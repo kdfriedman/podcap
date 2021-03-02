@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { Flex, Container, Text, Button, Heading } from "@chakra-ui/react";
 
