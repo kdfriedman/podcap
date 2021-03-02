@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import App from "../components/App";
+import PodcapApp from "../components/PodcapApp";
 import NotFoundPage from "../components/page-components/NotFoundPage";
 
 // initialize react router for handling of app route and any other possible routes
 const AppRouter = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact component={App} />
+      {/* generate route for home page which defaults to podcap app component */}
+      <Route path="/" exact component={PodcapApp} />
+      {/* handle 400 errors */}
       <Route component={NotFoundPage} />
     </Switch>
   </BrowserRouter>
