@@ -1,5 +1,7 @@
+import { Flex, Container } from "@chakra-ui/react";
+
 const App = () => {
-  return <div className="App">Podcap App</div>;
+  return <Container m={8}></Container>;
 };
 
 export default App;
