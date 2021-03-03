@@ -4,7 +4,7 @@ import Nav from "./Nav";
 const Header = () => {
   return (
     <>
-      <Flex justify="flex-start" backgroundColor="#fff">
+      <Flex className="header" justify="flex-start" backgroundColor="#fff">
         {/* Wire up the navigation */}
         <Nav />
       </Flex>

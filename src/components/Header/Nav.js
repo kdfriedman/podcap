@@ -6,6 +6,7 @@ const Nav = () => {
   return (
     <>
       <Flex
+        className="nav"
         flex="1 0 auto"
         p="0 24px"
         justify="space-between"
@@ -15,7 +16,7 @@ const Nav = () => {
         align="center"
         pos="relative"
       >
-        <NavLink to="/">
+        <NavLink className="nav__logo" to="/">
           <Image
             maxW="140px"
             maxH="42px"

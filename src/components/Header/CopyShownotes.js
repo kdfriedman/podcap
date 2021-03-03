@@ -1,10 +1,10 @@
 import { Flex, Button } from "@chakra-ui/react";
-import ClipboardIcon from "../styles/custom-icons/ClipboardIcon";
+import ClipboardIcon from "../../styles/custom-icons/ClipboardIcon";
 
 const CopyShownotes = () => {
   return (
     <>
-      <Flex backgroundColor="#fff">
+      <Flex className="nav__copy-shownotes-btn" backgroundColor="#fff">
         <Button
           id="clipboardIconBtn"
           _hover={{
