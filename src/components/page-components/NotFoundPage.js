@@ -4,7 +4,14 @@ import { Flex, Container, Text, Button, Heading } from "@chakra-ui/react";
 const NotFoundPage = () => (
   <Container m="4" p="4">
     <Flex>
-      <Heading isTruncated as="h2" fontSize="38px" fontWeight="800">
+      <Heading
+        fontFamily="Inter, san-serif"
+        color="#111"
+        isTruncated
+        as="h2"
+        fontSize="38px"
+        fontWeight="800"
+      >
         Page Not Found
       </Heading>
     </Flex>
@@ -24,7 +31,7 @@ const NotFoundPage = () => (
           bgColor="#111111"
           borderRadius="4px"
         >
-          <Text color="#ffffff" fontSize="16px">
+          <Text fontFamily="Inter, san-serif" color="#ffffff" fontSize="16px">
             Back to home
           </Text>
         </Button>
