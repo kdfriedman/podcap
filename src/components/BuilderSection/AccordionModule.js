@@ -12,6 +12,19 @@ import {
 import { DragHandleIcon } from "@chakra-ui/icons";
 
 const AccordionModule = () => {
+  // const handleTabFocus = (e, isClickFocus = null) => {
+  //   //   isCheckboxControl.removeAttribute("data-focus-visible-added");
+  //   const isCheckboxLabel = e.target.closest("[data-is-checkbox]");
+  //   // return all non checkbox label elements
+  //   if (!isCheckboxLabel) return;
+  //   // query child span element which is checkbox control
+  //   const isCheckboxControl = isCheckboxLabel.querySelector(
+  //     ".chakra-checkbox__control"
+  //   );
+  //   if (!isCheckboxControl) return;
+  //   isCheckboxControl.setAttribute("data-focus-visible-added", "");
+  // };
+
   return (
     <Accordion
       backgroundColor="white"
@@ -24,7 +37,13 @@ const AccordionModule = () => {
     >
       <AccordionItem w="100%">
         <h2>
-          <AccordionButton p="16px" maxH="56px">
+          <AccordionButton
+            _hover={{
+              background: "none",
+            }}
+            p="16px"
+            maxH="56px"
+          >
             <DragHandleIcon
               marginRight="13px"
               marginLeft=" 4px"
@@ -32,6 +51,8 @@ const AccordionModule = () => {
               fontWeight="900"
             />
             <Checkbox
+              data-is-checkbox
+              // onFocus={handleTabFocus}
               borderRadius="4px"
               colorScheme="brand"
               className="builder__section-checkbox"
@@ -61,13 +82,19 @@ const AccordionModule = () => {
             <strong>Tip:</strong> Provide an overview describing the main
             episode highlights.
           </Text>
-          <Textarea mt="8px" resize="none" pb={4} />
+          <Textarea minH="180px" mt="8px" resize="none" pb={4} />
         </AccordionPanel>
       </AccordionItem>
 
       <AccordionItem w="100%">
         <h2>
-          <AccordionButton p="16px" maxH="56px">
+          <AccordionButton
+            _hover={{
+              background: "none",
+            }}
+            p="16px"
+            maxH="56px"
+          >
             <DragHandleIcon
               marginRight="13px"
               marginLeft=" 4px"
@@ -104,12 +131,18 @@ const AccordionModule = () => {
             <strong>Tip:</strong> Provide an overview describing the main
             episode highlights.
           </Text>
-          <Textarea mt="8px" resize="none" pb={4} />
+          <Textarea minH="180px" mt="8px" resize="none" pb={4} />
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem w="100%">
         <h2>
-          <AccordionButton p="16px" maxH="56px">
+          <AccordionButton
+            _hover={{
+              background: "none",
+            }}
+            p="16px"
+            maxH="56px"
+          >
             <DragHandleIcon
               marginRight="13px"
               marginLeft=" 4px"
@@ -146,12 +179,18 @@ const AccordionModule = () => {
             <strong>Tip:</strong> Provide an overview describing the main
             episode highlights.
           </Text>
-          <Textarea mt="8px" resize="none" pb={4} />
+          <Textarea minH="180px" mt="8px" resize="none" pb={4} />
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem w="100%">
         <h2>
-          <AccordionButton p="16px" maxH="56px">
+          <AccordionButton
+            _hover={{
+              background: "none",
+            }}
+            p="16px"
+            maxH="56px"
+          >
             <DragHandleIcon
               marginRight="13px"
               marginLeft=" 4px"
@@ -188,7 +227,7 @@ const AccordionModule = () => {
             <strong>Tip:</strong> Provide an overview describing the main
             episode highlights.
           </Text>
-          <Textarea mt="8px" resize="none" pb={4} />
+          <Textarea minH="180px" mt="8px" resize="none" pb={4} />
         </AccordionPanel>
       </AccordionItem>
     </Accordion>
