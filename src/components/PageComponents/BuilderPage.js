@@ -1,6 +1,7 @@
 import { Flex, Box, Spacer } from "@chakra-ui/react";
 import Header from "../Header/Header";
 import BuilderSection from "../BuilderSection/BuilderSection";
+import PreviewSection from "../PreviewSection/PreviewSection";
 
 const BuilderPage = () => {
   return (
@@ -8,7 +9,7 @@ const BuilderPage = () => {
       {/* init the header in main App Page component, independent of other components */}
       <Header />
       <Flex className="builder__container">
-        <Box className="builder__form-section" w="55%" h="100vh" bg="#fff">
+        <Box className="builder__form-section" w="55%" h="100vh" bg="#efefef">
           {/* Wire up builder section component */}
           <BuilderSection />
         </Box>
@@ -17,7 +18,9 @@ const BuilderPage = () => {
           className="builder__vertical-divider"
           borderLeft="1px solid #CCCCCC"
         />
-        <Box className="builder__preview-section" w="45%" h="100vh" bg="#fff" />
+        <Box className="builder__preview-section" w="45%" h="100vh" bg="#fff">
+          <PreviewSection />
+        </Box>
       </Flex>
     </>
   );

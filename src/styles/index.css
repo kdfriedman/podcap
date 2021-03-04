@@ -37,3 +37,7 @@ code {
   margin-inline-end: 0;
   padding-right: 4px;
 }
+
+.builder__section-checkbox .chakra-checkbox__control {
+  border-radius: 4px;
+}
