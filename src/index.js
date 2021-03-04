@@ -4,6 +4,8 @@ import "./styles/index.css";
 import AppRouter from "./routes/AppRouter";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import "focus-visible/dist/focus-visible";
+
 // 2. Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({
   colors: {

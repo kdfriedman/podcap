@@ -41,3 +41,8 @@ code {
 .builder__section-checkbox .chakra-checkbox__control {
   border-radius: 4px;
 }
+
+.js-focus-visible :focus:not([data-focus-visible-added]) {
+  outline: none;
+  box-shadow: none;
+}
