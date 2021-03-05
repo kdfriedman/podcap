@@ -4,6 +4,7 @@ import AccordionModule from "./AccordionModule";
 const BuilderSection = () => {
   return (
     <Flex
+      h="100%"
       alignItems="center"
       justifyContent="center"
       className="builder__section-container"
@@ -11,6 +12,7 @@ const BuilderSection = () => {
     >
       <Flex
         h="60px"
+        minH="60px"
         alignItems="center"
         justifyContent="center"
         className="builder__section-header"
@@ -30,7 +32,7 @@ const BuilderSection = () => {
           Podcast Episode Show Notes Builder
         </Heading>
       </Flex>
-      <Flex w="100%" className="builder__section">
+      <Flex overflow="scroll" h="100%" w="100%" className="builder__section">
         <AccordionModule />
       </Flex>
     </Flex>

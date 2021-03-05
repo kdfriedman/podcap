@@ -12,25 +12,14 @@ import {
 import { DragHandleIcon } from "@chakra-ui/icons";
 
 const AccordionModule = () => {
-  // const handleTabFocus = (e, isClickFocus = null) => {
-  //   //   isCheckboxControl.removeAttribute("data-focus-visible-added");
-  //   const isCheckboxLabel = e.target.closest("[data-is-checkbox]");
-  //   // return all non checkbox label elements
-  //   if (!isCheckboxLabel) return;
-  //   // query child span element which is checkbox control
-  //   const isCheckboxControl = isCheckboxLabel.querySelector(
-  //     ".chakra-checkbox__control"
-  //   );
-  //   if (!isCheckboxControl) return;
-  //   isCheckboxControl.setAttribute("data-focus-visible-added", "");
-  // };
-
   return (
     <Accordion
+      className="builder__accordion-container"
       backgroundColor="white"
       m="16px 24px"
       borderRadius="6px"
       w="100%"
+      h="fit-content"
       boxShadow="0 2px 6px 0 rgb(0 0 0 / 20%)"
       defaultIndex={[0]}
       allowMultiple
@@ -52,7 +41,6 @@ const AccordionModule = () => {
             />
             <Checkbox
               data-is-checkbox
-              // onFocus={handleTabFocus}
               borderRadius="4px"
               colorScheme="brand"
               className="builder__section-checkbox"
@@ -82,7 +70,13 @@ const AccordionModule = () => {
             <strong>Tip:</strong> Provide an overview describing the main
             episode highlights.
           </Text>
-          <Textarea minH="180px" mt="8px" resize="none" pb={4} />
+          <Textarea
+            placeholder="Enter notes..."
+            minH="180px"
+            mt="8px"
+            resize="none"
+            pb={4}
+          />
         </AccordionPanel>
       </AccordionItem>
 
@@ -128,8 +122,8 @@ const AccordionModule = () => {
             lineHeight="1.3em"
             className="builder__accordion-tip-text"
           >
-            <strong>Tip:</strong> Provide an overview describing the main
-            episode highlights.
+            <strong>Tip:</strong> Introduce your episode guest and include links
+            with more information.
           </Text>
           <Textarea minH="180px" mt="8px" resize="none" pb={4} />
         </AccordionPanel>
