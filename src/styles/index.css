@@ -62,3 +62,19 @@ code {
   + .chakra-checkbox__control[data-focus] {
   box-shadow: 0 0 0 3px rgb(66 153 225 / 60%);
 }
+
+/* section title hover edit icon */
+.builder__accordion-item:hover .builder__section-title-edit-icon {
+  display: flex;
+}
+
+.builder__accordion-item:hover
+  .builder__section-title-edit-icon[data-is-editing="true"] {
+  display: none;
+}
+
+.builder__section-title-form {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
