@@ -36,14 +36,19 @@ const AccordionModule = () => {
   // handle edit title inside of accoridion section
   const handleEditTitle = (e) => {
     e.preventDefault();
-    const targetElement = e.target.closest(
+    const targetIconContainerElement = e.target.closest(
       ".builder__section-title-edit-container"
     );
-    if (!targetElement) return;
+    // check if target icon container element exists
+    if (!targetIconContainerElement) return;
 
     // update edit section title state as active (true)
-    const targetId = targetElement.id
-      ? parseInt(targetElement.id.slice(targetElement.id.length - 1))
+    const targetId = targetIconContainerElement.id
+      ? parseInt(
+          targetIconContainerElement.id.slice(
+            targetIconContainerElement.id.length - 1
+          )
+        )
       : null;
 
     // update isEditingSectionTitle to conditionally render each editable section input
@@ -55,6 +60,11 @@ const AccordionModule = () => {
       copiedSectionTitleList[targetIndex].sectionTitle = targetId;
       return copiedSectionTitleList;
     });
+    // get target and wire up data attribute to hide edit icon
+    const targetIconElement = e.target.closest(
+      ".builder__section-title-edit-icon"
+    );
+    if (!targetIconElement) return;
 
     e.target.closest(
       ".builder__section-title-edit-icon"
@@ -99,6 +109,21 @@ const AccordionModule = () => {
       copiedSectionTitleList[targetIndex].sectionTitle = false;
       return copiedSectionTitleList;
     });
+    // check if element exists, otherwise return
+    if (!document.querySelector("[data-is-editing]")) return;
+    document
+      .querySelector("[data-is-editing]")
+      .removeAttribute("data-is-editing");
+  };
+
+  // handle Accordion button space bar while editing input is active
+  const handleSpaceBarEditSection = (e) => {
+    const isEditingStatusList = isEditingSectionTitle.filter((editSection) => {
+      return editSection.sectionTitle;
+    });
+    if (isEditingStatusList.length > 0) {
+      e.preventDefault();
+    }
   };
 
   // bootstrap accordiion items as JXS
@@ -113,6 +138,7 @@ const AccordionModule = () => {
         >
           <h2>
             <AccordionButton
+              onClick={handleSpaceBarEditSection}
               _hover={{
                 background: "none",
               }}
@@ -159,12 +185,22 @@ const AccordionModule = () => {
                           onChange={handleInputChange}
                           onClick={handleInputClick}
                           className="builder__section-title-input"
+                          _focus={{
+                            border: "1px solid #773AE7",
+                          }}
                         />
                       </FormControl>
                       <Box
                         id={`sectionTitleSaveBtn${accItem.id}`}
                         onClick={handleSectionTitleSave}
                         type="submit"
+                        borderRadius="4px"
+                        backgroundColor="#000"
+                        fontSize="14px"
+                        fontWeight="600"
+                        color="#fff"
+                        padding="9px 14px"
+                        marginLeft="4px"
                       >
                         Save
                       </Box>
