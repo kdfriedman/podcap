@@ -111,28 +111,32 @@ const EditSectionTitle = ({
       copiedSectionTitleList[targetIndex].sectionTitle = false;
       return copiedSectionTitleList;
     });
-    // check if element exists, otherwise return
-    if (!document.querySelector("[data-is-editing]")) return;
-    document
-      .querySelector("[data-is-editing]")
-      .removeAttribute("data-is-editing");
 
     const sectionTitleCurrentValue =
       sectionTitleFormRef?.current?.elements[0]?.value;
     if (!sectionTitleCurrentValue) {
       // edit value of edit section input
-      return updateAccItemList((accItemList) => {
+      updateAccItemList((accItemList) => {
         let copiedAccItemList = [...accItemList];
         const targetIndex = copiedAccItemList.findIndex(
           (prop) => prop.id === targetId
         );
-        //TODO: figure out why some saves replace with prev value and some replace with empty string
-        console.log(tempValue);
         copiedAccItemList[targetIndex].accItemTitleText = tempValue;
         return copiedAccItemList;
       });
+
+      // check if element exists, otherwise return
+      if (!document.querySelector("[data-is-editing]")) return;
+      return document
+        .querySelector("[data-is-editing]")
+        .removeAttribute("data-is-editing");
     }
     updateTempValue(null);
+    // check if element exists, otherwise return
+    if (!document.querySelector("[data-is-editing]")) return;
+    document
+      .querySelector("[data-is-editing]")
+      .removeAttribute("data-is-editing");
   };
 
   return (
@@ -155,7 +159,9 @@ const EditSectionTitle = ({
             onSubmit={handleSectionTitleSave}
           >
             <FormControl id={`sectionTitleControlInput${accItem.id}`}>
+              {/* Max length char count of 45 characters */}
               <Input
+                maxLength="45"
                 ref={sectionTitleInputRef}
                 onBlur={handleSectionTitleSave}
                 type="section-title"
