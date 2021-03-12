@@ -168,6 +168,7 @@ const EditSectionTitle = ({
                 value={accItem.accItemTitleText}
                 onChange={handleInputChange}
                 onClick={handleInputClick}
+                // onMouseDown={handleMouseCapture}
                 className="builder__section-title-input"
                 _focus={{
                   border: "1px solid #773AE7",
