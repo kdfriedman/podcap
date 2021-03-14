@@ -28,7 +28,6 @@ const PreviewSection = () => {
     });
     updatePreviewBtnList(newArr);
   };
-
   return (
     <Flex className="builder__section-container">
       <Flex

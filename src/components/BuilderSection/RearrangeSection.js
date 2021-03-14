@@ -75,19 +75,19 @@ const RearrangeSection = (props) => {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
-  const handleDragStart = (e) => {
-    const draggableAccItem = e.target.closest("[data-handler-id]");
-    if (!draggableAccItem) return;
+  // const handleDragStart = (e) => {
+  //   const draggableAccItem = e.target.closest("[data-handler-id]");
+  //   if (!draggableAccItem) return;
 
-    const sectionTitleForm = draggableAccItem.querySelector("form");
-    if (sectionTitleForm) {
-      e.preventDefault();
-    }
-  };
+  //   const sectionTitleForm = draggableAccItem.querySelector("form");
+  //   if (sectionTitleForm) {
+  //     e.preventDefault();
+  //   }
+  // };
 
   return (
     <AccordionItem
-      onDragStart={handleDragStart}
+      //onDragStart={handleDragStart}
       ref={ref}
       style={{ opacity }}
       data-handler-id={handlerId}

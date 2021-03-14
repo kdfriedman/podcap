@@ -98,6 +98,12 @@ const EditSectionTitle = ({
   // handle save section title form submit
   const handleSectionTitleSave = (e) => {
     e.preventDefault();
+
+    // set draggable container element back to true when section title input focus is lost and onblur event occurs
+    const draggableContainer = e.target.closest("[data-handler-id]");
+    if (!draggableContainer) return;
+    draggableContainer.setAttribute("draggable", "true");
+
     const targetId = e.target.id
       ? parseInt(e.target.id.slice(e.target.id.length - 1))
       : null;
@@ -112,8 +118,11 @@ const EditSectionTitle = ({
       return copiedSectionTitleList;
     });
 
+    // store value of ref input to use later if user enters empty input and saves
     const sectionTitleCurrentValue =
       sectionTitleFormRef?.current?.elements[0]?.value;
+
+    // check if section input is saved as empty input then update input value with prev stored value
     if (!sectionTitleCurrentValue) {
       // edit value of edit section input
       updateAccItemList((accItemList) => {
@@ -139,6 +148,13 @@ const EditSectionTitle = ({
       .removeAttribute("data-is-editing");
   };
 
+  const handleFocus = (e) => {
+    // remove draggable attribute to prevent accordion from dragging while editing section title input
+    const draggableContainer = e.target.closest("[data-handler-id]");
+    if (!draggableContainer) return;
+    draggableContainer.setAttribute("draggable", "false");
+  };
+
   return (
     <Box
       flexDirection="row"
@@ -161,6 +177,7 @@ const EditSectionTitle = ({
             <FormControl id={`sectionTitleControlInput${accItem.id}`}>
               {/* Max length char count of 45 characters */}
               <Input
+                onFocus={handleFocus}
                 maxLength="45"
                 ref={sectionTitleInputRef}
                 onBlur={handleSectionTitleSave}
@@ -168,7 +185,6 @@ const EditSectionTitle = ({
                 value={accItem.accItemTitleText}
                 onChange={handleInputChange}
                 onClick={handleInputClick}
-                // onMouseDown={handleMouseCapture}
                 className="builder__section-title-input"
                 _focus={{
                   border: "1px solid #773AE7",
