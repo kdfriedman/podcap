@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { Flex, Button } from "@chakra-ui/react";
+import PodcastPreview from "./PodcastPreview";
+import EmailPreview from "./EmailPreview";
 
 const PreviewSection = () => {
+  // create preview btn state, used for rendering active btn state
   const [previewBtnList, updatePreviewBtnList] = useState([
     { btnText: "Podcast Preview", isActive: true, id: 1 },
     { btnText: "Email Preview", isActive: false, id: 2 },
   ]);
+  // deconstruct previewBtnList into podcast and email objects
+  const [podcastPreviewBtn] = previewBtnList;
 
   // map of preview section button styles for active vs inactive state
   const previewSectionHeaderButtonDictionary = new Map();
@@ -15,7 +20,7 @@ const PreviewSection = () => {
   });
   previewSectionHeaderButtonDictionary.set("inactive", {
     backgroundColor: "#fff",
-    border: "1.5px solid #773AE7",
+    border: "1.5px solid #AAAAAA",
   });
 
   // handle podcast/email preview click
@@ -28,8 +33,15 @@ const PreviewSection = () => {
     });
     updatePreviewBtnList(newArr);
   };
+
   return (
-    <Flex className="builder__section-container">
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+      className="builder__section-container"
+      height="100%"
+    >
       <Flex
         h="60px"
         minH="60px"
@@ -71,7 +83,19 @@ const PreviewSection = () => {
           {previewBtnList[1].btnText}
         </Button>
       </Flex>
-      <Flex className="builder__section"></Flex>
+      <Flex
+        backgroundRepeat="no-repeat"
+        backgroundSize="cover"
+        backgroundImage='url("/assets/preview-section-mobile-frame.png")'
+        className="builder__section"
+        height="100%"
+        width="520px"
+        justify="center"
+        marginTop="1.75rem"
+      >
+        {/* Instantiate active preview render */}
+        {podcastPreviewBtn.isActive ? <PodcastPreview /> : <EmailPreview />}
+      </Flex>
     </Flex>
   );
 };

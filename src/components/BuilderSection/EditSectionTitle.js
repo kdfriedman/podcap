@@ -148,7 +148,7 @@ const EditSectionTitle = ({
       .removeAttribute("data-is-editing");
   };
 
-  const handleFocus = (e) => {
+  const handleInputFocus = (e) => {
     // remove draggable attribute to prevent accordion from dragging while editing section title input
     const draggableContainer = e.target.closest("[data-handler-id]");
     if (!draggableContainer) return;
@@ -177,7 +177,7 @@ const EditSectionTitle = ({
             <FormControl id={`sectionTitleControlInput${accItem.id}`}>
               {/* Max length char count of 45 characters */}
               <Input
-                onFocus={handleFocus}
+                onFocus={handleInputFocus}
                 maxLength="45"
                 ref={sectionTitleInputRef}
                 onBlur={handleSectionTitleSave}
