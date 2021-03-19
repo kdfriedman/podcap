@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Flex, Button } from "@chakra-ui/react";
+import { Flex, Button, Link, Text } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import PodcastPreview from "./PodcastPreview";
 import EmailPreview from "./EmailPreview";
+import { FiChevronRight } from "react-icons/fi";
 
 const PreviewSection = () => {
   // create preview btn state, used for rendering active btn state
@@ -92,9 +94,36 @@ const PreviewSection = () => {
         width="520px"
         justify="center"
         marginTop="1.75rem"
+        minHeight="0"
       >
         {/* Instantiate active preview render */}
         {podcastPreviewBtn.isActive ? <PodcastPreview /> : <EmailPreview />}
+      </Flex>
+      <Flex
+        height="56px"
+        minHeight="56px"
+        backgroundColor="#3F3D56"
+        className="builder__section-preview-footer-container"
+        w="100%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex="1"
+      >
+        <Text
+          textAlign="center"
+          fontSize="14px"
+          fontWeight="500"
+          color="#ffffff"
+          className="builder__section-preview-footer"
+          fontFamily="Inter, san-serif"
+          lineHeight="1.3rem"
+        >
+          An example of how your show notes will appear in a podcast app.{" "}
+          <Link color="#92FAEF" href="https://www.podcap.io/" isExternal>
+            Learn more
+            <ExternalLinkIcon h="1rem" w="1rem" as={FiChevronRight} />
+          </Link>
+        </Text>
       </Flex>
     </Flex>
   );

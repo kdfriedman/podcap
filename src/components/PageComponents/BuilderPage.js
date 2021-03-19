@@ -9,7 +9,7 @@ const BuilderPage = () => {
       {/* init the header in main App Page component, independent of other components */}
       <Header />
       <Flex h="calc(100vh - 64px)" bg="#efefef" className="builder__container">
-        <Box className="builder__form-section" w="55%" h="100%" bg="#efefef">
+        <Box className="builder__form-section" w="50%" h="100%" bg="#efefef">
           {/* Wire up builder section component */}
           <BuilderSection />
         </Box>
@@ -18,7 +18,7 @@ const BuilderPage = () => {
           className="builder__vertical-divider"
           borderLeft="1px solid #CCCCCC"
         />
-        <Box className="builder__preview-section" w="45%" h="100%" bg="#efefef">
+        <Box className="builder__preview-section" w="50%" h="100%" bg="#efefef">
           <PreviewSection />
         </Box>
       </Flex>

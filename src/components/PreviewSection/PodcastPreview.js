@@ -18,6 +18,7 @@ const PodcastPreview = () => {
       borderBottom="none"
       borderBottomRightRadius="0"
       borderBottomLeftRadius="0px"
+      overflowY="scroll"
     >
       <Flex className="builder__section-podcast-brand-container">
         <Flex

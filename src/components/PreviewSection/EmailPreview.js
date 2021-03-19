@@ -19,6 +19,7 @@ const EmailPreview = () => {
       borderBottom="none"
       borderBottomRightRadius="0"
       borderBottomLeftRadius="0px"
+      overflowY="scroll"
     >
       <Flex
         justifyContent="flex-start"
@@ -288,7 +289,7 @@ const EmailPreview = () => {
       </Flex>
       {/* email podcast module - end */}
 
-      {/* <Flex
+      <Flex
         direction="column"
         className="builder__section-email-shownotes-container"
         justifyContent="center"
@@ -311,8 +312,8 @@ const EmailPreview = () => {
             className="builder__section-email-shownotes-edit-icon"
             as={FiEdit}
           />
-        </Flex> */}
-      {/* <Text
+        </Flex>
+        <Text
           marginTop="15px"
           alignSelf="center"
           maxWidth="268px"
@@ -323,10 +324,11 @@ const EmailPreview = () => {
           fontWeight="300"
           color="#888888"
           className="builder__section-email-shownotes-preview-text"
+          marginBottom="2rem"
         >
           Add your episode show notes to the form on the left to preview here.
-        </Text> */}
-      {/* </Flex> */}
+        </Text>
+      </Flex>
     </Flex>
   );
 };
