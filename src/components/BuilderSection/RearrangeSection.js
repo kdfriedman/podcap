@@ -1,18 +1,38 @@
-import { useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
   Checkbox,
-  Textarea,
   Text,
 } from "@chakra-ui/react";
 import EditSectionTitle from "./EditSectionTitle";
+import SectionInput from "./SectionInput";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { useDrag, useDrop } from "react-dnd";
 
 const RearrangeSection = (props) => {
+  console.log("is RearrangeSection rendereing ?");
+
+  // set state for section edit title isEditing status with associated ids
+  const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
+    { sectionTitle: false, id: 1 },
+    { sectionTitle: false, id: 2 },
+    { sectionTitle: false, id: 3 },
+    { sectionTitle: false, id: 4 },
+  ]);
+
+  // handle Accordion button space bar while editing input is active
+  const handleSpaceBarEditSection = (e) => {
+    const isEditingStatusList = isEditingSectionTitle.filter((editSection) => {
+      return editSection.sectionTitle;
+    });
+    if (isEditingStatusList.length > 0) {
+      e.preventDefault();
+    }
+  };
+
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
@@ -77,7 +97,6 @@ const RearrangeSection = (props) => {
 
   return (
     <AccordionItem
-      //onDragStart={handleDragStart}
       ref={ref}
       style={{ opacity }}
       data-handler-id={handlerId}
@@ -88,7 +107,7 @@ const RearrangeSection = (props) => {
       <h2>
         {/* Button which opens and closes accordion */}
         <AccordionButton
-          onClick={props.handleSpaceBarEditSection}
+          onClick={handleSpaceBarEditSection}
           _hover={{
             background: "none",
           }}
@@ -116,8 +135,8 @@ const RearrangeSection = (props) => {
           <EditSectionTitle
             updateAccItemList={props.updateAccItemList}
             accItem={props.accItem}
-            isEditingSectionTitle={props.isEditingSectionTitle}
-            updateIsEditingSectionTitle={props.updateIsEditingSectionTitle}
+            isEditingSectionTitle={isEditingSectionTitle}
+            updateIsEditingSectionTitle={updateIsEditingSectionTitle}
           />
           <AccordionIcon w="2rem" h="2rem," />
         </AccordionButton>
@@ -132,14 +151,8 @@ const RearrangeSection = (props) => {
           <strong>Tip:</strong> Provide an overview describing the main episode
           highlights.
         </Text>
-        {/* Textarea for accordion text input */}
-        <Textarea
-          placeholder="Enter show notes..."
-          minH="180px"
-          mt="8px"
-          resize="none"
-          pb={4}
-        />
+        {/* Instantiate SectionInput component - handles user input for rendering shownotes */}
+        <SectionInput />
       </AccordionPanel>
     </AccordionItem>
   );
