@@ -77,7 +77,6 @@ const RearrangeSection = (props) => {
 
   return (
     <AccordionItem
-      //onDragStart={handleDragStart}
       ref={ref}
       style={{ opacity }}
       data-handler-id={handlerId}
