@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, StoreProvider } from "easy-peasy";
+import { StoreProvider } from "easy-peasy";
+import store from "./store";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./styles/index.css";
@@ -8,10 +9,6 @@ import AppRouter from "./routes/AppRouter";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import "focus-visible/dist/focus-visible";
-import model from "./store.js";
-
-// initantiate the global data store
-const store = createStore(model);
 
 //Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({

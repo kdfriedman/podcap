@@ -1,11 +1,13 @@
-// create data store model
-const model = {
-  builder: {
-    section: [],
-    updateSection: (state, payload) => {
-      state.section.push(payload);
-    },
-  },
-};
+import { createStore, action } from "easy-peasy";
 
-export default model;
+// create data store model
+const store = createStore({
+  sectionInput: {
+    sectionInputValue: [],
+    updateSectionInputValue: action((state, payload) => {
+      state.sectionInputValue.push({ text: payload, done: false });
+    }),
+  },
+});
+
+export default store;
