@@ -184,7 +184,6 @@ const EmailPreview = () => {
         boxShadow="0 2px 5px 0 rgb(0 0 0 / 15%)"
       >
         <Flex
-          marginLeft="7px"
           className="builder__section-podcast-brand-img-container"
           alignItems="center"
         >
@@ -196,6 +195,7 @@ const EmailPreview = () => {
             borderRadius="6px"
             h="88px"
             w="88px"
+            margin="7px"
             className="builder__section-podcast-brand-img-module"
           >
             <Text
