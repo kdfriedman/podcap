@@ -28,6 +28,8 @@ const AccordionModule = () => {
     },
     [accItemList]
   );
+
+  // handler to render draggable accordion section which returns jsx
   const renderDraggableAccoridions = (accItem, index) => {
     return (
       <RearrangeSection

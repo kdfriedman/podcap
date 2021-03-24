@@ -13,8 +13,6 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import { useDrag, useDrop } from "react-dnd";
 
 const RearrangeSection = (props) => {
-  console.log("is RearrangeSection rendereing ?");
-
   // set state for section edit title isEditing status with associated ids
   const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
     { sectionTitle: false, id: 1 },
@@ -33,6 +31,7 @@ const RearrangeSection = (props) => {
     }
   };
 
+  // draggable libary config
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
@@ -152,7 +151,7 @@ const RearrangeSection = (props) => {
           highlights.
         </Text>
         {/* Instantiate SectionInput component - handles user input for rendering shownotes */}
-        <SectionInput />
+        <SectionInput sectionId={props.id} />
       </AccordionPanel>
     </AccordionItem>
   );

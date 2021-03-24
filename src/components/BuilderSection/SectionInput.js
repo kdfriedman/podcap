@@ -1,14 +1,27 @@
-import { useStoreState, useStoreActions } from "easy-peasy";
-
+import { useState } from "react";
 import { Textarea } from "@chakra-ui/react";
 
-const SectionInput = () => {
-  const sectionInputValueStore = useStoreState((state) => state.sectionInput);
-  const updateSectionInputValueStore = useStoreActions(
-    (actions) => actions.updateSectionInputValue
-  );
+const SectionInput = ({ sectionId }) => {
+  const [inputValue, updateInputValue] = useState("");
 
-  console.log(sectionInputValueStore);
+  const handleTextareaChange = (e) => {
+    if (!e.target ?? !e.target.closest("textarea")) return;
+    updateInputValue(e.target.value);
+  };
+
+  const handleTextareaFocus = (e) => {
+    // remove draggable attribute to prevent accordion from dragging while editing section title input
+    const draggableContainer = e.target.closest("[data-handler-id]");
+    if (!draggableContainer) return;
+    draggableContainer.setAttribute("draggable", "false");
+  };
+
+  const handleTextareaBlur = (e) => {
+    // remove draggable attribute to prevent accordion from dragging while editing section title input
+    const draggableContainer = e.target.closest("[data-handler-id]");
+    if (!draggableContainer) return;
+    draggableContainer.setAttribute("draggable", "true");
+  };
 
   return (
     <>
@@ -19,6 +32,10 @@ const SectionInput = () => {
         mt="8px"
         resize="none"
         pb={4}
+        value={inputValue}
+        onChange={handleTextareaChange}
+        onFocus={handleTextareaFocus}
+        onBlur={handleTextareaBlur}
       />
     </>
   );
