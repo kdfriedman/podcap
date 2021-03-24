@@ -8,7 +8,9 @@ import { BuilderContext } from "../../context/BuilderContext";
 
 const PodcastPreview = () => {
   const [builderSectionTextarea] = useContext(BuilderContext);
-  console.log(builderSectionTextarea);
+  const sortedBuilderSectionTextarea = builderSectionTextarea.sort(
+    (a, b) => a.id - b.id
+  );
 
   return (
     <Flex
@@ -124,8 +126,21 @@ const PodcastPreview = () => {
         justifyContent="center"
       >
         {builderSectionTextarea.length > 0 ? (
-          builderSectionTextarea.map((section, i) => {
-            return <Text>{section?.text}</Text>;
+          sortedBuilderSectionTextarea.map((section) => {
+            return (
+              <Text
+                fontWeight="400"
+                fontFamily="Helvetica Neue, Roboto, san-serif"
+                fontSize="16px"
+                lineHeight="20px"
+                color="#222222"
+                className="builder__section-podcast-shownotes-text"
+                margin="12px 15px"
+                key={section.id}
+              >
+                {section?.text}
+              </Text>
+            );
           })
         ) : (
           <>
