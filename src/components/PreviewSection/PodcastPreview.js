@@ -1,10 +1,15 @@
+import { useContext } from "react";
 import { Flex, Icon, Text, Spacer } from "@chakra-ui/react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { BuilderContext } from "../../context/BuilderContext";
 
 const PodcastPreview = () => {
+  const [builderSectionTextarea] = useContext(BuilderContext);
+  console.log(builderSectionTextarea);
+
   return (
     <Flex
       justify="flex-start"
@@ -118,39 +123,48 @@ const PodcastPreview = () => {
         className="builder__section-podcast-shownotes-container"
         justifyContent="center"
       >
-        <Flex
-          marginTop="5rem"
-          alignSelf="center"
-          h="98px"
-          w="98px"
-          backgroundColor="#F5F5F5"
-          borderRadius="50%"
-          className="builder__section-podcast-shownotes-circle-bg"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Icon
-            color="#d0d0d0"
-            h="40px"
-            w="40px"
-            className="builder__section-podcast-shownotes-edit-icon"
-            as={FiEdit}
-          />
-        </Flex>
-        <Text
-          marginTop="15px"
-          alignSelf="center"
-          maxWidth="268px"
-          textAlign="center"
-          fontFamily="Inter, sans-serif"
-          fontSize="15px"
-          lineHeight="20.25px"
-          fontWeight="300"
-          color="#888888"
-          className="builder__section-podcast-shownotes-preview-text"
-        >
-          Add your episode show notes to the form on the left to preview here.
-        </Text>
+        {builderSectionTextarea.length > 0 ? (
+          builderSectionTextarea.map((section, i) => {
+            return <Text>{section?.text}</Text>;
+          })
+        ) : (
+          <>
+            <Flex
+              marginTop="5rem"
+              alignSelf="center"
+              h="98px"
+              w="98px"
+              backgroundColor="#F5F5F5"
+              borderRadius="50%"
+              className="builder__section-podcast-shownotes-circle-bg"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Icon
+                color="#d0d0d0"
+                h="40px"
+                w="40px"
+                className="builder__section-podcast-shownotes-edit-icon"
+                as={FiEdit}
+              />
+            </Flex>
+            <Text
+              marginTop="15px"
+              alignSelf="center"
+              maxWidth="268px"
+              textAlign="center"
+              fontFamily="Inter, sans-serif"
+              fontSize="15px"
+              lineHeight="20.25px"
+              fontWeight="300"
+              color="#888888"
+              className="builder__section-podcast-shownotes-preview-text"
+            >
+              Add your episode show notes to the form on the left to preview
+              here.
+            </Text>
+          </>
+        )}
       </Flex>
     </Flex>
   );
