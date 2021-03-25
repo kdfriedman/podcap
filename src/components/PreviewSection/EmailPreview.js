@@ -1,11 +1,18 @@
+import { useContext } from "react";
 import { Flex, Icon, Text, Spacer, Image } from "@chakra-ui/react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FiMail, FiTrash, FiEdit } from "react-icons/fi";
 import { BiArchiveIn, BiDotsHorizontalRounded } from "react-icons/bi";
 import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
+import { BuilderContext } from "../../context/BuilderContext";
 
 const EmailPreview = () => {
+  const [builderSectionTextarea] = useContext(BuilderContext);
+  // sort items to keep ids in numerical order (smallest - largest)
+  const sortedBuilderSectionTextarea = builderSectionTextarea.sort(
+    (a, b) => a.id - b.id
+  );
   return (
     <Flex
       justify="flex-start"
@@ -294,40 +301,68 @@ const EmailPreview = () => {
         className="builder__section-email-shownotes-container"
         justifyContent="center"
       >
-        <Flex
-          marginTop="48px"
-          alignSelf="center"
-          h="98px"
-          w="98px"
-          backgroundColor="#F5F5F5"
-          borderRadius="50%"
-          className="builder__section-email-shownotes-circle-bg"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Icon
-            color="#d0d0d0"
-            h="40px"
-            w="40px"
-            className="builder__section-email-shownotes-edit-icon"
-            as={FiEdit}
-          />
-        </Flex>
-        <Text
-          marginTop="15px"
-          alignSelf="center"
-          maxWidth="268px"
-          textAlign="center"
-          fontFamily="Inter, sans-serif"
-          fontSize="15px"
-          lineHeight="20.25px"
-          fontWeight="300"
-          color="#888888"
-          className="builder__section-email-shownotes-preview-text"
-          marginBottom="2rem"
-        >
-          Add your episode show notes to the form on the left to preview here.
-        </Text>
+        {builderSectionTextarea.length > 0 ? (
+          <Flex
+            marginTop="5px"
+            marginBottom="1rem"
+            className="builder__section-email-shownotes-text-container"
+          >
+            {sortedBuilderSectionTextarea.map((section) => {
+              return (
+                <Text
+                  fontWeight="400"
+                  fontFamily="Helvetica Neue, Roboto, san-serif"
+                  fontSize="16px"
+                  lineHeight="20px"
+                  color="#222222"
+                  className="builder__section-email-shownotes-text"
+                  margin="12px 15px"
+                  key={section.id}
+                >
+                  {section?.text}
+                </Text>
+              );
+            })}
+          </Flex>
+        ) : (
+          <>
+            <Flex
+              marginTop="48px"
+              alignSelf="center"
+              h="98px"
+              w="98px"
+              backgroundColor="#F5F5F5"
+              borderRadius="50%"
+              className="builder__section-email-shownotes-circle-bg"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Icon
+                color="#d0d0d0"
+                h="40px"
+                w="40px"
+                className="builder__section-email-shownotes-edit-icon"
+                as={FiEdit}
+              />
+            </Flex>
+            <Text
+              marginTop="15px"
+              alignSelf="center"
+              maxWidth="268px"
+              textAlign="center"
+              fontFamily="Inter, sans-serif"
+              fontSize="15px"
+              lineHeight="20.25px"
+              fontWeight="300"
+              color="#888888"
+              className="builder__section-email-shownotes-preview-text"
+              marginBottom="2rem"
+            >
+              Add your episode show notes to the form on the left to preview
+              here.
+            </Text>
+          </>
+        )}
       </Flex>
     </Flex>
   );
