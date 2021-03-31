@@ -8,10 +8,11 @@ import { FaUserCircle } from "react-icons/fa";
 import { BuilderContext } from "../../context/BuilderContext";
 
 const EmailPreview = () => {
-  const [builderSectionTextarea] = useContext(BuilderContext);
-  // sort items to keep ids in numerical order (smallest - largest)
-  const sortedBuilderSectionTextarea = builderSectionTextarea.sort(
-    (a, b) => a.id - b.id
+  // reference context data store to access textarea user value to render to screen
+  const [builderSectionTextareaList] = useContext(BuilderContext);
+
+  const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
+    (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
   return (
     <Flex
@@ -301,13 +302,14 @@ const EmailPreview = () => {
         className="builder__section-email-shownotes-container"
         justifyContent="center"
       >
-        {builderSectionTextarea.length > 0 ? (
+        {!hasEmptyBuilderSectionTextareaValues ? (
           <Flex
             marginTop="5px"
             marginBottom="1rem"
             className="builder__section-email-shownotes-text-container"
+            direction="column"
           >
-            {sortedBuilderSectionTextarea.map((section) => {
+            {builderSectionTextareaList.map((section) => {
               return (
                 <Text
                   fontWeight="400"

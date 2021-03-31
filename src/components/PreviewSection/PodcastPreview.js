@@ -7,9 +7,11 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { BuilderContext } from "../../context/BuilderContext";
 
 const PodcastPreview = () => {
-  const [builderSectionTextarea] = useContext(BuilderContext);
-  const sortedBuilderSectionTextarea = builderSectionTextarea.sort(
-    (a, b) => a.id - b.id
+  // reference context data store to access textarea user value to render to screen
+  const [builderSectionTextareaList] = useContext(BuilderContext);
+
+  const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
+    (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
 
   return (
@@ -125,8 +127,9 @@ const PodcastPreview = () => {
         className="builder__section-podcast-shownotes-container"
         justifyContent="center"
       >
-        {builderSectionTextarea.length > 0 ? (
-          sortedBuilderSectionTextarea.map((section) => {
+        {/* Check if builder sections are all empty */}
+        {!hasEmptyBuilderSectionTextareaValues ? (
+          builderSectionTextareaList.map((section) => {
             return (
               <Text
                 fontWeight="400"

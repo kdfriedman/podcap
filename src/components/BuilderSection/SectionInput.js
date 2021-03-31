@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { Textarea } from "@chakra-ui/react";
 import { BuilderContext } from "../../context/BuilderContext";
 
-const SectionInput = ({ sectionId }) => {
+const SectionInput = (props) => {
   // destructure context, following useState format
   const [, updateBuilderSectionTextarea] = useContext(BuilderContext);
   // local state for binding textarea value to element's value attribute
@@ -33,12 +33,6 @@ const SectionInput = ({ sectionId }) => {
           return prop.id === parentElementId;
         }
       );
-
-      // check if textarea value is empty — remove textarea data object by index if true
-      if (e.target.value === "") {
-        copiedBuilderSectionTextareaList.splice(builderSectionTextareaIndex, 1);
-        return copiedBuilderSectionTextareaList;
-      }
 
       //if parentElementId has been added to builderSection list previously, update specific textarea value and id
       if (builderSectionTextareaIndex !== -1) {

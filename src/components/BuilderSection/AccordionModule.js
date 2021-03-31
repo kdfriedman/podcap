@@ -1,9 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { Accordion } from "@chakra-ui/react";
 import update from "immutability-helper";
 import RearrangeSection from "./RearrangeSection";
+import { BuilderContext } from "../../context/BuilderContext";
 
 const AccordionModule = () => {
+  // get context updater function to keep track of global state
+  const [builderSectionTextarea, updateBuilderSectionTextarea] = useContext(
+    BuilderContext
+  );
+
   // set state for section title input values with associated ids
   const [accItemList, updateAccItemList] = useState([
     { accItemTitleText: "Episode Summary", id: 1 },
@@ -12,21 +18,49 @@ const AccordionModule = () => {
     { accItemTitleText: "Sponsored Links", id: 4 },
   ]);
 
+  //TODO: figure out how to sort ids of updated/mutated accItemList
   // allows us to update the state as an entire object and alter order of each item in the arr
   const moveAccordion = useCallback(
     (dragIndex, hoverIndex) => {
       const dragAccordion = accItemList[dragIndex];
-      updateAccItemList(
+      let mutatedAccItemList;
+
+      updateAccItemList((accItemList) => {
         // special package from immutability-helper
-        update(accItemList, {
+        mutatedAccItemList = update(accItemList, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragAccordion],
           ],
-        })
-      );
+        });
+        return mutatedAccItemList;
+      });
+
+      updateBuilderSectionTextarea((builderSectionTextareaList) => {
+        const draggedBuilderSection = builderSectionTextareaList[dragIndex];
+        if (!draggedBuilderSection) return builderSectionTextareaList;
+
+        const mutatedBuilderSectionTextareaList = update(
+          builderSectionTextareaList,
+          {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, draggedBuilderSection],
+            ],
+          }
+        );
+        // TODO: figure out why order is not respecting sorted accordion order
+        // const updatedBuilderSectionTextarea = mutatedBuilderSectionTextareaList.map(
+        //   (builderSectionObj, i) => {
+        //     let sortedId = i + 1;
+        //     builderSectionObj.id = sortedId.toString();
+        //     return builderSectionObj;
+        //   }
+        // );
+        return mutatedBuilderSectionTextareaList;
+      });
     },
-    [accItemList]
+    [accItemList, updateBuilderSectionTextarea]
   );
 
   // handler to render draggable accordion section which returns jsx
