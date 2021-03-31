@@ -6,9 +6,7 @@ import { BuilderContext } from "../../context/BuilderContext";
 
 const AccordionModule = () => {
   // get context updater function to keep track of global state
-  const [builderSectionTextarea, updateBuilderSectionTextarea] = useContext(
-    BuilderContext
-  );
+  const [, updateBuilderSectionTextarea] = useContext(BuilderContext);
 
   // set state for section title input values with associated ids
   const [accItemList, updateAccItemList] = useState([
@@ -27,6 +25,8 @@ const AccordionModule = () => {
 
       updateAccItemList((accItemList) => {
         // special package from immutability-helper
+        // uses drag index to remove the item from the accItemList array,
+        // then uses the hover index to figure out where to add the removed item back into the accItem array at the new index
         mutatedAccItemList = update(accItemList, {
           $splice: [
             [dragIndex, 1],
@@ -37,9 +37,9 @@ const AccordionModule = () => {
       });
 
       updateBuilderSectionTextarea((builderSectionTextareaList) => {
+        // get correlated matching textarea from draggable accordion by index
         const draggedBuilderSection = builderSectionTextareaList[dragIndex];
-        if (!draggedBuilderSection) return builderSectionTextareaList;
-
+        // update textarea position onDrag, which correlates to accordion which has been dragged to a new index
         const mutatedBuilderSectionTextareaList = update(
           builderSectionTextareaList,
           {
@@ -49,14 +49,6 @@ const AccordionModule = () => {
             ],
           }
         );
-        // TODO: figure out why order is not respecting sorted accordion order
-        // const updatedBuilderSectionTextarea = mutatedBuilderSectionTextareaList.map(
-        //   (builderSectionObj, i) => {
-        //     let sortedId = i + 1;
-        //     builderSectionObj.id = sortedId.toString();
-        //     return builderSectionObj;
-        //   }
-        // );
         return mutatedBuilderSectionTextareaList;
       });
     },
