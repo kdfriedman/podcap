@@ -9,6 +9,7 @@ import { BuilderContext } from "../../context/BuilderContext";
 const PodcastPreview = () => {
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
+  console.log(builderSectionTextareaList);
 
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ""
@@ -132,6 +133,7 @@ const PodcastPreview = () => {
           builderSectionTextareaList.map((section) => {
             return (
               <Text
+                whiteSpace="pre"
                 display={!section.isVisible ? "none" : ""}
                 fontWeight="400"
                 fontFamily="Helvetica Neue, Roboto, san-serif"
