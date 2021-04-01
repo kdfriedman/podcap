@@ -14,6 +14,8 @@ const PodcastPreview = () => {
     (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
 
+  console.log(builderSectionTextareaList);
+
   return (
     <Flex
       justify="flex-start"
@@ -132,6 +134,7 @@ const PodcastPreview = () => {
           builderSectionTextareaList.map((section) => {
             return (
               <Text
+                display={!section.isVisible ? "none" : ""}
                 fontWeight="400"
                 fontFamily="Helvetica Neue, Roboto, san-serif"
                 fontSize="16px"
@@ -139,7 +142,8 @@ const PodcastPreview = () => {
                 color="#222222"
                 className="builder__section-podcast-shownotes-text"
                 margin="12px 15px"
-                key={section.id}
+                id={`podcastPreviewShownotesText-${section?.id}`}
+                key={section?.id}
               >
                 {section?.text}
               </Text>

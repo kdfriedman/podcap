@@ -4,11 +4,11 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Checkbox,
   Text,
 } from "@chakra-ui/react";
 import EditSectionTitle from "./EditSectionTitle";
 import SectionInput from "./SectionInput";
+import HideSection from "./HideSection";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { useDrag, useDrop } from "react-dnd";
 
@@ -121,15 +121,8 @@ const RearrangeSection = (props) => {
             fontWeight="900"
           />
           {/* Checkbox to hide/show accordion items */}
-          <Checkbox
-            data-is-checkbox
-            borderRadius="4px"
-            colorScheme="brand"
-            className="builder__section-checkbox"
-            size="lg"
-            mr="8px"
-            defaultIsChecked
-          />
+          <HideSection />
+
           {/* initialize EditSectionTitle component to handle section title edits */}
           <EditSectionTitle
             updateAccItemList={props.updateAccItemList}

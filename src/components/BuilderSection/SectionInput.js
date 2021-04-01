@@ -48,7 +48,7 @@ const SectionInput = (props) => {
       // generate new object to add to builderSection list, containing unique parentElId and textarea value
       return [
         ...builderSectionTextareaList,
-        { id: parentElementId, text: e.target.value },
+        { id: parentElementId, text: e.target.value, isVisible: true },
       ];
     });
   };

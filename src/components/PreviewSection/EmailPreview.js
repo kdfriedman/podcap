@@ -312,6 +312,7 @@ const EmailPreview = () => {
             {builderSectionTextareaList.map((section) => {
               return (
                 <Text
+                  display={!section.isVisible ? "none" : ""}
                   fontWeight="400"
                   fontFamily="Helvetica Neue, Roboto, san-serif"
                   fontSize="16px"
@@ -319,7 +320,8 @@ const EmailPreview = () => {
                   color="#222222"
                   className="builder__section-email-shownotes-text"
                   margin="12px 15px"
-                  key={section.id}
+                  key={`podcastEmailShownotesText-${section?.id}`}
+                  id={section?.id}
                 >
                   {section?.text}
                 </Text>
