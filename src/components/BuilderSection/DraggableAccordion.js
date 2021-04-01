@@ -1,18 +1,23 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import EditSectionTitle from "./EditSectionTitle";
-import SectionInput from "./SectionInput";
+import SectionTextarea from "./SectionTextarea";
 import HideSection from "./HideSection";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { useDrag, useDrop } from "react-dnd";
+import { BuilderContext } from "../../context/BuilderContext";
 
-const RearrangeSection = (props) => {
+const DraggableAccordion = (props) => {
+  // destructure context, following useState format
+  const [builderSectionTextarea] = useContext(BuilderContext);
+
   // set state for section edit title isEditing status with associated ids
   const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
     { sectionTitle: false, id: 1 },
@@ -130,6 +135,29 @@ const RearrangeSection = (props) => {
             isEditingSectionTitle={isEditingSectionTitle}
             updateIsEditingSectionTitle={updateIsEditingSectionTitle}
           />
+          {!builderSectionTextarea[props.id - 1].isVisible && (
+            <>
+              <Flex
+                margin="0 8px"
+                padding="1px 0"
+                maxWidth="5rem"
+                justifyContent="center"
+                alignItems="center"
+                backgroundColor="#D0D0D0"
+                borderRadius="4px"
+                flex="1"
+              >
+                <Text
+                  fontSize="14px"
+                  fontWeight="bold"
+                  fontFamily="Inter, san-serif"
+                  color="#616161"
+                >
+                  Hidden
+                </Text>
+              </Flex>
+            </>
+          )}
           <AccordionIcon w="2rem" h="2rem," />
         </AccordionButton>
       </h2>
@@ -144,10 +172,10 @@ const RearrangeSection = (props) => {
           highlights.
         </Text>
         {/* Instantiate SectionInput component - handles user input for rendering shownotes */}
-        <SectionInput sectionId={props.id} />
+        <SectionTextarea sectionId={props.id} />
       </AccordionPanel>
     </AccordionItem>
   );
 };
 
-export default RearrangeSection;
+export default DraggableAccordion;

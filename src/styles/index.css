@@ -79,3 +79,10 @@ code {
   flex-flow: row nowrap;
   align-items: center;
 }
+
+div.chakra-alert {
+  background: #111;
+}
+.chakra-alert__icon svg path {
+  fill: #92faef;
+}

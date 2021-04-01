@@ -14,8 +14,6 @@ const PodcastPreview = () => {
     (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
 
-  console.log(builderSectionTextareaList);
-
   return (
     <Flex
       justify="flex-start"

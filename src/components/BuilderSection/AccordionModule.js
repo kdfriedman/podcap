@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 import { Accordion } from "@chakra-ui/react";
 import update from "immutability-helper";
-import RearrangeSection from "./RearrangeSection";
+import DraggableAccordion from "./DraggableAccordion";
 import { BuilderContext } from "../../context/BuilderContext";
 
 const AccordionModule = () => {
@@ -58,7 +58,7 @@ const AccordionModule = () => {
   // handler to render draggable accordion section which returns jsx
   const renderDraggableAccoridions = (accItem, index) => {
     return (
-      <RearrangeSection
+      <DraggableAccordion
         key={accItem.id}
         index={index}
         id={accItem.id}
