@@ -44,19 +44,18 @@ const CopyShownotes = () => {
     };
     // check if show notes button state is true - if a user selects the button
     if (isShowNotesButtonSelected) {
-      const copiedTextString = builderSectionTextarea.reduce(
+      const copiedTextListOfStrings = builderSectionTextarea.reduce(
         (accum, section) => {
-          const tempArrOfSectionText = [];
           if (section.text) {
-            tempArrOfSectionText.push(section.text);
+            accum.push(section.text);
           }
-          accum += tempArrOfSectionText.join("\n");
           return accum;
         },
-        ""
+        []
       );
+      const copiedTextJoinedString = copiedTextListOfStrings.join("\n\n");
       // pass in text string to be written to clipboard api
-      copyShowNotes(copiedTextString);
+      copyShowNotes(copiedTextJoinedString);
     }
   }, [isShowNotesButtonSelected, toast, builderSectionTextarea]);
 

@@ -312,7 +312,7 @@ const EmailPreview = () => {
             {builderSectionTextareaList.map((section) => {
               return (
                 <Text
-                  whiteSpace="pre"
+                  whiteSpace="pre-line"
                   display={!section.isVisible ? "none" : ""}
                   fontWeight="400"
                   fontFamily="Helvetica Neue, Roboto, san-serif"
