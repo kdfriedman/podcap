@@ -41,6 +41,15 @@ const CopyShownotes = () => {
         // reset show notes button bool state to false
         return updateShowNotesButtonSelected(false);
       }
+      toast({
+        title:
+          "We're sorry, your browser does not support copy clipboard functionality",
+        position: "top",
+        isClosable: true,
+        status: "error",
+        duration: 2000,
+      });
+      return updateShowNotesButtonSelected(true);
     };
     // check if show notes button state is true - if a user selects the button
     if (isShowNotesButtonSelected) {

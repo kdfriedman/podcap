@@ -3,11 +3,19 @@ import ReactDOM from "react-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./styles/index.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { createBreakpoints } from "@chakra-ui/theme-tools";
 import "focus-visible/dist/focus-visible";
 import AppRouter from "./routes/AppRouter";
 import { BuilderProvider } from "./context/BuilderContext";
+
+// Update the breakpoints as key-value pairs
+const breakpoints = createBreakpoints({
+  sm: "320px",
+  md: "768px",
+  lg: "950px",
+  xl: "1200px",
+});
 
 //Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({
@@ -16,6 +24,7 @@ const theme = extendTheme({
       500: "#6E41E2",
     },
   },
+  breakpoints,
 });
 
 // render app router which bootstraps the application
