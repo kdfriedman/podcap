@@ -9,7 +9,6 @@ import { BuilderContext } from "../../context/BuilderContext";
 const PodcastPreview = () => {
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
-  console.log(builderSectionTextareaList);
 
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ""

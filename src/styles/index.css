@@ -86,3 +86,8 @@ div.chakra-alert {
 .chakra-alert__icon svg path {
   fill: #92faef;
 }
+
+.builder__email-preview-btn-star svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}

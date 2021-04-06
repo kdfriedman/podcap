@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import PodcastPreview from "./PodcastPreview";
 import EmailPreview from "./EmailPreview";
 import { FiChevronRight } from "react-icons/fi";
+import { AiFillStar } from "react-icons/ai";
 
 const PreviewSection = () => {
   // create preview btn state, used for rendering active btn state
@@ -28,12 +29,14 @@ const PreviewSection = () => {
   // handle podcast/email preview click
   const handleClick = (e) => {
     const btn = e.target.closest("button");
+    // return function if button clicked is already active
     if (!btn || btn.dataset.isActive === "true") return;
-    const newArr = previewBtnList.map((previewBtn) => {
+    // map through list of button objects and switch isActive state using logical not operand
+    const updatedPreviewBtnList = previewBtnList.map((previewBtn) => {
       const { isActive } = previewBtn;
       return { ...previewBtn, isActive: !isActive };
     });
-    updatePreviewBtnList(newArr);
+    updatePreviewBtnList(updatedPreviewBtnList);
   };
 
   return (
@@ -55,6 +58,7 @@ const PreviewSection = () => {
         borderBottom="1px solid #ccc"
       >
         <Button
+          className="builder__podcast-preview-btn"
           onClick={handleClick}
           data-btn-id={1}
           data-is-active={previewBtnList[0].isActive}
@@ -70,6 +74,7 @@ const PreviewSection = () => {
           {previewBtnList[0].btnText}
         </Button>
         <Button
+          className="builder__email-preview-btn"
           onClick={handleClick}
           data-btn-id={2}
           data-is-active={previewBtnList[1].isActive}
@@ -84,6 +89,40 @@ const PreviewSection = () => {
         >
           {previewBtnList[1].btnText}
         </Button>
+        {/* Check if email button is active, then show star icon feature */}
+        {!previewBtnList[1].isActive ? (
+          <Flex
+            boxShadow="0 2px 6px 0 rgb(0 0 0 / 18%)"
+            className="builder__email-preview-btn-star"
+            position="relative"
+            bottom="19px"
+            right="12px"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="50%"
+            h="23px"
+            w="23px"
+            backgroundColor="#FAD96B"
+          >
+            <AiFillStar width=".75rem" height=".75rem" />
+          </Flex>
+        ) : (
+          <Flex
+            className="builder__email-preview-btn-star"
+            position="relative"
+            bottom="19px"
+            right="12px"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="50%"
+            h="23px"
+            w="23px"
+            backgroundColor="#FAD96B"
+            visibility="hidden"
+          >
+            <AiFillStar width=".75rem" height=".75rem" />
+          </Flex>
+        )}
       </Flex>
       <Flex
         backgroundRepeat="no-repeat"

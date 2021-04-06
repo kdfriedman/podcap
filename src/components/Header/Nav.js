@@ -1,5 +1,4 @@
-import { Flex, Image } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Flex, Image, Link } from "@chakra-ui/react";
 import CopyShownotes from "./CopyShownotes";
 
 const Nav = () => {
@@ -16,7 +15,7 @@ const Nav = () => {
         align="center"
         pos="relative"
       >
-        <NavLink className="nav__logo" to="/">
+        <Link className="nav__logo" href="https://www.podcap.io/" isExternal>
           <Image
             maxW="140px"
             maxH="42px"
@@ -25,7 +24,7 @@ const Nav = () => {
             src="/assets/podcap-logo.png"
             alt="Podcap Logo"
           />
-        </NavLink>
+        </Link>
         <CopyShownotes />
       </Flex>
     </>

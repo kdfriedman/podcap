@@ -70,7 +70,11 @@ const CopyShownotes = () => {
 
   return (
     <>
-      <Flex className="nav__copy-shownotes-btn" backgroundColor="#fff">
+      <Flex
+        display={{ base: "none", lg: "flex" }}
+        className="nav__copy-shownotes-btn"
+        backgroundColor="#fff"
+      >
         <Button
           onClick={handleShowNotesButtonClick}
           id="clipboardIconBtn"

@@ -3,7 +3,7 @@ import AccordionModule from "./AccordionModule";
 
 const BuilderSection = () => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+  const [isLargerThan951] = useMediaQuery("(min-width: 951px)");
 
   return (
     <Flex
@@ -32,7 +32,7 @@ const BuilderSection = () => {
           lineHeight="1.4em"
           textAlign="center"
         >
-          {isLargerThan420
+          {isLargerThan951
             ? "Podcast Episode Show Notes Builder"
             : "Show Notes Builder"}
         </Heading>
