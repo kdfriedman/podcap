@@ -1,5 +1,6 @@
 import { Flex, Image, Link } from "@chakra-ui/react";
 import CopyShownotes from "./CopyShownotes";
+import PreviewNotes from "./PreviewNotes";
 
 const Nav = () => {
   return (
@@ -26,6 +27,7 @@ const Nav = () => {
           />
         </Link>
         <CopyShownotes />
+        <PreviewNotes />
       </Flex>
     </>
   );

@@ -84,7 +84,10 @@ const AccordionModule = () => {
       <Accordion
         className="builder__accordion-container"
         backgroundColor="white"
-        m="16px 24px"
+        m={{
+          base: "10px 10px",
+          md: "16px 24px",
+        }}
         borderRadius="6px"
         w="100%"
         h="fit-content"

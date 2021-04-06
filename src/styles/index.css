@@ -91,3 +91,8 @@ div.chakra-alert {
   width: 0.75rem;
   height: 0.75rem;
 }
+
+#previewNotesBtn svg {
+  width: 25px;
+  height: 25px;
+}

@@ -157,6 +157,7 @@ const EditSectionTitle = ({
 
   return (
     <Box
+      className="builder__section-title-container"
       flexDirection="row"
       display="flex"
       alignItems="center"
@@ -165,6 +166,7 @@ const EditSectionTitle = ({
       fontWeight="700"
       flex="1"
       textAlign="left"
+      width="32px"
     >
       {isEditingSectionTitle[accItem.id - 1].sectionTitle ? (
         <>
@@ -208,7 +210,7 @@ const EditSectionTitle = ({
           </form>
         </>
       ) : (
-        <Box className="builder__section-title-text">
+        <Box isTruncated className="builder__section-title-text">
           {accItem.accItemTitleText}
         </Box>
       )}
