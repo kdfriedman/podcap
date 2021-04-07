@@ -6,6 +6,7 @@ import {
   AccordionIcon,
   Text,
   Flex,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import EditSectionTitle from "./EditSectionTitle";
 import SectionTextarea from "./SectionTextarea";
@@ -17,6 +18,8 @@ import { BuilderContext } from "../../context/BuilderContext";
 const DraggableAccordion = (props) => {
   // destructure context, following useState format
   const [builderSectionTextarea] = useContext(BuilderContext);
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
 
   // set state for section edit title isEditing status with associated ids
   const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
@@ -135,9 +138,11 @@ const DraggableAccordion = (props) => {
             isEditingSectionTitle={isEditingSectionTitle}
             updateIsEditingSectionTitle={updateIsEditingSectionTitle}
           />
+          {/* if checkbox is selected, render hidden notice in accordion */}
           {!builderSectionTextarea[props.id - 1].isVisible && (
             <>
               <Flex
+                display={isLargerThan420 ? "flex" : "none"}
                 margin="0 8px"
                 padding="1px 0"
                 maxWidth="5rem"

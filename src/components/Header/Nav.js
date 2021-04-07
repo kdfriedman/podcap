@@ -1,8 +1,11 @@
-import { Flex, Image, Link } from "@chakra-ui/react";
+import { Flex, Image, Link, useMediaQuery } from "@chakra-ui/react";
 import CopyShownotes from "./CopyShownotes";
 import PreviewNotes from "./PreviewNotes";
 
 const Nav = () => {
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+
   return (
     <>
       <Flex
@@ -18,11 +21,15 @@ const Nav = () => {
       >
         <Link className="nav__logo" href="https://www.podcap.io/" isExternal>
           <Image
-            maxW="140px"
-            maxH="42px"
+            maxW={isLargerThan420 ? "140px" : "42px"}
+            maxH={isLargerThan420 ? "42px" : "42px"}
             w="100%"
             h="100%"
-            src="/assets/podcap-logo.png"
+            src={
+              isLargerThan420
+                ? "/assets/podcap-logo.png"
+                : "/assets/podcap_logo-svg.svg"
+            }
             alt="Podcap Logo"
           />
         </Link>
