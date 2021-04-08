@@ -37,6 +37,7 @@ const BuilderPage = () => {
           h="100%"
           bg="#efefef"
         >
+          {/* Wire up preview section component */}
           <PreviewSection />
         </Box>
       </Flex>

@@ -2,6 +2,9 @@ import { Flex, Button } from "@chakra-ui/react";
 import { FiChevronRight } from "react-icons/fi";
 
 const PreviewNotes = () => {
+  const renderPreviewShowNotes = (e) => {
+    console.log(e);
+  };
   return (
     <>
       <Flex
@@ -10,6 +13,7 @@ const PreviewNotes = () => {
         backgroundColor="#fff"
       >
         <Button
+          onClick={renderPreviewShowNotes}
           id="previewNotesBtn"
           _hover={{
             opacity: ".8",
