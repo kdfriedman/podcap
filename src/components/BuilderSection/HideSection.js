@@ -21,7 +21,10 @@ const HideSection = () => {
 
     updateBuilderSectionTextarea((builderSectionTextarea) => {
       const copiedBuilderSectionTextarea = [...builderSectionTextarea];
-      copiedBuilderSectionTextarea[parentElementId - 1].isVisible =
+      const selectedSectionCheckBox = copiedBuilderSectionTextarea.findIndex(
+        (section) => section.id === parentElementId
+      );
+      copiedBuilderSectionTextarea[selectedSectionCheckBox].isVisible =
         e.target.checked;
       return copiedBuilderSectionTextarea;
     });
