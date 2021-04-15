@@ -15,7 +15,6 @@ const Nav = () => {
   const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
 
   const renderCopyShowNotes = () => {
-    if (isLargerThan950) return <CopyShownotes />;
     if (previewSection.isSectionVisible) return <CopyShownotes />;
   };
 
@@ -32,7 +31,8 @@ const Nav = () => {
         align="center"
         pos="relative"
       >
-        {builderSection.isSectionVisible && (
+        {/* TODO: Fix logo state getting stuck in touch device render */}
+        {isLargerThan950 ? (
           <Link className="nav__logo" href="https://www.podcap.io/" isExternal>
             <Image
               maxW={isLargerThan420 ? "140px" : "42px"}
@@ -47,10 +47,32 @@ const Nav = () => {
               alt="Podcap Logo"
             />
           </Link>
+        ) : (
+          builderSection.isSectionVisible && (
+            <Link
+              className="nav__logo"
+              href="https://www.podcap.io/"
+              isExternal
+            >
+              <Image
+                maxW={isLargerThan420 ? "140px" : "42px"}
+                maxH={isLargerThan420 ? "42px" : "42px"}
+                w="100%"
+                h="100%"
+                src={
+                  isLargerThan420
+                    ? "/assets/podcap-logo.png"
+                    : "/assets/podcap_logo-svg.svg"
+                }
+                alt="Podcap Logo"
+              />
+            </Link>
+          )
         )}
         {builderSection.isSectionVisible && <PreviewNotes />}
         {previewSection.isSectionVisible && <EditNotes />}
-        {renderCopyShowNotes()}
+        {/* TODO: Fix copyshownotes state getting stuck in touch device render */}
+        {isLargerThan950 ? <CopyShownotes /> : renderCopyShowNotes()}
       </Flex>
     </>
   );
