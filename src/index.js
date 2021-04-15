@@ -9,6 +9,8 @@ import { createBreakpoints } from "@chakra-ui/theme-tools";
 import "focus-visible/dist/focus-visible";
 import AppRouter from "./routes/AppRouter";
 import { BuilderProvider } from "./context/BuilderContext";
+import { TouchDeviceProvider } from "./context/TouchDeviceContext";
+
 import isTouchDevice from "./util/getDeviceType";
 
 // Update the breakpoints as key-value pairs
@@ -38,10 +40,15 @@ const InitApp = () => {
     <DndProvider backend={isTouchScreen}>
       {/* initalize chakra ui library and make available to all components */}
       <ChakraProvider theme={theme}>
+        {/* builder context provides the accordion layout with corresponding IDs and text properties*/}
         <BuilderProvider>
-          <React.StrictMode>
-            <AppRouter />
-          </React.StrictMode>
+          {/* touch device context provides app access to state of visibility 
+          of preview and builder sections on smaller devices */}
+          <TouchDeviceProvider>
+            <React.StrictMode>
+              <AppRouter />
+            </React.StrictMode>
+          </TouchDeviceProvider>
         </BuilderProvider>
       </ChakraProvider>
     </DndProvider>

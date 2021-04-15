@@ -71,7 +71,7 @@ const CopyShownotes = () => {
   return (
     <>
       <Flex
-        display={{ base: "none", lg: "flex" }}
+        // display={{ base: "none", lg: "flex" }}
         className="nav__copy-shownotes-btn"
         backgroundColor="#fff"
       >
