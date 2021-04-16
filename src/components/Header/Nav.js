@@ -71,7 +71,6 @@ const Nav = () => {
         )}
         {builderSection.isSectionVisible && <PreviewNotes />}
         {previewSection.isSectionVisible && <EditNotes />}
-        {/* TODO: Fix copyshownotes state getting stuck in touch device render */}
         {isLargerThan950 ? <CopyShownotes /> : renderCopyShowNotes()}
       </Flex>
     </>

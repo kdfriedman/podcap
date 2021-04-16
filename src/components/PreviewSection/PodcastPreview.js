@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Flex, Icon, Text, Spacer } from "@chakra-ui/react";
+import { Flex, Icon, Text, Spacer, useMediaQuery } from "@chakra-ui/react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
@@ -7,6 +7,10 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { BuilderContext } from "../../context/BuilderContext";
 
 const PodcastPreview = () => {
+  // setup conditional media query hook to render conditionally based on viewport width
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
+  const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
 
@@ -17,7 +21,7 @@ const PodcastPreview = () => {
   return (
     <Flex
       justify="flex-start"
-      w="380px"
+      w={isLargerThan450 ? "380px" : isLargerThan425 ? "315px" : "295px"}
       border="1px solid #888"
       borderRadius="4px"
       className="builder__section-podcast-preview"

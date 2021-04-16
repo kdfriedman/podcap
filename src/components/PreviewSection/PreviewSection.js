@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flex, Button, Link, Text } from "@chakra-ui/react";
+import { Flex, Button, Link, Text, useMediaQuery } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import PodcastPreview from "./PodcastPreview";
 import EmailPreview from "./EmailPreview";
@@ -7,6 +7,10 @@ import { FiChevronRight } from "react-icons/fi";
 import { AiFillStar } from "react-icons/ai";
 
 const PreviewSection = () => {
+  // setup conditional media query hook to render conditionally based on viewport width
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
+  const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+
   // create preview btn state, used for rendering active btn state
   const [previewBtnList, updatePreviewBtnList] = useState([
     { btnText: "Podcast Preview", isActive: true, id: 1 },
@@ -56,6 +60,7 @@ const PreviewSection = () => {
         bgColor="#fff"
         w="100%"
         borderBottom="1px solid #ccc"
+        p={isLargerThan425 ? "0" : "0 24px"}
       >
         <Button
           className="builder__podcast-preview-btn"
@@ -130,7 +135,7 @@ const PreviewSection = () => {
         backgroundImage='url("/assets/preview-section-mobile-frame.png")'
         className="builder__section"
         height="100%"
-        width="520px"
+        width={isLargerThan450 ? "520px" : isLargerThan425 ? "425px" : "400px"}
         justify="center"
         marginTop="1.75rem"
         minHeight="0"
@@ -147,6 +152,7 @@ const PreviewSection = () => {
         justifyContent="center"
         alignItems="center"
         zIndex="1"
+        p="0 1rem"
       >
         <Text
           textAlign="center"

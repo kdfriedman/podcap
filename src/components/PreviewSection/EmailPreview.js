@@ -1,5 +1,12 @@
 import { useContext } from "react";
-import { Flex, Icon, Text, Spacer, Image } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  Text,
+  Spacer,
+  Image,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FiMail, FiTrash, FiEdit } from "react-icons/fi";
 import { BiArchiveIn, BiDotsHorizontalRounded } from "react-icons/bi";
@@ -8,6 +15,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { BuilderContext } from "../../context/BuilderContext";
 
 const EmailPreview = () => {
+  // setup conditional media query hook to render conditionally based on viewport width
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
+  const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
 
@@ -17,7 +28,7 @@ const EmailPreview = () => {
   return (
     <Flex
       justify="flex-start"
-      w="380px"
+      w={isLargerThan450 ? "380px" : isLargerThan425 ? "315px" : "295px"}
       border="1px solid #888"
       borderRadius="4px"
       className="builder__section-email-preview"
