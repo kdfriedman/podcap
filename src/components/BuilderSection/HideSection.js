@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Checkbox } from "@chakra-ui/react";
 import { BuilderContext } from "../../context/BuilderContext";
 
-const HideSection = () => {
+const HideSection = ({ updateBuilderSectionVisibilityList }) => {
   // destructure context, following useState format
   const [, updateBuilderSectionTextarea] = useContext(BuilderContext);
 
@@ -27,6 +27,19 @@ const HideSection = () => {
       copiedBuilderSectionTextarea[selectedSectionCheckBox].isVisible =
         e.target.checked;
       return copiedBuilderSectionTextarea;
+    });
+
+    // update local accordion state to use for updating accordions with hidden text
+    updateBuilderSectionVisibilityList((builderSectionVisibilityList) => {
+      const copiedBuilderSectionVisibilityList = [
+        ...builderSectionVisibilityList,
+      ];
+      const selectedSectionCheckBox = copiedBuilderSectionVisibilityList.findIndex(
+        (section) => section.id === parentElementId
+      );
+      copiedBuilderSectionVisibilityList[selectedSectionCheckBox].isVisible =
+        e.target.checked;
+      return copiedBuilderSectionVisibilityList;
     });
   };
 

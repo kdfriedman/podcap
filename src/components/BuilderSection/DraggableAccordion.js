@@ -18,6 +18,17 @@ import { BuilderContext } from "../../context/BuilderContext";
 const DraggableAccordion = (props) => {
   // destructure context, following useState format
   const [builderSectionTextarea] = useContext(BuilderContext);
+  // create duplicate local state to use for hiding accordions
+  const [
+    builderSectionVisibilityList,
+    updateBuilderSectionVisibilityList,
+  ] = useState([
+    { id: "1", isVisible: true },
+    { id: "2", isVisible: true },
+    { id: "3", isVisible: true },
+    { id: "4", isVisible: true },
+  ]);
+
   // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
   const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
 
@@ -129,7 +140,11 @@ const DraggableAccordion = (props) => {
             fontWeight="900"
           />
           {/* Checkbox to hide/show accordion items */}
-          <HideSection />
+          <HideSection
+            updateBuilderSectionVisibilityList={
+              updateBuilderSectionVisibilityList
+            }
+          />
 
           {/* initialize EditSectionTitle component to handle section title edits */}
           <EditSectionTitle
@@ -139,8 +154,9 @@ const DraggableAccordion = (props) => {
             updateIsEditingSectionTitle={updateIsEditingSectionTitle}
           />
           {/* if checkbox is selected, render hidden notice in accordion */}
-          {!builderSectionTextarea[props.id - 1].isVisible && (
+          {!builderSectionVisibilityList[props.id - 1].isVisible && (
             <>
+              {console.log(builderSectionVisibilityList[props.id - 1])}
               <Flex
                 display={isLargerThan420 ? "flex" : "none"}
                 margin="0 8px"
