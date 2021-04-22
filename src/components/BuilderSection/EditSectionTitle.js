@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Icon, Input, FormControl } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Icon,
+  Input,
+  FormControl,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { MdModeEdit } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
 
 const EditSectionTitle = ({
   updateAccItemList,
@@ -8,6 +16,9 @@ const EditSectionTitle = ({
   isEditingSectionTitle,
   updateIsEditingSectionTitle,
 }) => {
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+
   const sectionTitleFormRef = useRef();
   const sectionTitleInputRef = useRef();
 
@@ -104,9 +115,11 @@ const EditSectionTitle = ({
     if (!draggableContainer) return;
     draggableContainer.setAttribute("draggable", "true");
 
-    const targetId = e.target.id
-      ? parseInt(e.target.id.slice(e.target.id.length - 1))
+    const targetEl = e.target.closest("[id^=sectionTitle]");
+    const targetId = targetEl.id
+      ? parseInt(targetEl.id.slice(targetEl.id.length - 1))
       : null;
+    if (!targetEl || !targetId) return;
 
     // update save edit section state
     updateIsEditingSectionTitle((sectionTitleList) => {
@@ -205,7 +218,19 @@ const EditSectionTitle = ({
               padding="9px 14px"
               marginLeft="4px"
             >
-              Save
+              {isLargerThan420 ? (
+                "Save"
+              ) : (
+                <Flex justifyContent="center" alignItems="center">
+                  <Icon
+                    className="builder__section-title-save-icon"
+                    as={FaSave}
+                    color="#fff"
+                    w="1.2rem"
+                    h="1.2rem"
+                  />
+                </Flex>
+              )}
             </Box>
           </form>
         </>

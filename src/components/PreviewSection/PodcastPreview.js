@@ -1,15 +1,26 @@
 import { useContext } from "react";
-import { Flex, Icon, Text, Spacer, useMediaQuery } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  Text,
+  Spacer,
+  useMediaQuery,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { BuilderContext } from "../../context/BuilderContext";
+import AddPodcastInfo from "./AddPodcastInfo";
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
   const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+
+  // chakra handlers for modal component
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
@@ -65,6 +76,7 @@ const PodcastPreview = () => {
           right="1.2rem"
           justifyContent="center"
           alignItems="center"
+          onClick={onOpen}
         >
           <Icon
             h="26px"
@@ -73,6 +85,7 @@ const PodcastPreview = () => {
             as={AiFillPlusCircle}
             fill="#6E41E2"
           />
+          <AddPodcastInfo isOpen={isOpen} onClose={onClose} />
         </Flex>
         <Flex
           direction="column"

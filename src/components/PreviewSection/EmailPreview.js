@@ -6,6 +6,7 @@ import {
   Spacer,
   Image,
   useMediaQuery,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FiMail, FiTrash, FiEdit } from "react-icons/fi";
@@ -13,11 +14,15 @@ import { BiArchiveIn, BiDotsHorizontalRounded } from "react-icons/bi";
 import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { BuilderContext } from "../../context/BuilderContext";
+import AddPodcastInfo from "./AddPodcastInfo";
 
 const EmailPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
   const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+
+  // chakra handlers for modal component
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
@@ -112,6 +117,7 @@ const EmailPreview = () => {
             w="23px"
             as={AiFillPlusCircle}
             fill="#6E41E2"
+            onClick={onOpen}
           />
         </Flex>
         <Flex
@@ -239,6 +245,7 @@ const EmailPreview = () => {
             right="19px"
             justifyContent="center"
             alignItems="center"
+            onClick={onOpen}
           >
             <Icon
               h="23px"
@@ -247,6 +254,7 @@ const EmailPreview = () => {
               as={AiFillPlusCircle}
               fill="#6E41E2"
             />
+            <AddPodcastInfo isOpen={isOpen} onClose={onClose} />
           </Flex>
         </Flex>
 

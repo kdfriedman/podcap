@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import {
   AccordionItem,
   AccordionButton,
@@ -13,11 +13,8 @@ import SectionTextarea from "./SectionTextarea";
 import HideSection from "./HideSection";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { useDrag, useDrop } from "react-dnd";
-import { BuilderContext } from "../../context/BuilderContext";
 
 const DraggableAccordion = (props) => {
-  // destructure context, following useState format
-  const [builderSectionTextarea] = useContext(BuilderContext);
   // create duplicate local state to use for hiding accordions
   const [
     builderSectionVisibilityList,
@@ -156,7 +153,6 @@ const DraggableAccordion = (props) => {
           {/* if checkbox is selected, render hidden notice in accordion */}
           {!builderSectionVisibilityList[props.id - 1].isVisible && (
             <>
-              {console.log(builderSectionVisibilityList[props.id - 1])}
               <Flex
                 display={isLargerThan420 ? "flex" : "none"}
                 margin="0 8px"
