@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useContext } from "react";
 import {
+  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -13,15 +14,16 @@ import {
   Input,
   Text,
   Icon,
+  Image,
 } from "@chakra-ui/react";
 import readInputFile from "../../util/readInputFile";
 import { IoMdCloudUpload } from "react-icons/io";
+import { PreviewContext } from "../../context/PreviewContext";
 
 const AddPodcastInfo = ({ isOpen, onClose }) => {
-  // set state for image file
-  const [currentImage, setImage] = useState(null);
-  // set state for image base64 string to pass in as src of <img> tag
-  const [fileToBase64, updateBase64] = useState(null);
+  const [currentImage, setImage] = useContext(PreviewContext);
+  const [fileToBase64, updateBase64] = useContext(PreviewContext);
+  const [formInputText, updateFormInputText] = useContext(PreviewContext);
 
   // use to apply focus to  1st input on modal open
   const initialRef = useRef();
@@ -41,15 +43,8 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
       try {
         // read file
         const url = await readInputFile(file);
-        const uploadImageLabelElement = document.getElementById(
-          "uploadImageModule"
-        );
-
         // update state with new image base64 string
         updateBase64(url);
-
-        // add class to label element to change cursor styling
-        uploadImageLabelElement.classList.add("image-active");
       } catch (err) {
         console.error(err);
       }
@@ -145,24 +140,44 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                 h="150px"
                 borderRadius="4px"
                 border="1px solid #C6C6C6"
-                id="uploadImageModule"
               >
-                <Icon
-                  color="#aaaaaa"
-                  w="1.5rem"
-                  h="1.5rem"
-                  className="builder__section-modal-form-upload-icon"
-                  as={IoMdCloudUpload}
-                />
-                <Text
-                  color="#aaaaaa"
-                  fontSize="17px"
-                  fontFamily="Inter, san-serif"
-                  textAlign="center"
-                  fontWeight="400"
-                >
-                  Upload Image
-                </Text>
+                {!currentImage && (
+                  <Icon
+                    color="#aaaaaa"
+                    w="1.5rem"
+                    h="1.5rem"
+                    className="builder__section-modal-form-upload-icon"
+                    as={IoMdCloudUpload}
+                  />
+                )}
+                {!currentImage && (
+                  <Text
+                    color="#aaaaaa"
+                    fontSize="17px"
+                    fontFamily="Inter, san-serif"
+                    textAlign="center"
+                    fontWeight="400"
+                  >
+                    Upload Image
+                  </Text>
+                )}
+                {fileToBase64 && (
+                  <Flex
+                    h="10rem"
+                    className="builder__section-modal-image-container"
+                  >
+                    <Image
+                      maxWidth="100%"
+                      height="100%"
+                      overflow="hidden"
+                      objectFit="cover"
+                      alt="podcast brand"
+                      className="builder__section-modal-image-preview"
+                      src={fileToBase64}
+                      id="uploadedImage"
+                    />
+                  </Flex>
+                )}
                 <Input
                   className="builder__section-modal-form-input"
                   h="44px"

@@ -10,6 +10,7 @@ import "focus-visible/dist/focus-visible";
 import AppRouter from "./routes/AppRouter";
 import { BuilderProvider } from "./context/BuilderContext";
 import { TouchDeviceProvider } from "./context/TouchDeviceContext";
+import { PreviewProvider } from "./context/PreviewContext";
 
 import isTouchDevice from "./util/getDeviceType";
 
@@ -45,9 +46,11 @@ const InitApp = () => {
           {/* touch device context provides app access to state of visibility 
           of preview and builder sections on smaller devices */}
           <TouchDeviceProvider>
-            <React.StrictMode>
-              <AppRouter />
-            </React.StrictMode>
+            <PreviewProvider>
+              <React.StrictMode>
+                <AppRouter />
+              </React.StrictMode>
+            </PreviewProvider>
           </TouchDeviceProvider>
         </BuilderProvider>
       </ChakraProvider>
