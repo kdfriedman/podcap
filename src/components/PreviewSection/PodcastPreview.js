@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   Flex,
   Icon,
   Text,
+  Image,
   Spacer,
   useMediaQuery,
   useDisclosure,
@@ -13,6 +14,7 @@ import { FiEdit } from "react-icons/fi";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { BuilderContext } from "../../context/BuilderContext";
 import AddPodcastInfo from "./AddPodcastInfo";
+import { PreviewContext } from "../../context/PreviewContext";
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
@@ -25,6 +27,17 @@ const PodcastPreview = () => {
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
 
+  // reference context data store for form data (input text and images)
+  const { fileToBase64 } = useContext(PreviewContext);
+  const { formInputText } = useContext(PreviewContext);
+  const [podcastNameInput, podcastTitleInput] = formInputText;
+
+  // podcast info submit state
+  const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(
+    false
+  );
+
+  // used for checking if textarea elements have any saved text in context data store
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
@@ -45,48 +58,73 @@ const PodcastPreview = () => {
       overflowY="scroll"
     >
       <Flex className="builder__section-podcast-brand-container">
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          direction="column"
-          backgroundColor="#e8e8e8"
-          borderRadius="6px"
-          h="64px"
-          w="64px"
-          margin="15px 0 0 15px"
-          className="builder__section-podcast-brand-img-container"
-        >
-          <Text
-            fontFamily="Helvetica Neue, Roboto, san-serif"
-            fontSize="12px"
-            color="#888888"
-            className="builder__section-podcast-logo-text"
+        {isPodcastInfoSubmitted && fileToBase64 ? (
+          <Flex
+            h="10rem"
+            className="builder__section-podcast-image-preview-container"
           >
-            LOGO
-          </Text>
-        </Flex>
-        <Flex
-          h="28px"
-          w="28px"
-          backgroundColor="#fff"
-          borderRadius="50%"
-          className="builder__section-podcast-add-icon-circle-bg"
-          position="relative"
-          top="3.5rem"
-          right="1.2rem"
-          justifyContent="center"
-          alignItems="center"
-          onClick={onOpen}
-        >
-          <Icon
-            h="26px"
-            w="26px"
-            className="builder__section-podcast-add-icon"
-            as={AiFillPlusCircle}
-            fill="#6E41E2"
-          />
-          <AddPodcastInfo isOpen={isOpen} onClose={onClose} />
-        </Flex>
+            <Image
+              maxWidth="100%"
+              height="100%"
+              overflow="hidden"
+              objectFit="cover"
+              alt="podcast brand"
+              className="builder__section-podcast-image-preview"
+              src={fileToBase64}
+              id="podcastPreviewImage"
+            />
+          </Flex>
+        ) : (
+          <>
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              direction="column"
+              backgroundColor="#e8e8e8"
+              borderRadius="6px"
+              h="64px"
+              w="64px"
+              margin="15px 0 0 15px"
+              className="builder__section-podcast-brand-img-container"
+            >
+              <Text
+                fontFamily="Helvetica Neue, Roboto, san-serif"
+                fontSize="12px"
+                color="#888888"
+                className="builder__section-podcast-logo-text"
+              >
+                LOGO
+              </Text>
+            </Flex>
+            <Flex
+              h="28px"
+              w="28px"
+              backgroundColor="#fff"
+              borderRadius="50%"
+              className="builder__section-podcast-add-icon-circle-bg"
+              position="relative"
+              top="3.5rem"
+              right="1.2rem"
+              justifyContent="center"
+              alignItems="center"
+              onClick={onOpen}
+            >
+              <Icon
+                h="26px"
+                w="26px"
+                className="builder__section-podcast-add-icon"
+                as={AiFillPlusCircle}
+                fill="#6E41E2"
+              />
+              <AddPodcastInfo
+                isOpen={isOpen}
+                onClose={onClose}
+                updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+              />
+            </Flex>
+          </>
+        )}
+
         <Flex
           direction="column"
           marginTop="15px"
@@ -100,7 +138,7 @@ const PodcastPreview = () => {
             color="#888888"
             lineHeight="120%"
           >
-            Podcast Name
+            {podcastNameInput.text || "Podcast Name"}
           </Text>
           <Text
             fontFamily="Helvetica Neue, Roboto, san-serif"
@@ -108,7 +146,7 @@ const PodcastPreview = () => {
             color="#111111"
             lineHeight="125%"
           >
-            Episode Title
+            {podcastTitleInput.text || "Episode Title"}
           </Text>
         </Flex>
       </Flex>

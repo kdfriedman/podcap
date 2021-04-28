@@ -1,4 +1,4 @@
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import {
   Flex,
   Modal,
@@ -20,15 +20,70 @@ import readInputFile from "../../util/readInputFile";
 import { IoMdCloudUpload } from "react-icons/io";
 import { PreviewContext } from "../../context/PreviewContext";
 
-const AddPodcastInfo = ({ isOpen, onClose }) => {
-  const [currentImage, setImage] = useContext(PreviewContext);
-  const [fileToBase64, updateBase64] = useContext(PreviewContext);
-  const [formInputText, updateFormInputText] = useContext(PreviewContext);
+const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
+  // reference context data store for form data (input text and images)
+  const { currentImage, setImage } = useContext(PreviewContext);
+  const { fileToBase64, updateBase64 } = useContext(PreviewContext);
+  const { formInputText, updateFormInputText } = useContext(PreviewContext);
+  const [podcastNameInput, podcastTitleInput] = formInputText;
 
+  // error msg local state
   const [formErrorMsg, updateFormErrorMsgState] = useState(null);
 
   // use to apply focus to  1st input on modal open
   const initialRef = useRef();
+
+  // read image file asynchronously
+  useEffect(() => {
+    const loadImageUpload = async () => {
+      try {
+        // read file
+        const url = await readInputFile(currentImage);
+
+        // update state with new image base64 string
+        updateBase64(url);
+
+        // clear err msg state
+        updateFormErrorMsgState(null);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (currentImage) {
+      loadImageUpload();
+    }
+  }, [currentImage, updateBase64]);
+
+  const closeModal = (e) => {
+    if (!currentImage) {
+      updateFormInputText((formInputList) => {
+        const copiedFormInputList = [...formInputList];
+        return copiedFormInputList.map((formInput) => {
+          if (formInput.text !== "") {
+            formInput.text = "";
+          }
+          return formInput;
+        });
+      });
+    }
+    // clear err msg state
+    updateFormErrorMsgState(null);
+    // close modal
+    onClose();
+  };
+
+  const handleInputChange = (e) => {
+    if (!e.target.closest("input") ?? !e.target.id) return;
+    updateFormInputText((formInputList) => {
+      const copiedFormInputList = [...formInputList];
+      const activeCopiedFormInput = copiedFormInputList.find(
+        (formInput) => formInput.id === e.target.id
+      );
+      activeCopiedFormInput.text = e.target.value;
+      return copiedFormInputList;
+    });
+  };
 
   const handleImageFileChange = (e) => {
     // check if file has length to determine if file has been selected or canceled
@@ -39,21 +94,6 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
 
     // set image state with uploaded image file
     setImage(file);
-
-    // async wrapper to handle async readURL function
-    (async () => {
-      try {
-        // read file
-        const url = await readInputFile(file);
-        // update state with new image base64 string
-        updateBase64(url);
-
-        // clear err msg state
-        updateFormErrorMsgState(null);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
   };
 
   const handleAddPodcastInfoSubmit = (e) => {
@@ -62,27 +102,18 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
     const form = e.currentTarget.closest("form");
     if (!form) return;
 
-    // form inputs
-    const podcastNameInput = form.elements["podcastNameInput"];
-    const podcastTitleInput = form.elements["podcastTitleInput"];
-    const podcastFileUploadInput = form.elements["podcastFileUploadInput"];
-
     // check if image is currently present from image upload input, return if not
     if (!currentImage) {
       return updateFormErrorMsgState(
-        "Please upload an image to save your brand info."
+        "Please upload an image to save your info."
       );
     }
 
-    // close modal
-    onClose();
-  };
+    // update parent state with submit state
+    updateIsPodcastInfoSubmitted(true);
 
-  const closeModal = (e) => {
-    // clear err msg state
-    updateFormErrorMsgState(null);
     // close modal
-    onClose();
+    closeModal();
   };
 
   return (
@@ -130,6 +161,7 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                   Podcast Name
                 </FormLabel>
                 <Input
+                  onChange={handleInputChange}
                   id="podcastNameInput"
                   className="builder__section-modal-form-input"
                   h="44px"
@@ -141,6 +173,7 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                   minLength="1"
                   maxLength="100"
                   required
+                  value={podcastNameInput.text}
                 />
               </FormControl>
 
@@ -158,6 +191,7 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                   Pocast Title
                 </FormLabel>
                 <Input
+                  onChange={handleInputChange}
                   id="podcastTitleInput"
                   className="builder__section-modal-form-input"
                   _focus={{
@@ -169,6 +203,7 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                   minLength="1"
                   maxLength="100"
                   required
+                  value={podcastTitleInput.text}
                 />
               </FormControl>
 
@@ -195,7 +230,9 @@ const AddPodcastInfo = ({ isOpen, onClose }) => {
                   w="150px"
                   h="150px"
                   borderRadius="4px"
-                  border="1px solid #C6C6C6"
+                  border={
+                    formErrorMsg ? "1px solid #E53E3E" : "1px solid #C6C6C6"
+                  }
                 >
                   {!currentImage && (
                     <Icon
