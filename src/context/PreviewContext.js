@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useMemo } from "react";
 
 export const PreviewContext = createContext();
 
@@ -7,13 +7,17 @@ export const PreviewProvider = (props) => {
   const [currentImage, setImage] = useState(null);
   // set state for image base64 string to pass in as src of <img> tag
   const [fileToBase64, updateBase64] = useState(null);
+
+  // set state for form submit amount to determine if component should auto render saved image
+  const [podcastInfoSubmitCount, setPodcastInfoSubmitCount] = useState(0);
+
   // set state for text inputs in form
   const [formInputText, updateFormInputText] = useState([
     { id: "podcastNameInput", text: "" },
     { id: "podcastTitleInput", text: "" },
   ]);
 
-  const providerValue = React.useMemo(
+  const providerValue = useMemo(
     () => ({
       currentImage,
       setImage,
@@ -21,8 +25,10 @@ export const PreviewProvider = (props) => {
       updateBase64,
       formInputText,
       updateFormInputText,
+      podcastInfoSubmitCount,
+      setPodcastInfoSubmitCount,
     }),
-    [currentImage, fileToBase64, formInputText]
+    [currentImage, fileToBase64, podcastInfoSubmitCount, formInputText]
   );
 
   return (

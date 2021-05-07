@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Flex,
   Icon,
@@ -29,18 +29,112 @@ const PodcastPreview = () => {
 
   // reference context data store for form data (input text and images)
   const { fileToBase64 } = useContext(PreviewContext);
+  const { podcastInfoSubmitCount } = useContext(PreviewContext);
   const { formInputText } = useContext(PreviewContext);
   const [podcastNameInput, podcastTitleInput] = formInputText;
 
   // podcast info submit state
-  const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(
-    false
+  const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
+  const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
+    null
   );
+  const [formSubmitCount, updateFormSubmitCount] = useState(0);
+
+  // using to avoid memory leaks when updating context store from child component async function
+  useEffect(() => {
+    if (fileToBase64 && podcastInfoSubmitCount >= 1) {
+      updateHasImageStoredInContext(true);
+      updateFormSubmitCount(
+        (formSubmitCount) => formSubmitCount + podcastInfoSubmitCount
+      );
+    }
+  }, [fileToBase64, podcastInfoSubmitCount]);
 
   // used for checking if textarea elements have any saved text in context data store
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ""
   );
+
+  const renderAddPodcastInfo = () => {
+    if (
+      isPodcastInfoSubmitted ??
+      (hasImageStoredInContext && formSubmitCount >= 1)
+    ) {
+      return (
+        <Flex
+          h="10rem"
+          className="builder__section-podcast-image-preview-container"
+        >
+          <Image
+            maxWidth="100%"
+            height="100%"
+            overflow="hidden"
+            objectFit="cover"
+            alt="podcast brand"
+            className="builder__section-podcast-image-preview"
+            src={fileToBase64}
+            id="podcastPreviewImage"
+            borderRadius="6px"
+            maxH="64px"
+            maxW="64px"
+            margin="15px"
+          />
+        </Flex>
+      );
+    }
+
+    return (
+      <>
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          direction="column"
+          backgroundColor="#e8e8e8"
+          borderRadius="6px"
+          h="64px"
+          w="64px"
+          margin="15px 0 0 15px"
+          className="builder__section-podcast-brand-img-container"
+        >
+          <Text
+            fontFamily="Helvetica Neue, Roboto, san-serif"
+            fontSize="12px"
+            color="#888888"
+            className="builder__section-podcast-logo-text"
+          >
+            LOGO
+          </Text>
+        </Flex>
+        <Flex
+          h="28px"
+          w="28px"
+          backgroundColor="#fff"
+          borderRadius="50%"
+          className="builder__section-podcast-add-icon-circle-bg"
+          position="relative"
+          top="3.5rem"
+          right="1.2rem"
+          justifyContent="center"
+          alignItems="center"
+          onClick={onOpen}
+        >
+          <Icon
+            h="26px"
+            w="26px"
+            className="builder__section-podcast-add-icon"
+            as={AiFillPlusCircle}
+            fill="#6E41E2"
+            cursor="pointer"
+          />
+          <AddPodcastInfo
+            isOpen={isOpen}
+            onClose={onClose}
+            updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+          />
+        </Flex>
+      </>
+    );
+  };
 
   return (
     <Flex
@@ -58,79 +152,14 @@ const PodcastPreview = () => {
       overflowY="scroll"
     >
       <Flex className="builder__section-podcast-brand-container">
-        {isPodcastInfoSubmitted && fileToBase64 ? (
-          <Flex
-            h="10rem"
-            className="builder__section-podcast-image-preview-container"
-          >
-            <Image
-              maxWidth="100%"
-              height="100%"
-              overflow="hidden"
-              objectFit="cover"
-              alt="podcast brand"
-              className="builder__section-podcast-image-preview"
-              src={fileToBase64}
-              id="podcastPreviewImage"
-            />
-          </Flex>
-        ) : (
-          <>
-            <Flex
-              justifyContent="center"
-              alignItems="center"
-              direction="column"
-              backgroundColor="#e8e8e8"
-              borderRadius="6px"
-              h="64px"
-              w="64px"
-              margin="15px 0 0 15px"
-              className="builder__section-podcast-brand-img-container"
-            >
-              <Text
-                fontFamily="Helvetica Neue, Roboto, san-serif"
-                fontSize="12px"
-                color="#888888"
-                className="builder__section-podcast-logo-text"
-              >
-                LOGO
-              </Text>
-            </Flex>
-            <Flex
-              h="28px"
-              w="28px"
-              backgroundColor="#fff"
-              borderRadius="50%"
-              className="builder__section-podcast-add-icon-circle-bg"
-              position="relative"
-              top="3.5rem"
-              right="1.2rem"
-              justifyContent="center"
-              alignItems="center"
-              onClick={onOpen}
-            >
-              <Icon
-                h="26px"
-                w="26px"
-                className="builder__section-podcast-add-icon"
-                as={AiFillPlusCircle}
-                fill="#6E41E2"
-              />
-              <AddPodcastInfo
-                isOpen={isOpen}
-                onClose={onClose}
-                updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
-              />
-            </Flex>
-          </>
-        )}
-
+        {/* Render AddPodcastInfo component */}
+        {renderAddPodcastInfo()}
         <Flex
           direction="column"
           marginTop="15px"
           className="builder__section-podcast-brand-heading"
           position="relative"
-          right="15px"
+          right={isPodcastInfoSubmitted && fileToBase64 ? "" : "15px"}
         >
           <Text
             fontFamily="Helvetica Neue, Roboto, san-serif"

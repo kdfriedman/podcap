@@ -118,6 +118,7 @@ const EmailPreview = () => {
             as={AiFillPlusCircle}
             fill="#6E41E2"
             onClick={onOpen}
+            cursor="pointer"
           />
         </Flex>
         <Flex
@@ -246,6 +247,7 @@ const EmailPreview = () => {
             justifyContent="center"
             alignItems="center"
             onClick={onOpen}
+            cursor="pointer"
           >
             <Icon
               h="23px"

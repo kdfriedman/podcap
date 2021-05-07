@@ -24,6 +24,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
   // reference context data store for form data (input text and images)
   const { currentImage, setImage } = useContext(PreviewContext);
   const { fileToBase64, updateBase64 } = useContext(PreviewContext);
+  const { setPodcastInfoSubmitCount } = useContext(PreviewContext);
   const { formInputText, updateFormInputText } = useContext(PreviewContext);
   const [podcastNameInput, podcastTitleInput] = formInputText;
 
@@ -40,7 +41,6 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
         // read file
         const url = await readInputFile(currentImage);
 
-        // update state with new image base64 string
         updateBase64(url);
 
         // clear err msg state
@@ -55,22 +55,46 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
     }
   }, [currentImage, updateBase64]);
 
-  const closeModal = (e) => {
-    if (!currentImage) {
-      updateFormInputText((formInputList) => {
-        const copiedFormInputList = [...formInputList];
-        return copiedFormInputList.map((formInput) => {
-          if (formInput.text !== "") {
-            formInput.text = "";
-          }
-          return formInput;
-        });
+  // reset form data and all errors
+  const resetForm = () => {
+    // clear form inputs
+    updateFormInputText((formInputList) => {
+      const copiedFormInputList = [...formInputList];
+      return copiedFormInputList.map((formInput) => {
+        if (formInput.text !== "") {
+          formInput.text = "";
+        }
+        return formInput;
       });
-    }
+    });
+    // clear image upload (base 64 string and image file) data
+    setImage(null);
+    updateBase64(null);
     // clear err msg state
-    updateFormErrorMsgState(null);
-    // close modal
-    onClose();
+    return updateFormErrorMsgState(null);
+  };
+
+  const closeModal = (isSubmitEvent) => {
+    if (!currentImage) {
+      // clear form data and errors
+      resetForm();
+      // close modal
+      return onClose();
+    }
+
+    // check if argument passed in is submit event, if not clear form, including image file
+    if (!isSubmitEvent) {
+      // clear image data from context
+      setImage(null);
+      updateBase64(null);
+
+      // clear form data and errors
+      resetForm();
+      // close modal
+      return onClose();
+    }
+    // if image is set and form has been submitted, close modal
+    return onClose();
   };
 
   const handleInputChange = (e) => {
@@ -112,8 +136,11 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
     // update parent state with submit state
     updateIsPodcastInfoSubmitted(true);
 
+    // increment submit count to determine track if user has submitted form at least once
+    setPodcastInfoSubmitCount((submitCount) => submitCount + 1);
+
     // close modal
-    closeModal();
+    closeModal(true);
   };
 
   return (
@@ -122,7 +149,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
         className="builder__section-modal"
         initialFocusRef={initialRef}
         isOpen={isOpen}
-        onClose={closeModal}
+        onClose={() => closeModal(false)}
       >
         <ModalOverlay className="builder__section-modal-overlay" />
         <ModalContent
@@ -146,7 +173,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
               Your Podcast Info
             </ModalHeader>
             <ModalCloseButton
-              onClick={closeModal}
+              onClick={() => closeModal(false)}
               className="builder__section-modal-close-btn"
             />
             <ModalBody className="builder__section-modal-body" pb={6}>
@@ -300,7 +327,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
                   opacity: ".8",
                 }}
                 background="transparent"
-                onClick={closeModal}
+                onClick={() => closeModal(false)}
                 color="#4D4D4D"
                 fontFamily="Inter, san-serif"
                 fontWeight="700"
