@@ -35,9 +35,11 @@ const PodcastPreview = () => {
 
   // podcast info submit state
   const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
+  // keep local state to determine if image is being stored in context
   const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
     null
   );
+  // keep state to keep track how many times the form has been submitted
   const [formSubmitCount, updateFormSubmitCount] = useState(0);
 
   // using to avoid memory leaks when updating context store from child component async function
@@ -62,7 +64,7 @@ const PodcastPreview = () => {
     ) {
       return (
         <Flex
-          h="10rem"
+          h="5rem"
           className="builder__section-podcast-image-preview-container"
         >
           <Image
@@ -159,7 +161,12 @@ const PodcastPreview = () => {
           marginTop="15px"
           className="builder__section-podcast-brand-heading"
           position="relative"
-          right={isPodcastInfoSubmitted && fileToBase64 ? "" : "15px"}
+          right={
+            isPodcastInfoSubmitted ??
+            (hasImageStoredInContext && formSubmitCount >= 1)
+              ? ""
+              : "15px"
+          }
         >
           <Text
             fontFamily="Helvetica Neue, Roboto, san-serif"
@@ -264,6 +271,7 @@ const PodcastPreview = () => {
               fontWeight="300"
               color="#888888"
               className="builder__section-podcast-shownotes-preview-text"
+              marginBottom="2rem"
             >
               Add your episode show notes to the form on the left to preview
               here.

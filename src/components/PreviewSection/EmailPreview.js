@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Flex,
   Icon,
@@ -15,6 +15,7 @@ import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { BuilderContext } from "../../context/BuilderContext";
 import AddPodcastInfo from "./AddPodcastInfo";
+import { PreviewContext } from "../../context/PreviewContext";
 
 const EmailPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
@@ -26,6 +27,31 @@ const EmailPreview = () => {
 
   // reference context data store to access textarea user value to render to screen
   const [builderSectionTextareaList] = useContext(BuilderContext);
+
+  // reference context data store for form data (input text and images)
+  const { fileToBase64 } = useContext(PreviewContext);
+  const { podcastInfoSubmitCount } = useContext(PreviewContext);
+  const { formInputText } = useContext(PreviewContext);
+  const [podcastNameInput, podcastTitleInput] = formInputText;
+
+  // podcast info submit state
+  const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
+  // keep local state to determine if image is being stored in context
+  const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
+    null
+  );
+  // keep state to keep track how many times the form has been submitted
+  const [formSubmitCount, updateFormSubmitCount] = useState(0);
+
+  // using to avoid memory leaks when updating context store from child component async function
+  useEffect(() => {
+    if (fileToBase64 && podcastInfoSubmitCount >= 1) {
+      updateHasImageStoredInContext(true);
+      updateFormSubmitCount(
+        (formSubmitCount) => formSubmitCount + podcastInfoSubmitCount
+      );
+    }
+  }, [fileToBase64, podcastInfoSubmitCount]);
 
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ""
@@ -108,18 +134,20 @@ const EmailPreview = () => {
             fontWeight="500"
             lineHeight="23.75px"
           >
-            New episode: Episode Title
+            {podcastTitleInput.text || "New episode: Episode Title"}
           </Text>
-          <Icon
-            marginLeft="8px"
-            className="builder__section-email-add-icon"
-            h="23px"
-            w="23px"
-            as={AiFillPlusCircle}
-            fill="#6E41E2"
-            onClick={onOpen}
-            cursor="pointer"
-          />
+          {!podcastTitleInput.text && (
+            <Icon
+              marginLeft="8px"
+              className="builder__section-email-add-icon"
+              h="23px"
+              w="23px"
+              as={AiFillPlusCircle}
+              fill="#6E41E2"
+              onClick={onOpen}
+              cursor="pointer"
+            />
+          )}
         </Flex>
         <Flex
           justifyContent="flex-start"
@@ -147,7 +175,7 @@ const EmailPreview = () => {
               fontFamily="Helvetica Neue, Roboto, san-serif"
               className="builder__section-email-sender-name"
             >
-              Podcast Name
+              {podcastNameInput.text || "Podcast Name"}
             </Text>
             <Text
               fontWeight="400"
@@ -205,7 +233,7 @@ const EmailPreview = () => {
         boxSizing="border-box"
         borderRadius="4px"
         margin="15px 15px 0 15px"
-        width="348px"
+        width={isLargerThan450 ? "348px" : isLargerThan425 ? "284px" : "263px"}
         height="104px"
         boxShadow="0 2px 5px 0 rgb(0 0 0 / 15%)"
       >
@@ -256,7 +284,11 @@ const EmailPreview = () => {
               as={AiFillPlusCircle}
               fill="#6E41E2"
             />
-            <AddPodcastInfo isOpen={isOpen} onClose={onClose} />
+            <AddPodcastInfo
+              isOpen={isOpen}
+              onClose={onClose}
+              updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+            />
           </Flex>
         </Flex>
 
@@ -308,10 +340,12 @@ const EmailPreview = () => {
           <Flex className="builder__section-email-podcast-module-img-container">
             <Image
               w="234px"
-              h="46.53px"
+              h={isLargerThan450 ? "46.53px" : "25px"}
               className="builder__section-email-podcast-module-img"
               src="/assets/audio-waves.svg"
               alt="audio wave"
+              objectFit={isLargerThan450 ? "" : "cover"}
+              marginTop={isLargerThan450 ? 0 : "12px"}
             />
           </Flex>
         </Flex>

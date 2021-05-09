@@ -15,12 +15,16 @@ import {
   Text,
   Icon,
   Image,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import readInputFile from "../../util/readInputFile";
 import { IoMdCloudUpload } from "react-icons/io";
 import { PreviewContext } from "../../context/PreviewContext";
 
 const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
+  // setup conditional media query hook to render conditionally based on viewport width
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
+
   // reference context data store for form data (input text and images)
   const { currentImage, setImage } = useContext(PreviewContext);
   const { fileToBase64, updateBase64 } = useContext(PreviewContext);
@@ -154,8 +158,9 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
         <ModalOverlay className="builder__section-modal-overlay" />
         <ModalContent
           className="builder__section-modal-content"
-          maxW="530px"
+          maxW={isLargerThan450 ? "530px" : "380px"}
           maxH="577px"
+          margin="15px"
         >
           <form
             onSubmit={handleAddPodcastInfoSubmit}
