@@ -68,7 +68,7 @@ const PodcastPreview = () => {
           className="builder__section-podcast-image-preview-container"
         >
           <Image
-            maxWidth="100%"
+            width="100%"
             height="100%"
             overflow="hidden"
             objectFit="cover"
@@ -79,6 +79,7 @@ const PodcastPreview = () => {
             borderRadius="6px"
             maxH="64px"
             maxW="64px"
+            minW="64px"
             margin="15px"
           />
         </Flex>

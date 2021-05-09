@@ -237,66 +237,95 @@ const EmailPreview = () => {
         height="104px"
         boxShadow="0 2px 5px 0 rgb(0 0 0 / 15%)"
       >
-        <Flex
-          className="builder__section-podcast-brand-img-container"
-          alignItems="center"
-        >
+        {isPodcastInfoSubmitted ??
+        (hasImageStoredInContext && formSubmitCount >= 1) ? (
           <Flex
-            justifyContent="center"
+            className="builder__section-podcast-brand-img-container"
             alignItems="center"
-            direction="column"
-            backgroundColor="#e8e8e8"
-            borderRadius="6px"
-            h="88px"
-            w="88px"
-            margin="7px"
-            className="builder__section-podcast-brand-img-module"
           >
-            <Text
-              fontFamily="Helvetica Neue, Roboto, san-serif"
-              fontSize="16px"
-              color="#888888"
-              className="builder__section-podcast-logo-text"
-              lineHeight="16.2px"
-              fontWeight="500"
+            <Image
+              justifyContent="center"
+              width="100%"
+              height="100%"
+              overflow="hidden"
+              objectFit="cover"
+              alt="podcast brand"
+              className="builder__section-podcast-image-preview"
+              src={fileToBase64}
+              id="podcastPreviewImage"
+              borderRadius="6px"
+              maxH="88px"
+              maxW="88px"
+              margin="7px"
+            />
+          </Flex>
+        ) : (
+          <Flex
+            className="builder__section-podcast-brand-img-container"
+            alignItems="center"
+          >
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              direction="column"
+              backgroundColor="#e8e8e8"
+              borderRadius="6px"
+              h="88px"
+              w="88px"
+              margin="7px"
+              className="builder__section-podcast-brand-img-module"
             >
-              LOGO
-            </Text>
+              <Text
+                fontFamily="Helvetica Neue, Roboto, san-serif"
+                fontSize="16px"
+                color="#888888"
+                className="builder__section-podcast-logo-text"
+                lineHeight="16.2px"
+                fontWeight="500"
+              >
+                LOGO
+              </Text>
+            </Flex>
+            <Flex
+              h="25px"
+              w="25px"
+              backgroundColor="#fff"
+              borderRadius="50%"
+              className="builder__section-podcast-add-icon-circle-bg"
+              position="relative"
+              top="33px"
+              right="19px"
+              justifyContent="center"
+              alignItems="center"
+              onClick={onOpen}
+              cursor="pointer"
+            >
+              <Icon
+                h="23px"
+                w="23px"
+                className="builder__section-podcast-add-icon"
+                as={AiFillPlusCircle}
+                fill="#6E41E2"
+              />
+              <AddPodcastInfo
+                isOpen={isOpen}
+                onClose={onClose}
+                updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+              />
+            </Flex>
           </Flex>
-          <Flex
-            h="25px"
-            w="25px"
-            backgroundColor="#fff"
-            borderRadius="50%"
-            className="builder__section-podcast-add-icon-circle-bg"
-            position="relative"
-            top="33px"
-            right="19px"
-            justifyContent="center"
-            alignItems="center"
-            onClick={onOpen}
-            cursor="pointer"
-          >
-            <Icon
-              h="23px"
-              w="23px"
-              className="builder__section-podcast-add-icon"
-              as={AiFillPlusCircle}
-              fill="#6E41E2"
-            />
-            <AddPodcastInfo
-              isOpen={isOpen}
-              onClose={onClose}
-              updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
-            />
-          </Flex>
-        </Flex>
+        )}
 
         <Flex
           direction="column"
           className="builder__section-podcast-controls-container"
           justifyContent="center"
-          marginLeft="-16px"
+          marginLeft={
+            isPodcastInfoSubmitted ??
+            (hasImageStoredInContext && formSubmitCount >= 1)
+              ? "5px"
+              : "-16px"
+          }
         >
           <Flex
             alignItems="center"
