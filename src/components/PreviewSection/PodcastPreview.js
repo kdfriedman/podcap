@@ -162,6 +162,7 @@ const PodcastPreview = () => {
           marginTop="15px"
           className="builder__section-podcast-brand-heading"
           position="relative"
+          minW="0"
           right={
             isPodcastInfoSubmitted ??
             (hasImageStoredInContext && formSubmitCount >= 1)
@@ -174,6 +175,7 @@ const PodcastPreview = () => {
             fontSize="12px"
             color="#888888"
             lineHeight="120%"
+            isTruncated
           >
             {podcastNameInput.text || "Podcast Name"}
           </Text>
@@ -182,6 +184,7 @@ const PodcastPreview = () => {
             fontSize="19px"
             color="#111111"
             lineHeight="125%"
+            paddingRight="15px"
           >
             {podcastTitleInput.text || "Episode Title"}
           </Text>

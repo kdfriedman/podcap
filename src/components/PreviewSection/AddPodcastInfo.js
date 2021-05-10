@@ -202,8 +202,8 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
                   _focus={{
                     border: "1px solid #773AE7",
                   }}
-                  minLength="1"
-                  maxLength="100"
+                  minLength="2"
+                  maxLength="70"
                   required
                   value={podcastNameInput.text}
                 />
@@ -232,8 +232,8 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
                   h="44px"
                   borderRadius="4px"
                   placeholder="Enter podcast title"
-                  minLength="1"
-                  maxLength="100"
+                  minLength="2"
+                  maxLength="70"
                   required
                   value={podcastTitleInput.text}
                 />

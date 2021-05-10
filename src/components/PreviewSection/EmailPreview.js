@@ -167,6 +167,7 @@ const EmailPreview = () => {
             marginLeft="10px"
             className="builder__section-email-recipient-container"
             direction="column"
+            minW="0"
           >
             <Text
               fontWeight="500"
@@ -174,6 +175,7 @@ const EmailPreview = () => {
               lineHeight="16.8px"
               fontFamily="Helvetica Neue, Roboto, san-serif"
               className="builder__section-email-sender-name"
+              isTruncated
             >
               {podcastNameInput.text || "Podcast Name"}
             </Text>
@@ -221,7 +223,7 @@ const EmailPreview = () => {
           color="#000000"
           className="builder__section-email-podcast-title"
         >
-          Episode Title
+          {podcastTitleInput.text || "Episode Title"}
         </Text>
       </Flex>
 
@@ -253,10 +255,10 @@ const EmailPreview = () => {
               className="builder__section-podcast-image-preview"
               src={fileToBase64}
               id="podcastPreviewImage"
-              borderRadius="6px"
+              borderRadius="10px"
               maxH="88px"
               maxW="88px"
-              margin="7px"
+              padding="5px"
             />
           </Flex>
         ) : (
@@ -330,6 +332,8 @@ const EmailPreview = () => {
           <Flex
             alignItems="center"
             className="builder__section-podcast-controls-content"
+            position="relative"
+            top={isLargerThan450 ? 0 : "4px"}
           >
             <Icon
               h="32px"
