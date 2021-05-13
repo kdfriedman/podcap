@@ -246,8 +246,8 @@ const EditSectionTitle = ({
         padding="1rem 1rem 1rem 0rem"
       >
         <Icon
+          display={{ base: "flex", lg: "none" }}
           className="builder__section-title-edit-icon"
-          display="none"
           ml=".6rem"
           as={MdModeEdit}
         />

@@ -18,6 +18,7 @@ import { PreviewContext } from "../../context/PreviewContext";
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
+  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
   const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
 
@@ -66,6 +67,15 @@ const PodcastPreview = () => {
         <Flex
           h="5rem"
           className="builder__section-podcast-image-preview-container"
+          _hover={
+            isLargerThan950
+              ? {
+                  filter: "brightness(60%)",
+                  cursor: "pointer",
+                }
+              : ""
+          }
+          onClick={onOpen}
         >
           <Image
             width="100%"
@@ -81,6 +91,13 @@ const PodcastPreview = () => {
             maxW="64px"
             minW="64px"
             margin="15px"
+          />
+          <AddPodcastInfo
+            isOpen={isOpen}
+            onClose={onClose}
+            updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+            hasImageStoredInContext={hasImageStoredInContext}
+            formSubmitCount={formSubmitCount}
           />
         </Flex>
       );
@@ -133,6 +150,8 @@ const PodcastPreview = () => {
             isOpen={isOpen}
             onClose={onClose}
             updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+            hasImageStoredInContext={hasImageStoredInContext}
+            formSubmitCount={formSubmitCount}
           />
         </Flex>
       </>

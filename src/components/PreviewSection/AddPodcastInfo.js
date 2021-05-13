@@ -21,7 +21,13 @@ import readInputFile from "../../util/readInputFile";
 import { IoMdCloudUpload } from "react-icons/io";
 import { PreviewContext } from "../../context/PreviewContext";
 
-const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
+const AddPodcastInfo = ({
+  isOpen,
+  onClose,
+  updateIsPodcastInfoSubmitted,
+  hasImageStoredInContext,
+  formSubmitCount,
+}) => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
 
@@ -35,8 +41,14 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
   // error msg local state
   const [formErrorMsg, updateFormErrorMsgState] = useState(null);
 
+  // temp image state for form exit while saved image already exists in context
+  const [tempImage, setTempImage] = useState(null);
+
   // use to apply focus to  1st input on modal open
   const initialRef = useRef();
+
+  // store value of ref input to use later if user enters empty input and saves
+  const podcastInfoFormRef = useRef();
 
   // read image file asynchronously
   useEffect(() => {
@@ -79,6 +91,13 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
   };
 
   const closeModal = (isSubmitEvent) => {
+    // if context already has image stored and no submit event occurs
+    // occurs when user opens modal after they've already stored brand info
+    if (hasImageStoredInContext && !isSubmitEvent) {
+      setImage(tempImage);
+      return onClose();
+    }
+
     if (!currentImage) {
       // clear form data and errors
       resetForm();
@@ -114,6 +133,10 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
   };
 
   const handleImageFileChange = (e) => {
+    // store a reference to the old
+    if (hasImageStoredInContext) {
+      setTempImage(currentImage);
+    }
     // check if file has length to determine if file has been selected or canceled
     if (e.target.files.length === 0) return;
 
@@ -163,6 +186,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
           margin="15px"
         >
           <form
+            ref={podcastInfoFormRef}
             onSubmit={handleAddPodcastInfoSubmit}
             className="builder__section-modal-form"
           >
@@ -304,6 +328,7 @@ const AddPodcastInfo = ({ isOpen, onClose, updateIsPodcastInfoSubmitted }) => {
                     </Flex>
                   )}
                   <Input
+                    data-input-id="inputFileUpload"
                     className="builder__section-modal-form-input"
                     h="44px"
                     borderRadius="4px"
