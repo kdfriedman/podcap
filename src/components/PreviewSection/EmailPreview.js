@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import {
+  Box,
   Flex,
   Icon,
   Text,
@@ -12,6 +13,8 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { FiMail, FiTrash, FiEdit } from "react-icons/fi";
 import { BiArchiveIn, BiDotsHorizontalRounded } from "react-icons/bi";
 import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
+import { MdModeEdit } from "react-icons/md";
+
 import { FaUserCircle } from "react-icons/fa";
 import { BuilderContext } from "../../context/BuilderContext";
 import AddPodcastInfo from "./AddPodcastInfo";
@@ -242,9 +245,36 @@ const EmailPreview = () => {
         {isPodcastInfoSubmitted ??
         (hasImageStoredInContext && formSubmitCount >= 1) ? (
           <Flex
-            className="builder__section-podcast-brand-img-container"
+            className="builder__section-podcast-image-preview-container"
             alignItems="center"
+            onClick={onOpen}
           >
+            <Box
+              className="builder__section-modal-edit-icon-container"
+              position="absolute"
+              top="285px"
+              left="21px"
+              width="78px"
+              height="78px"
+              backgroundColor="#00000038"
+              borderRadius="6px"
+              display="none"
+              zIndex="1"
+            >
+              <Icon
+                w="1.25rem"
+                h="1.25rem"
+                display="block"
+                className="builder__section-modal-edit-icon"
+                ml=".6rem"
+                as={MdModeEdit}
+                fill="#fff"
+                marginLeft="auto"
+                marginRight="auto"
+                top="1.6rem"
+                position="relative"
+              />
+            </Box>
             <Image
               justifyContent="center"
               width="100%"
@@ -259,6 +289,12 @@ const EmailPreview = () => {
               maxH="88px"
               maxW="88px"
               padding="5px"
+            />
+            <AddPodcastInfo
+              isOpen={isOpen}
+              onClose={onClose}
+              updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
+              hasImageStoredInContext={hasImageStoredInContext}
             />
           </Flex>
         ) : (

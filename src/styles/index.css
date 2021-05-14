@@ -101,3 +101,10 @@ div.chakra-alert {
   width: 25px;
   height: 25px;
 }
+
+@media screen and (min-width: 950px) {
+  .builder__section-podcast-image-preview-container:hover
+    .builder__section-modal-edit-icon-container {
+    display: block;
+  }
+}

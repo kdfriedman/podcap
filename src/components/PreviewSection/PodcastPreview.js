@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import {
   Flex,
+  Box,
   Icon,
   Text,
   Image,
@@ -12,13 +13,13 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { MdModeEdit } from "react-icons/md";
 import { BuilderContext } from "../../context/BuilderContext";
 import AddPodcastInfo from "./AddPodcastInfo";
 import { PreviewContext } from "../../context/PreviewContext";
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
   const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
 
@@ -67,16 +68,34 @@ const PodcastPreview = () => {
         <Flex
           h="5rem"
           className="builder__section-podcast-image-preview-container"
-          _hover={
-            isLargerThan950
-              ? {
-                  filter: "brightness(60%)",
-                  cursor: "pointer",
-                }
-              : ""
-          }
           onClick={onOpen}
         >
+          <Box
+            className="builder__section-modal-edit-icon-container"
+            position="absolute"
+            top="15px"
+            left="15px"
+            width="64px"
+            height="64px"
+            backgroundColor="#00000038"
+            borderRadius="6px"
+            display="none"
+            zIndex="1"
+          >
+            <Icon
+              w="1.25rem"
+              h="1.25rem"
+              display="block"
+              className="builder__section-modal-edit-icon"
+              ml=".6rem"
+              as={MdModeEdit}
+              fill="#fff"
+              marginLeft="auto"
+              marginRight="auto"
+              top="1.25rem"
+              position="relative"
+            />
+          </Box>
           <Image
             width="100%"
             height="100%"
@@ -97,7 +116,6 @@ const PodcastPreview = () => {
             onClose={onClose}
             updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
             hasImageStoredInContext={hasImageStoredInContext}
-            formSubmitCount={formSubmitCount}
           />
         </Flex>
       );

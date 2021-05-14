@@ -26,7 +26,6 @@ const AddPodcastInfo = ({
   onClose,
   updateIsPodcastInfoSubmitted,
   hasImageStoredInContext,
-  formSubmitCount,
 }) => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
@@ -94,7 +93,8 @@ const AddPodcastInfo = ({
     // if context already has image stored and no submit event occurs
     // occurs when user opens modal after they've already stored brand info
     if (hasImageStoredInContext && !isSubmitEvent) {
-      setImage(tempImage);
+      // check if tempImage exists and update previous temp image, otherwise close modal without update
+      if (tempImage) setImage(tempImage);
       return onClose();
     }
 
@@ -133,8 +133,8 @@ const AddPodcastInfo = ({
   };
 
   const handleImageFileChange = (e) => {
-    // store a reference to the old
     if (hasImageStoredInContext) {
+      // store a reference to the old
       setTempImage(currentImage);
     }
     // check if file has length to determine if file has been selected or canceled
