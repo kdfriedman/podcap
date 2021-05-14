@@ -66,8 +66,10 @@ const AddPodcastInfo = ({
     };
 
     if (currentImage) {
-      loadImageUpload();
+      return loadImageUpload();
     }
+    // if currentImage is false, clear base64 string from state
+    updateBase64(null);
   }, [currentImage, updateBase64]);
 
   // reset form data and all errors
@@ -130,6 +132,15 @@ const AddPodcastInfo = ({
       activeCopiedFormInput.text = e.target.value;
       return copiedFormInputList;
     });
+  };
+
+  const handleRemoveFile = () => {
+    // reset image file to null to remove image
+    setImage(null);
+    const fileInputElement = podcastInfoFormRef?.current.querySelector(
+      '[data-input-id="inputFileUpload"]'
+    );
+    fileInputElement.value = "";
   };
 
   const handleImageFileChange = (e) => {
@@ -338,6 +349,22 @@ const AddPodcastInfo = ({
                     onChange={handleImageFileChange}
                   />
                 </FormLabel>
+                {fileToBase64 && (
+                  <>
+                    <Text
+                      onClick={handleRemoveFile}
+                      color="#314CE3"
+                      fontFamily="Inter, san-serif"
+                      fontSize="17px"
+                      fontWeight="400"
+                      lineHeight="21.25px"
+                      marginLeft="18px"
+                      cursor="pointer"
+                    >
+                      Remove Photo
+                    </Text>
+                  </>
+                )}
                 {formErrorMsg && (
                   <Text
                     fontWeight="400"
