@@ -26,6 +26,7 @@ const AddPodcastInfo = ({
   onClose,
   updateIsPodcastInfoSubmitted,
   hasImageStoredInContext,
+  updateHasImageStoredInContext,
 }) => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
@@ -66,11 +67,14 @@ const AddPodcastInfo = ({
     };
 
     if (currentImage) {
+      // call image upload function to update image context store
       return loadImageUpload();
     }
     // if currentImage is false, clear base64 string from state
     updateBase64(null);
-  }, [currentImage, updateBase64]);
+    // lift up state to parent component consumers - updating hasImageStoredInContext to null
+    updateHasImageStoredInContext(null);
+  }, [currentImage, updateBase64, updateHasImageStoredInContext]);
 
   // reset form data and all errors
   const resetForm = () => {
@@ -84,22 +88,23 @@ const AddPodcastInfo = ({
         return formInput;
       });
     });
+    // clear parent state isSubmitEvent
+    updateIsPodcastInfoSubmitted(null);
     // clear image upload (base 64 string and image file) data
     setImage(null);
-    updateBase64(null);
     // clear err msg state
     return updateFormErrorMsgState(null);
   };
 
   const closeModal = (isSubmitEvent) => {
-    // if context already has image stored and no submit event occurs
-    // occurs when user opens modal after they've already stored brand info
+    // occurs if context already has image stored and no submit event occurs
     if (hasImageStoredInContext && !isSubmitEvent) {
       // check if tempImage exists and update previous temp image, otherwise close modal without update
       if (tempImage) setImage(tempImage);
       return onClose();
     }
 
+    // occurs when user closes modal with no image stored
     if (!currentImage) {
       // clear form data and errors
       resetForm();
@@ -107,12 +112,8 @@ const AddPodcastInfo = ({
       return onClose();
     }
 
-    // check if argument passed in is submit event, if not clear form, including image file
+    // occurs when user has image uploaded but not saved in context and cancels without submitting
     if (!isSubmitEvent) {
-      // clear image data from context
-      setImage(null);
-      updateBase64(null);
-
       // clear form data and errors
       resetForm();
       // close modal
@@ -144,6 +145,9 @@ const AddPodcastInfo = ({
   };
 
   const handleImageFileChange = (e) => {
+    // clear image
+    setImage(null);
+
     if (hasImageStoredInContext) {
       // store a reference to the old
       setTempImage(currentImage);
@@ -151,11 +155,20 @@ const AddPodcastInfo = ({
     // check if file has length to determine if file has been selected or canceled
     if (e.target.files.length === 0) return;
 
+    // validate image size, no larger than 500kb
+    // help with image renders and performance on mobile
+    if (e.target.files[0].size > 500000) {
+      return updateFormErrorMsgState(
+        "Image too large. Please upload images no larger than 500 KB"
+      );
+    }
+
     // parse file from input
     const file = e.target.files[0];
 
     // set image state with uploaded image file
     setImage(file);
+    updateFormErrorMsgState(null);
   };
 
   const handleAddPodcastInfoSubmit = (e) => {

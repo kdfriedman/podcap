@@ -38,9 +38,8 @@ const PodcastPreview = () => {
   // podcast info submit state
   const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
   // keep local state to determine if image is being stored in context
-  const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
-    null
-  );
+  const [hasImageStoredInContext, updateHasImageStoredInContext] =
+    useState(null);
   // keep state to keep track how many times the form has been submitted
   const [formSubmitCount, updateFormSubmitCount] = useState(0);
 
@@ -81,6 +80,9 @@ const PodcastPreview = () => {
             borderRadius="6px"
             display="none"
             zIndex="1"
+            _hover={{
+              cursor: "pointer",
+            }}
           >
             <Icon
               w="1.25rem"
@@ -116,6 +118,7 @@ const PodcastPreview = () => {
             onClose={onClose}
             updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
             hasImageStoredInContext={hasImageStoredInContext}
+            updateHasImageStoredInContext={updateHasImageStoredInContext}
           />
         </Flex>
       );
@@ -169,7 +172,7 @@ const PodcastPreview = () => {
             onClose={onClose}
             updateIsPodcastInfoSubmitted={updateIsPodcastInfoSubmitted}
             hasImageStoredInContext={hasImageStoredInContext}
-            formSubmitCount={formSubmitCount}
+            updateHasImageStoredInContext={updateHasImageStoredInContext}
           />
         </Flex>
       </>
