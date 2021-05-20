@@ -85,7 +85,7 @@ const AccordionModule = () => {
         className="builder__accordion-container"
         backgroundColor="white"
         m={{
-          base: "16px 10px",
+          base: "1.75rem",
           md: "16px 24px",
         }}
         borderRadius="6px"
@@ -93,7 +93,6 @@ const AccordionModule = () => {
         h="fit-content"
         boxShadow="0 2px 6px 0 rgb(0 0 0 / 20%)"
         defaultIndex={[0]}
-        allowMultiple
       >
         {/* Render accordion list of sections */}
         {accItemList.length > 0 && renderAccoridions()}
