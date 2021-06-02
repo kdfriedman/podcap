@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Flex, Button, useToast } from "@chakra-ui/react";
 import ClipboardIcon from "../../styles/custom-icons/ClipboardIcon";
 import { BuilderContext } from "../../context/BuilderContext";
@@ -9,39 +9,75 @@ const CopyShownotes = () => {
 
   // instantiate toast component from chakra
   const toast = useToast();
-  // set state for show notes button
-  const [isShowNotesButtonSelected, updateShowNotesButtonSelected] = useState(
-    false
-  );
 
-  // handle show notes button click event
-  const handleShowNotesButtonClick = (e) => {
-    // check if evt target id is clipboard button, otherwise return
-    if (!e.target.closest("#clipboardIconBtn")) return;
-    // update show notes button state to true to activate useEffect call
-    updateShowNotesButtonSelected(true);
-  };
-
-  // run async copyShownotes if copy show notes button state is true
-  useEffect(() => {
-    // copy show notes using async clipboard api
-    const copyShowNotes = async (text) => {
-      // check if browser supports clipboard api and text argument is truthy
-      if (navigator.clipboard) {
+  // copy show notes using async clipboard api
+  const copyShowNotes = async (text) => {
+    // check if browser supports clipboard api, text argument is truthy, and is secure context
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
         // write copied text to clipboard api via await
         await navigator.clipboard.writeText(text);
         // configure toast component with custom settings object
-        toast({
+        return toast({
           title: "Show notes copied to clipboard",
           position: "top",
           isClosable: true,
           status: "success",
           duration: 2000,
         });
-        // reset show notes button bool state to false
-        return updateShowNotesButtonSelected(false);
       }
-      toast({
+
+      // if browser does not support navigator.clipboard use fallback
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      document.body.appendChild(textArea);
+
+      // handle iOS as a special case
+      if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+        // save current contentEditable/readOnly status
+        const editable = textArea.contentEditable;
+        const readOnly = textArea.readOnly;
+
+        // convert to editable with readonly to stop iOS keyboard opening
+        textArea.contentEditable = true;
+        textArea.readOnly = true;
+
+        // create a selectable range
+        const range = document.createRange();
+        range.selectNodeContents(textArea);
+
+        // select the range
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+
+        // restore contentEditable/readOnly to original state
+        textArea.contentEditable = editable;
+        textArea.readOnly = readOnly;
+      } else {
+        textArea.focus();
+        textArea.select();
+      }
+      // copy text
+      const copiedText = document.execCommand("copy");
+      console.log(copiedText);
+      // remove child from DOM
+      document.body.removeChild(textArea);
+
+      // configure toast component with custom settings object
+      return toast({
+        title: "Show notes copied to clipboard",
+        position: "top",
+        isClosable: true,
+        status: "success",
+        duration: 2000,
+      });
+    } catch (err) {
+      console.log(err);
+      // handle all errors
+      return toast({
         title:
           "We're sorry, your browser does not support copy clipboard functionality",
         position: "top",
@@ -49,24 +85,27 @@ const CopyShownotes = () => {
         status: "error",
         duration: 2000,
       });
-      return updateShowNotesButtonSelected(true);
-    };
-    // check if show notes button state is true - if a user selects the button
-    if (isShowNotesButtonSelected) {
-      const copiedTextListOfStrings = builderSectionTextarea.reduce(
-        (accum, section) => {
-          if (section.text) {
-            accum.push(section.text);
-          }
-          return accum;
-        },
-        []
-      );
-      const copiedTextJoinedString = copiedTextListOfStrings.join("\n\n");
-      // pass in text string to be written to clipboard api
-      copyShowNotes(copiedTextJoinedString);
     }
-  }, [isShowNotesButtonSelected, toast, builderSectionTextarea]);
+  };
+
+  // handle show notes button click event
+  const handleShowNotesButtonClick = async (e) => {
+    // check if evt target id is clipboard button, otherwise return
+    if (!e.target.closest("#clipboardIconBtn")) return;
+
+    const copiedTextListOfStrings = builderSectionTextarea.reduce(
+      (accum, section) => {
+        if (section.text) {
+          accum.push(section.text);
+        }
+        return accum;
+      },
+      []
+    );
+    const copiedTextJoinedString = copiedTextListOfStrings.join("\n\n");
+    // pass in text string to be written to clipboard api
+    copyShowNotes(copiedTextJoinedString);
+  };
 
   return (
     <>
