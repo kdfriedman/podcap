@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { MdModeEdit } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import isTouchDevice from "../../util/getDeviceType";
 
 const EditSectionTitle = ({
   updateAccItemList,
@@ -110,10 +111,13 @@ const EditSectionTitle = ({
   const handleSectionTitleSave = (e) => {
     e.preventDefault();
 
-    // set draggable container element back to true when section title input focus is lost and onblur event occurs
-    const draggableContainer = e.target.closest("[data-handler-id]");
-    if (!draggableContainer) return;
-    draggableContainer.setAttribute("draggable", "true");
+    // only set draggable attribute back to true for non-touch devices
+    if (!isTouchDevice()) {
+      // set draggable container element back to true when section title input focus is lost and onblur event occurs
+      const draggableContainer = e.target.closest("[data-handler-id]");
+      if (!draggableContainer) return;
+      draggableContainer.setAttribute("draggable", "true");
+    }
 
     const targetEl = e.target.closest("[id^=sectionTitle]");
     const targetId = targetEl.id
@@ -162,10 +166,20 @@ const EditSectionTitle = ({
   };
 
   const handleInputFocus = (e) => {
-    // remove draggable attribute to prevent accordion from dragging while editing section title input
-    const draggableContainer = e.target.closest("[data-handler-id]");
-    if (!draggableContainer) return;
-    draggableContainer.setAttribute("draggable", "false");
+    // check if device is non-touch and set attr to false to prevent dragging during editing
+    if (!isTouchDevice()) {
+      // remove draggable attribute to prevent accordion from dragging while editing section title input
+      const draggableContainer = e.target.closest("[data-handler-id]");
+      if (!draggableContainer) return;
+      draggableContainer.setAttribute("draggable", "false");
+    }
+  };
+
+  // prevent accordion from dragging on touch devices while editing section title
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e);
   };
 
   return (
@@ -192,6 +206,7 @@ const EditSectionTitle = ({
             <FormControl id={`sectionTitleControlInput${accItem.id}`}>
               {/* Max length char count of 45 characters */}
               <Input
+                onTouchMove={handleTouchMove}
                 onFocus={handleInputFocus}
                 maxLength="45"
                 ref={sectionTitleInputRef}
