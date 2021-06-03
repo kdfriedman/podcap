@@ -16,7 +16,6 @@ const AccordionModule = () => {
     { accItemTitleText: "Sponsored Links", id: 4 },
   ]);
 
-  //TODO: figure out how to sort ids of updated/mutated accItemList
   // allows us to update the state as an entire object and alter order of each item in the arr
   const moveAccordion = useCallback(
     (dragIndex, hoverIndex) => {

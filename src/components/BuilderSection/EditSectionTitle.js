@@ -179,7 +179,6 @@ const EditSectionTitle = ({
   const handleTouchMove = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(e);
   };
 
   return (

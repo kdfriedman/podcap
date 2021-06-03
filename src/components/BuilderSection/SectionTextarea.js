@@ -28,20 +28,18 @@ const SectionTextarea = (props) => {
       const copiedBuilderSectionTextareaList = [...builderSectionTextareaList];
 
       // check if parentElementId exists inside builderSection list
-      const builderSectionTextareaIndex = copiedBuilderSectionTextareaList.findIndex(
-        (prop) => {
+      const builderSectionTextareaIndex =
+        copiedBuilderSectionTextareaList.findIndex((prop) => {
           return prop.id === parentElementId;
-        }
-      );
+        });
 
       //if parentElementId has been added to builderSection list previously, update specific textarea value and id
       if (builderSectionTextareaIndex !== -1) {
         // update text with textarea active input, using index of previously saved data object
         copiedBuilderSectionTextareaList[builderSectionTextareaIndex].text =
           e.target.value;
-        copiedBuilderSectionTextareaList[
-          builderSectionTextareaIndex
-        ].id = parentElementId;
+        copiedBuilderSectionTextareaList[builderSectionTextareaIndex].id =
+          parentElementId;
         return copiedBuilderSectionTextareaList;
       }
 
@@ -67,6 +65,12 @@ const SectionTextarea = (props) => {
     draggableContainer.setAttribute("draggable", "true");
   };
 
+  // prevent accordion from dragging on touch devices while editing text area
+  const handleTextAreaTouchMove = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <>
       {/* Textarea for accordion text input */}
@@ -80,6 +84,7 @@ const SectionTextarea = (props) => {
         onChange={handleTextareaChange}
         onFocus={handleTextareaFocus}
         onBlur={handleTextareaBlur}
+        onTouchMove={handleTextAreaTouchMove}
       />
     </>
   );
