@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from 'react';
 import {
   Flex,
   Box,
@@ -8,20 +8,20 @@ import {
   Spacer,
   useMediaQuery,
   useDisclosure,
-} from "@chakra-ui/react";
-import { AiFillPlayCircle } from "react-icons/ai";
-import { HiDotsCircleHorizontal } from "react-icons/hi";
-import { FiEdit } from "react-icons/fi";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { MdModeEdit } from "react-icons/md";
-import { BuilderContext } from "../../context/BuilderContext";
-import AddPodcastInfo from "./AddPodcastInfo";
-import { PreviewContext } from "../../context/PreviewContext";
+} from '@chakra-ui/react';
+import { AiFillPlayCircle } from 'react-icons/ai';
+import { HiDotsCircleHorizontal } from 'react-icons/hi';
+import { FiEdit } from 'react-icons/fi';
+import { AiFillPlusCircle } from 'react-icons/ai';
+import { MdModeEdit } from 'react-icons/md';
+import { BuilderContext } from '../../context/BuilderContext';
+import AddPodcastInfo from './AddPodcastInfo';
+import { PreviewContext } from '../../context/PreviewContext';
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
-  const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+  const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
+  const [isLargerThan425] = useMediaQuery('(min-width: 425px)');
 
   // chakra handlers for modal component
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,8 +38,9 @@ const PodcastPreview = () => {
   // podcast info submit state
   const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
   // keep local state to determine if image is being stored in context
-  const [hasImageStoredInContext, updateHasImageStoredInContext] =
-    useState(null);
+  const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
+    null
+  );
   // keep state to keep track how many times the form has been submitted
   const [formSubmitCount, updateFormSubmitCount] = useState(0);
 
@@ -55,7 +56,7 @@ const PodcastPreview = () => {
 
   // used for checking if textarea elements have any saved text in context data store
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
-    (builderSectionTextarea) => builderSectionTextarea.text === ""
+    (builderSectionTextarea) => builderSectionTextarea.text === ''
   );
 
   const renderAddPodcastInfo = () => {
@@ -81,7 +82,7 @@ const PodcastPreview = () => {
             display="none"
             zIndex="1"
             _hover={{
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
           >
             <Icon
@@ -182,12 +183,12 @@ const PodcastPreview = () => {
   return (
     <Flex
       justify="flex-start"
-      w={isLargerThan450 ? "380px" : isLargerThan425 ? "315px" : "295px"}
+      w={isLargerThan450 ? '314px' : '290px'}
       border="1px solid #888"
       borderRadius="4px"
       className="builder__section-podcast-preview"
       position="relative"
-      marginTop="4.5rem"
+      marginTop="3rem"
       direction="column"
       borderBottom="none"
       borderBottomRightRadius="0"
@@ -206,8 +207,8 @@ const PodcastPreview = () => {
           right={
             isPodcastInfoSubmitted ??
             (hasImageStoredInContext && formSubmitCount >= 1)
-              ? ""
-              : "15px"
+              ? ''
+              : '15px'
           }
         >
           <Text
@@ -217,7 +218,7 @@ const PodcastPreview = () => {
             lineHeight="120%"
             isTruncated
           >
-            {podcastNameInput.text || "Podcast Name"}
+            {podcastNameInput.text || 'Podcast Name'}
           </Text>
           <Text
             fontFamily="Helvetica Neue, Roboto, san-serif"
@@ -226,7 +227,7 @@ const PodcastPreview = () => {
             lineHeight="125%"
             paddingRight="15px"
           >
-            {podcastTitleInput.text || "Episode Title"}
+            {podcastTitleInput.text || 'Episode Title'}
           </Text>
         </Flex>
       </Flex>
@@ -268,7 +269,7 @@ const PodcastPreview = () => {
             return (
               <Text
                 whiteSpace="pre-line"
-                display={!section.isVisible ? "none" : ""}
+                display={!section.isVisible ? 'none' : ''}
                 fontWeight="400"
                 fontFamily="Helvetica Neue, Roboto, san-serif"
                 fontSize="16px"

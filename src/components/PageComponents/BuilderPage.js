@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { Flex, Box, Spacer } from "@chakra-ui/react";
-import Header from "../Header/Header";
-import BuilderSection from "../BuilderSection/BuilderSection";
-import PreviewSection from "../PreviewSection/PreviewSection";
-import { TouchDeviceContext } from "../../context/TouchDeviceContext";
+import { useContext } from 'react';
+import { Flex, Box, Spacer } from '@chakra-ui/react';
+import Header from '../Header/Header';
+import BuilderSection from '../BuilderSection/BuilderSection';
+import PreviewSection from '../PreviewSection/PreviewSection';
+import { TouchDeviceContext } from '../../context/TouchDeviceContext';
 
 const BuilderPage = () => {
   const [touchDeviceSectionVisibilityList] = useContext(TouchDeviceContext);
@@ -17,13 +17,13 @@ const BuilderPage = () => {
         <Box
           display={
             builderSection.isSectionVisible
-              ? { base: "block", lg: "block" }
-              : { base: "none", lg: "block" }
+              ? { base: 'block', lg: 'block' }
+              : { base: 'none', lg: 'block' }
           }
           className="builder__form-section"
           w={{
-            lg: "50%",
-            base: "100%",
+            lg: '50%',
+            base: '100%',
           }}
           h="100%"
           bg="#efefef"
@@ -33,23 +33,23 @@ const BuilderPage = () => {
         </Box>
         {/* creates the vertical border in the main layout */}
         <Spacer
-          display={{ base: "none", lg: "block" }}
+          display={{ base: 'none', lg: 'block' }}
           className="builder__vertical-divider"
           borderLeft="1px solid #CCCCCC"
         />
         <Box
           display={
             previewSection.isSectionVisible
-              ? { base: "block", lg: "block" }
-              : { base: "none", lg: "block" }
+              ? { base: 'block', lg: 'block' }
+              : { base: 'none', lg: 'block' }
           }
           className="builder__preview-section"
           w={{
-            lg: "50%",
-            base: "100%",
+            lg: '50%',
+            base: '100%',
           }}
           h="100%"
-          bg="#efefef"
+          bg="#FAD96B"
         >
           {/* Wire up preview section component */}
           <PreviewSection />

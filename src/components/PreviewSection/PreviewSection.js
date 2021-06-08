@@ -1,40 +1,40 @@
-import { useState } from "react";
-import { Flex, Button, Link, Text, useMediaQuery } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-import PodcastPreview from "./PodcastPreview";
-import EmailPreview from "./EmailPreview";
-import { FiChevronRight } from "react-icons/fi";
-import { AiFillStar } from "react-icons/ai";
+import { useState } from 'react';
+import { Flex, Button, Link, Text, useMediaQuery } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import PodcastPreview from './PodcastPreview';
+import EmailPreview from './EmailPreview';
+import { FiChevronRight } from 'react-icons/fi';
+import { AiFillStar } from 'react-icons/ai';
 
 const PreviewSection = () => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
-  const [isLargerThan425] = useMediaQuery("(min-width: 425px)");
+  const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
+  const [isLargerThan425] = useMediaQuery('(min-width: 425px)');
 
   // create preview btn state, used for rendering active btn state
   const [previewBtnList, updatePreviewBtnList] = useState([
-    { btnText: "Podcast Preview", isActive: true, id: 1 },
-    { btnText: "Email Preview", isActive: false, id: 2 },
+    { btnText: 'Podcast Preview', isActive: true, id: 1 },
+    { btnText: 'Newsletter Preview', isActive: false, id: 2 },
   ]);
   // deconstruct previewBtnList into podcast and email objects
   const [podcastPreviewBtn] = previewBtnList;
 
   // map of preview section button styles for active vs inactive state
   const previewSectionHeaderButtonDictionary = new Map();
-  previewSectionHeaderButtonDictionary.set("active", {
-    backgroundColor: "#EADFFF",
-    border: "1.5px solid #773AE7",
+  previewSectionHeaderButtonDictionary.set('active', {
+    backgroundColor: '#EADFFF',
+    border: '1.5px solid #773AE7',
   });
-  previewSectionHeaderButtonDictionary.set("inactive", {
-    backgroundColor: "#fff",
-    border: "1.5px solid #AAAAAA",
+  previewSectionHeaderButtonDictionary.set('inactive', {
+    backgroundColor: '#fff',
+    border: '1.5px solid #AAAAAA',
   });
 
   // handle podcast/email preview click
   const handleClick = (e) => {
-    const btn = e.target.closest("button");
+    const btn = e.target.closest('button');
     // return function if button clicked is already active
-    if (!btn || btn.dataset.isActive === "true") return;
+    if (!btn || btn.dataset.isActive === 'true') return;
     // map through list of button objects and switch isActive state using logical not operand
     const updatedPreviewBtnList = previewBtnList.map((previewBtn) => {
       const { isActive } = previewBtn;
@@ -60,7 +60,7 @@ const PreviewSection = () => {
         bgColor="#fff"
         w="100%"
         borderBottom="1px solid #ccc"
-        p={isLargerThan425 ? "0" : "0 24px"}
+        p={isLargerThan425 ? '0' : '0 24px'}
       >
         <Button
           className="builder__podcast-preview-btn"
@@ -73,7 +73,7 @@ const PreviewSection = () => {
           fontSize="16px"
           borderRadius="6px 0px 0px 6px"
           style={previewSectionHeaderButtonDictionary.get(
-            `${previewBtnList[0].isActive ? "active" : "inactive"}`
+            `${previewBtnList[0].isActive ? 'active' : 'inactive'}`
           )}
         >
           {previewBtnList[0].btnText}
@@ -89,7 +89,7 @@ const PreviewSection = () => {
           fontSize="16px"
           borderRadius="0px 6px 6px 0px"
           style={previewSectionHeaderButtonDictionary.get(
-            `${previewBtnList[1].isActive ? "active" : "inactive"}`
+            `${previewBtnList[1].isActive ? 'active' : 'inactive'}`
           )}
         >
           {previewBtnList[1].btnText}
@@ -132,10 +132,10 @@ const PreviewSection = () => {
       <Flex
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
-        backgroundImage='url("/assets/preview-section-mobile-frame.png")'
+        backgroundImage='url("/assets/mobile-frame-lg.png")'
         className="builder__section"
         height="100%"
-        width={isLargerThan450 ? "520px" : isLargerThan425 ? "425px" : "400px"}
+        width={isLargerThan450 ? '615px' : '575px'}
         justify="center"
         marginTop="1.75rem"
         minHeight="0"
@@ -163,7 +163,7 @@ const PreviewSection = () => {
           fontFamily="Inter, san-serif"
           lineHeight="1.3rem"
         >
-          An example of how your show notes will appear in a podcast app.{" "}
+          An example of how your show notes will appear in a podcast app.{' '}
           <Link color="#92FAEF" href="https://www.podcap.io/" isExternal>
             Learn more
             <ExternalLinkIcon h="1rem" w="1rem" as={FiChevronRight} />

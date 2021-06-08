@@ -1,9 +1,9 @@
-import { Flex, Heading, useMediaQuery } from "@chakra-ui/react";
-import AccordionModule from "./AccordionModule";
+import { Flex, Heading, useMediaQuery } from '@chakra-ui/react';
+import AccordionModule from './AccordionModule';
 
 const BuilderSection = () => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+  const [isLargerThan420] = useMediaQuery('(min-width: 420px)');
 
   return (
     <Flex
@@ -33,8 +33,8 @@ const BuilderSection = () => {
           textAlign="center"
         >
           {isLargerThan420
-            ? "Podcast Episode Show Notes Builder"
-            : "Show Notes Builder"}
+            ? 'Build your show notes here'
+            : 'Show Notes Builder'}
         </Heading>
       </Flex>
       <Flex overflow="scroll" h="100%" w="100%" className="builder__section">
