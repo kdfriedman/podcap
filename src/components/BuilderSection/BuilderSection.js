@@ -43,6 +43,12 @@ const BuilderSection = () => {
           />
           <Text>Build your show notes here</Text>
         </Heading>
+        <Image
+          src="/assets/build-notes-arrow.png"
+          maxHeight="3.25rem"
+          position="relative"
+          top="10px"
+        />
       </Flex>
       <Flex overflow="scroll" h="100%" w="100%" className="builder__section">
         <AccordionModule />
