@@ -1,9 +1,9 @@
-import { createIcon } from "@chakra-ui/react";
+import { createIcon } from '@chakra-ui/react';
 
 // using `path`
 const ClipboardIcon = createIcon({
-  displayName: "UpDownIcon",
-  viewBox: "0 0 20 20",
+  displayName: 'UpDownIcon',
+  viewBox: '0 0 20 20',
   // path can also be an array of elements, if you have multiple paths, lines, shapes, etc.
   path: (
     <path
@@ -12,5 +12,4 @@ const ClipboardIcon = createIcon({
     />
   ),
 });
-//w="20px" h="20px"
 export default ClipboardIcon;

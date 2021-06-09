@@ -60,7 +60,7 @@ const PreviewSection = () => {
         bgColor="#fff"
         w="100%"
         borderBottom="1px solid #ccc"
-        p={isLargerThan425 ? '0' : '0 24px'}
+        p={isLargerThan425 ? '0' : '0 15px'}
       >
         <Button
           className="builder__podcast-preview-btn"

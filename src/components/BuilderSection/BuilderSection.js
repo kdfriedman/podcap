@@ -1,4 +1,4 @@
-import { Flex, Heading, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Heading, Image, Text, useMediaQuery } from '@chakra-ui/react';
 import AccordionModule from './AccordionModule';
 
 const BuilderSection = () => {
@@ -31,10 +31,17 @@ const BuilderSection = () => {
           fontWeight="800"
           lineHeight="1.4em"
           textAlign="center"
+          display="flex"
+          direction="column"
+          alignItems="center"
         >
-          {isLargerThan420
-            ? 'Build your show notes here'
-            : 'Show Notes Builder'}
+          <Image
+            maxWidth="23px"
+            maxHeight="23px"
+            src="/assets/hand_wave_emoji.svg"
+            marginRight="7px"
+          />
+          <Text>Build your show notes here</Text>
         </Heading>
       </Flex>
       <Flex overflow="scroll" h="100%" w="100%" className="builder__section">
