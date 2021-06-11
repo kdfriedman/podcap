@@ -135,7 +135,7 @@ const PreviewSection = () => {
         backgroundImage='url("/assets/mobile-frame-lg.png")'
         className="builder__section"
         height="100%"
-        width={isLargerThan450 ? '615px' : '575px'}
+        width={isLargerThan450 ? '700px' : '575px'}
         justify="center"
         marginTop="1.75rem"
         minHeight="0"
@@ -163,7 +163,9 @@ const PreviewSection = () => {
           fontFamily="Inter, san-serif"
           lineHeight="1.3rem"
         >
-          An example of how your show notes will appear in a podcast app.{' '}
+          {previewBtnList[0].isActive
+            ? 'This is an example of how your show notes will appear in a podcast app.'
+            : 'This is an example of how your show notes will appear as an email newsletter.'}{' '}
           <Link color="#92FAEF" href="https://www.podcap.io/" isExternal>
             Learn more
             <ExternalLinkIcon h="1rem" w="1rem" as={FiChevronRight} />

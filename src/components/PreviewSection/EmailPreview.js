@@ -23,7 +23,6 @@ import { PreviewContext } from '../../context/PreviewContext';
 const EmailPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
-  const [isLargerThan425] = useMediaQuery('(min-width: 425px)');
 
   // chakra handlers for modal component
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -62,7 +61,7 @@ const EmailPreview = () => {
   return (
     <Flex
       justify="flex-start"
-      w={isLargerThan450 ? '314px' : '290px'}
+      w={isLargerThan450 ? '338px' : '290px'}
       border="1px solid #888"
       borderRadius="4px"
       className="builder__section-email-preview"
@@ -238,7 +237,7 @@ const EmailPreview = () => {
         boxSizing="border-box"
         borderRadius="4px"
         margin="15px 15px 0 15px"
-        width={isLargerThan450 ? '282px' : '258px'}
+        width={isLargerThan450 ? '306px' : '258px'}
         height="104px"
         boxShadow="0 2px 5px 0 rgb(0 0 0 / 15%)"
       >

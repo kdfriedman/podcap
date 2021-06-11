@@ -1,10 +1,7 @@
-import { Flex, Heading, Image, Text, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Heading, Image, Text } from '@chakra-ui/react';
 import AccordionModule from './AccordionModule';
 
 const BuilderSection = () => {
-  // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan420] = useMediaQuery('(min-width: 420px)');
-
   return (
     <Flex
       h="100%"

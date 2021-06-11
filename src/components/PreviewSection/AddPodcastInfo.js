@@ -1,4 +1,4 @@
-import { useRef, useContext, useState, useEffect } from "react";
+import { useRef, useContext, useState, useEffect } from 'react';
 import {
   Flex,
   Modal,
@@ -16,10 +16,10 @@ import {
   Icon,
   Image,
   useMediaQuery,
-} from "@chakra-ui/react";
-import readInputFile from "../../util/readInputFile";
-import { IoMdCloudUpload } from "react-icons/io";
-import { PreviewContext } from "../../context/PreviewContext";
+} from '@chakra-ui/react';
+import readInputFile from '../../util/readInputFile';
+import { IoMdCloudUpload } from 'react-icons/io';
+import { PreviewContext } from '../../context/PreviewContext';
 
 const AddPodcastInfo = ({
   isOpen,
@@ -29,7 +29,7 @@ const AddPodcastInfo = ({
   updateHasImageStoredInContext,
 }) => {
   // setup conditional media query hook to render conditionally based on viewport width
-  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
+  const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
 
   // reference context data store for form data (input text and images)
   const { currentImage, setImage } = useContext(PreviewContext);
@@ -82,8 +82,8 @@ const AddPodcastInfo = ({
     updateFormInputText((formInputList) => {
       const copiedFormInputList = [...formInputList];
       return copiedFormInputList.map((formInput) => {
-        if (formInput.text !== "") {
-          formInput.text = "";
+        if (formInput.text !== '') {
+          formInput.text = '';
         }
         return formInput;
       });
@@ -124,7 +124,7 @@ const AddPodcastInfo = ({
   };
 
   const handleInputChange = (e) => {
-    if (!e.target.closest("input") ?? !e.target.id) return;
+    if (!e.target.closest('input') ?? !e.target.id) return;
     updateFormInputText((formInputList) => {
       const copiedFormInputList = [...formInputList];
       const activeCopiedFormInput = copiedFormInputList.find(
@@ -138,10 +138,14 @@ const AddPodcastInfo = ({
   const handleRemoveFile = () => {
     // reset image file to null to remove image
     setImage(null);
+
+    // get dom element from file input ref
     const fileInputElement = podcastInfoFormRef?.current.querySelector(
       '[data-input-id="inputFileUpload"]'
     );
-    fileInputElement.value = "";
+    if (!fileInputElement) return;
+    // set value to empty string to clear file from file input
+    fileInputElement.value = '';
   };
 
   const handleImageFileChange = (e) => {
@@ -159,7 +163,7 @@ const AddPodcastInfo = ({
     // help with image renders and performance on mobile
     if (e.target.files[0].size > 500000) {
       return updateFormErrorMsgState(
-        "Image too large. Please upload images no larger than 500 KB"
+        'Image too large. Please upload images no larger than 500 KB'
       );
     }
 
@@ -174,13 +178,13 @@ const AddPodcastInfo = ({
   const handleAddPodcastInfoSubmit = (e) => {
     e.preventDefault();
     // check that current target is form, otherwise return
-    const form = e.currentTarget.closest("form");
+    const form = e.currentTarget.closest('form');
     if (!form) return;
 
     // check if image is currently present from image upload input, return if not
     if (!currentImage) {
       return updateFormErrorMsgState(
-        "Please upload an image to save your info."
+        'Please upload an image to save your info.'
       );
     }
 
@@ -205,7 +209,7 @@ const AddPodcastInfo = ({
         <ModalOverlay className="builder__section-modal-overlay" />
         <ModalContent
           className="builder__section-modal-content"
-          maxW={isLargerThan450 ? "530px" : "380px"}
+          maxW={isLargerThan450 ? '530px' : '380px'}
           maxH="577px"
           margin="15px"
         >
@@ -248,7 +252,7 @@ const AddPodcastInfo = ({
                   ref={initialRef}
                   placeholder="Enter podcast name"
                   _focus={{
-                    border: "1px solid #773AE7",
+                    border: '1px solid #773AE7',
                   }}
                   minLength="2"
                   maxLength="70"
@@ -275,7 +279,7 @@ const AddPodcastInfo = ({
                   id="podcastTitleInput"
                   className="builder__section-modal-form-input"
                   _focus={{
-                    border: "1px solid #773AE7",
+                    border: '1px solid #773AE7',
                   }}
                   h="44px"
                   borderRadius="4px"
@@ -311,7 +315,7 @@ const AddPodcastInfo = ({
                   h="150px"
                   borderRadius="4px"
                   border={
-                    formErrorMsg ? "1px solid #E53E3E" : "1px solid #C6C6C6"
+                    formErrorMsg ? '1px solid #E53E3E' : '1px solid #C6C6C6'
                   }
                 >
                   {!currentImage && (
@@ -394,7 +398,7 @@ const AddPodcastInfo = ({
             <ModalFooter className="builder__section-modal-footer">
               <Button
                 _hover={{
-                  opacity: ".8",
+                  opacity: '.8',
                 }}
                 background="transparent"
                 onClick={() => closeModal(false)}
@@ -408,7 +412,7 @@ const AddPodcastInfo = ({
               <Button
                 type="submit"
                 _hover={{
-                  opacity: ".8",
+                  opacity: '.8',
                 }}
                 fontSize="16px"
                 fontWeight="700"

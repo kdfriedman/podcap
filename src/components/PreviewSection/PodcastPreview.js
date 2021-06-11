@@ -21,7 +21,6 @@ import { PreviewContext } from '../../context/PreviewContext';
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
   const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
-  const [isLargerThan425] = useMediaQuery('(min-width: 425px)');
 
   // chakra handlers for modal component
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,7 +51,7 @@ const PodcastPreview = () => {
         (formSubmitCount) => formSubmitCount + podcastInfoSubmitCount
       );
     }
-  }, [fileToBase64, podcastInfoSubmitCount]);
+  }, [fileToBase64, podcastInfoSubmitCount, updateHasImageStoredInContext]);
 
   // used for checking if textarea elements have any saved text in context data store
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
@@ -183,7 +182,7 @@ const PodcastPreview = () => {
   return (
     <Flex
       justify="flex-start"
-      w={isLargerThan450 ? '314px' : '290px'}
+      w={isLargerThan450 ? '338px' : '290px'}
       border="1px solid #888"
       borderRadius="4px"
       className="builder__section-podcast-preview"
