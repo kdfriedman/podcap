@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useContext } from "react";
-import { Accordion } from "@chakra-ui/react";
-import update from "immutability-helper";
-import DraggableAccordion from "./DraggableAccordion";
-import { BuilderContext } from "../../context/BuilderContext";
+import React, { useState, useCallback, useContext } from 'react';
+import { Accordion } from '@chakra-ui/react';
+import update from 'immutability-helper';
+import DraggableAccordion from './DraggableAccordion';
+import { BuilderContext } from '../../context/BuilderContext';
 
 const AccordionModule = () => {
   // get context updater function to keep track of global state
@@ -10,12 +10,28 @@ const AccordionModule = () => {
 
   // set state for section title input values with associated ids
   const [accItemList, updateAccItemList] = useState([
-    { accItemTitleText: "Episode Summary", id: 1 },
-    { accItemTitleText: "Guest Info", id: 2 },
-    { accItemTitleText: "Referenced Media", id: 3 },
-    { accItemTitleText: "Sponsored Links", id: 4 },
+    {
+      accItemTitleText: 'Episode Summary',
+      id: 1,
+      tipDescription:
+        'Provide an overview describing the main episodehighlights.',
+    },
+    {
+      accItemTitleText: 'Guest Info',
+      id: 2,
+      tipDescription: 'Provide a brief summary of your guest',
+    },
+    {
+      accItemTitleText: 'Referenced Media',
+      id: 3,
+      tipDescription: 'Share any links or media referenced during the episode',
+    },
+    {
+      accItemTitleText: 'Sponsored Links',
+      id: 4,
+      tipDescription: 'List any brand/affiliate partners',
+    },
   ]);
-
   // allows us to update the state as an entire object and alter order of each item in the arr
   const moveAccordion = useCallback(
     (dragIndex, hoverIndex) => {
@@ -61,6 +77,7 @@ const AccordionModule = () => {
         key={accItem.id}
         index={index}
         id={accItem.id}
+        tipDescription={accItem.tipDescription}
         accItemTitleText={accItem.accItemTitleText}
         moveAccordion={moveAccordion}
         updateAccItemList={updateAccItemList}
@@ -84,8 +101,8 @@ const AccordionModule = () => {
         className="builder__accordion-container"
         backgroundColor="white"
         m={{
-          base: "1.75rem",
-          md: "16px 24px",
+          base: '1.75rem',
+          md: '16px 24px',
         }}
         borderRadius="6px"
         w="100%"

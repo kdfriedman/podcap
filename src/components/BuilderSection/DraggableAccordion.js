@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 import {
   AccordionItem,
   AccordionButton,
@@ -7,12 +7,12 @@ import {
   Text,
   Flex,
   useMediaQuery,
-} from "@chakra-ui/react";
-import EditSectionTitle from "./EditSectionTitle";
-import SectionTextarea from "./SectionTextarea";
-import HideSection from "./HideSection";
-import { DragHandleIcon } from "@chakra-ui/icons";
-import { useDrag, useDrop } from "react-dnd";
+} from '@chakra-ui/react';
+import EditSectionTitle from './EditSectionTitle';
+import SectionTextarea from './SectionTextarea';
+import HideSection from './HideSection';
+import { DragHandleIcon } from '@chakra-ui/icons';
+import { useDrag, useDrop } from 'react-dnd';
 
 const DraggableAccordion = (props) => {
   // create duplicate local state to use for hiding accordions
@@ -20,14 +20,14 @@ const DraggableAccordion = (props) => {
     builderSectionVisibilityList,
     updateBuilderSectionVisibilityList,
   ] = useState([
-    { id: "1", isVisible: true },
-    { id: "2", isVisible: true },
-    { id: "3", isVisible: true },
-    { id: "4", isVisible: true },
+    { id: '1', isVisible: true },
+    { id: '2', isVisible: true },
+    { id: '3', isVisible: true },
+    { id: '4', isVisible: true },
   ]);
 
   // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
-  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+  const [isLargerThan420] = useMediaQuery('(min-width: 420px)');
 
   // set state for section edit title isEditing status with associated ids
   const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
@@ -51,7 +51,7 @@ const DraggableAccordion = (props) => {
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
-    accept: "accItem",
+    accept: 'accItem',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -98,7 +98,7 @@ const DraggableAccordion = (props) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: "accItem",
+    type: 'accItem',
     item: () => {
       return { id: props.id, index: props.index };
     },
@@ -124,7 +124,7 @@ const DraggableAccordion = (props) => {
         <AccordionButton
           onClick={handleSpaceBarEditSection}
           _hover={{
-            background: "none",
+            background: 'none',
           }}
           p="16px"
           maxH="56px"
@@ -154,7 +154,7 @@ const DraggableAccordion = (props) => {
           {!builderSectionVisibilityList[props.id - 1].isVisible && (
             <>
               <Flex
-                display={isLargerThan420 ? "flex" : "none"}
+                display={isLargerThan420 ? 'flex' : 'none'}
                 margin="0 8px"
                 padding="1px 0"
                 maxWidth="5rem"
@@ -185,8 +185,7 @@ const DraggableAccordion = (props) => {
           lineHeight="1.3em"
           className="builder__accordion-tip-text"
         >
-          <strong>Tip:</strong> Provide an overview describing the main episode
-          highlights.
+          <strong>Tip:</strong> {props.tipDescription}
         </Text>
         {/* Instantiate SectionInput component - handles user input for rendering shownotes */}
         <SectionTextarea sectionId={props.id} />
