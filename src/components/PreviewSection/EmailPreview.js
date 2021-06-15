@@ -245,13 +245,14 @@ const EmailPreview = () => {
         (hasImageStoredInContext && formSubmitCount >= 1) ? (
           <Flex
             className="builder__section-podcast-image-preview-container"
+            maxHeight="88px"
             alignItems="center"
             onClick={onOpen}
           >
             <Box
               className="builder__section-modal-edit-icon-container"
               position="absolute"
-              top="292px"
+              top="260px"
               left="21px"
               width="78px"
               height="78px"
@@ -364,6 +365,7 @@ const EmailPreview = () => {
         <Flex
           direction="column"
           className="builder__section-podcast-controls-container"
+          maxHeight="88px"
           justifyContent="center"
           marginLeft={
             isPodcastInfoSubmitted ??
