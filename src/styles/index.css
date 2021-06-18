@@ -99,6 +99,11 @@ div.chakra-alert {
   height: 25px;
 }
 
+.hyperlink {
+  color: #773ae7;
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 950px) {
   .builder__section-podcast-image-preview-container:hover
     .builder__section-modal-edit-icon-container {

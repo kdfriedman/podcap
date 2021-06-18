@@ -17,6 +17,7 @@ import { MdModeEdit } from 'react-icons/md';
 import { BuilderContext } from '../../context/BuilderContext';
 import AddPodcastInfo from './AddPodcastInfo';
 import { PreviewContext } from '../../context/PreviewContext';
+import parse from 'html-react-parser';
 
 const PodcastPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
@@ -265,6 +266,19 @@ const PodcastPreview = () => {
         {/* Check if builder sections are all empty */}
         {!hasEmptyBuilderSectionTextareaValues ? (
           builderSectionTextareaList.map((section) => {
+            // TODO: refactor into smaller functions (hyperLink and linebreak funcs)
+            const listOfSectionTextWords = section.text.split(' ');
+
+            const reformattedSectionTextArr = listOfSectionTextWords.map(
+              (word) => {
+                word = word.replace(
+                  /http(s)?:\/\/[\w-.]+\.[a-z]+\/?[^\s]+/gi,
+                  `<a target='_blank' href='$&'><span class='hyperlink'>$&</span></a>`
+                );
+                return word;
+              }
+            );
+
             return (
               <Text
                 whiteSpace="pre-line"
@@ -279,7 +293,9 @@ const PodcastPreview = () => {
                 id={`podcastPreviewShownotesText-${section?.id}`}
                 key={section?.id}
               >
-                {section?.text}
+                {/* pass in section text which is being reduced into a string which 
+                may have injected span elements to deal with hyperlinks. Join array of words into final string */}
+                {parse(reformattedSectionTextArr.join(' '))}
               </Text>
             );
           })
