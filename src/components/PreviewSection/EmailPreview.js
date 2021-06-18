@@ -59,6 +59,13 @@ const EmailPreview = () => {
   const hasEmptyBuilderSectionTextareaValues = builderSectionTextareaList.every(
     (builderSectionTextarea) => builderSectionTextarea.text === ''
   );
+
+  const injectMarkupIntoWord = (match, offset, string) => {
+    return `<a target='_blank' href=${
+      /http(s)?/gi.test(match) ? match : 'https://' + match
+    }><span class='hyperlink'>${match}</span></a>`;
+  };
+
   return (
     <Flex
       justify="flex-start"
@@ -448,8 +455,8 @@ const EmailPreview = () => {
               const reformattedSectionTextArr = listOfSectionTextWords.map(
                 (word) => {
                   word = word.replace(
-                    /http(s)?:\/\/[\w-.]+\.[a-z]+\/?[^\s]+/gi,
-                    `<a target='_blank' href='$&'><span class='hyperlink'>$&</span></a>`
+                    /(http(s)?:\/\/)?(www\.)?[\w-.]+\.[a-z]+\/?[^\s]+/gi,
+                    injectMarkupIntoWord
                   );
                   return word;
                 }
