@@ -19,6 +19,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { BuilderContext } from '../../context/BuilderContext';
 import AddPodcastInfo from './AddPodcastInfo';
 import { PreviewContext } from '../../context/PreviewContext';
+import parse from 'html-react-parser';
 
 const EmailPreview = () => {
   // setup conditional media query hook to render conditionally based on viewport width
@@ -443,6 +444,16 @@ const EmailPreview = () => {
             direction="column"
           >
             {builderSectionTextareaList.map((section) => {
+              const listOfSectionTextWords = section.text.split(' ');
+              const reformattedSectionTextArr = listOfSectionTextWords.map(
+                (word) => {
+                  word = word.replace(
+                    /http(s)?:\/\/[\w-.]+\.[a-z]+\/?[^\s]+/gi,
+                    `<a target='_blank' href='$&'><span class='hyperlink'>$&</span></a>`
+                  );
+                  return word;
+                }
+              );
               return (
                 <Text
                   whiteSpace="pre-line"
@@ -457,7 +468,9 @@ const EmailPreview = () => {
                   key={`podcastEmailShownotesText-${section?.id}`}
                   id={section?.id}
                 >
-                  {section?.text}
+                  {/* pass in section text which is being reduced into a string which 
+                may have injected span elements to deal with hyperlinks. Join array of words into final string */}
+                  {parse(reformattedSectionTextArr.join(' '))}
                 </Text>
               );
             })}

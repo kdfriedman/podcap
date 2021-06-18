@@ -266,9 +266,7 @@ const PodcastPreview = () => {
         {/* Check if builder sections are all empty */}
         {!hasEmptyBuilderSectionTextareaValues ? (
           builderSectionTextareaList.map((section) => {
-            // TODO: refactor into smaller functions (hyperLink and linebreak funcs)
             const listOfSectionTextWords = section.text.split(' ');
-
             const reformattedSectionTextArr = listOfSectionTextWords.map(
               (word) => {
                 word = word.replace(
