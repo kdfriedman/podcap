@@ -6,15 +6,16 @@ import {
   Text,
   Spacer,
   Image,
+  Button,
   useMediaQuery,
   useDisclosure,
 } from '@chakra-ui/react';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { FiMail, FiTrash, FiEdit } from 'react-icons/fi';
 import { BiArchiveIn, BiDotsHorizontalRounded } from 'react-icons/bi';
 import { AiFillPlusCircle, AiFillPlayCircle } from 'react-icons/ai';
 import { MdModeEdit } from 'react-icons/md';
-
 import { FaUserCircle } from 'react-icons/fa';
 import { BuilderContext } from '../../context/BuilderContext';
 import AddPodcastInfo from './AddPodcastInfo';
@@ -40,9 +41,8 @@ const EmailPreview = () => {
   // podcast info submit state
   const [isPodcastInfoSubmitted, updateIsPodcastInfoSubmitted] = useState(null);
   // keep local state to determine if image is being stored in context
-  const [hasImageStoredInContext, updateHasImageStoredInContext] = useState(
-    null
-  );
+  const [hasImageStoredInContext, updateHasImageStoredInContext] =
+    useState(null);
   // keep state to keep track how many times the form has been submitted
   const [formSubmitCount, updateFormSubmitCount] = useState(0);
 
@@ -481,6 +481,395 @@ const EmailPreview = () => {
                 </Text>
               );
             })}
+            {/* TODO: add newsletter image cards and social information here: */}
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              className="builder__section-newsletter-brand-container"
+            >
+              <Image
+                loading="lazy"
+                margin="2px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/listen_apple.png"
+                borderRadius="10px"
+                cursor="pointer"
+              />
+              <Image
+                loading="lazy"
+                margin="2px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/listen_spotify.png"
+                borderRadius="10px"
+                cursor="pointer"
+              />
+              <Image
+                loading="lazy"
+                margin="2px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/listen_google.png"
+                borderRadius="10px"
+                cursor="pointer"
+              />
+              <Image
+                cursor="pointer"
+                loading="lazy"
+                margin="2px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/listen_youtube.png"
+                borderRadius="10px"
+              />
+              <Spacer
+                className="builder__horizontol-divider"
+                borderTop="1px solid #CBCBCB"
+                margin="15px 14px 0 12px"
+                maxHeight="1px"
+              />
+              <Text
+                margin="15px 15px 0 15px"
+                fontSize="20px"
+                lineHeight="25px"
+                fontFamily="Inter, san-serif"
+                fontWeight="700"
+                color="#000000"
+                className="builder__section-newsletter-epsisode-list-title"
+              >
+                Link to previous episodes:
+              </Text>
+              <Box
+                margin="0 15px"
+                className="builder__section-newsletter-epsisode-list-item"
+                textDecoration="underline"
+                color="#444"
+              >
+                Ep 04: Episode Title
+              </Box>
+              <Box
+                textDecoration="underline"
+                color="#444"
+                margin="0 15px"
+                className="builder__section-newsletter-epsisode-list-item"
+              >
+                Ep 03: Episode Title
+              </Box>
+              <Box
+                textDecoration="underline"
+                color="#444"
+                margin="0 15px"
+                className="builder__section-newsletter-epsisode-list-item"
+              >
+                Ep 02: Episode Title
+              </Box>
+              <Box
+                textDecoration="underline"
+                color="#444"
+                margin="0 15px"
+                className="builder__section-newsletter-epsisode-list-item"
+              >
+                Ep 01: Episode Title
+              </Box>
+              <Box
+                className="builder__section-newsletter-episode-btn"
+                margin="15px 0 25px 0"
+                padding="10px 17px"
+                backgroundColor="#e8e8e8"
+                color="#888"
+                borderRadius="4px"
+                width="12rem"
+                alignSelf="center"
+                textAlign="center"
+                fontWeight="600"
+                cursor="pointer"
+              >
+                VIEW ALL EPISODES
+              </Box>
+              <Spacer
+                className="builder__horizontol-divider"
+                borderTop="1px solid #CBCBCB"
+                margin="15px 14px 0 12px"
+                maxHeight="1px"
+              />
+              <Text
+                margin="15px 15px 0 15px"
+                fontSize="20px"
+                lineHeight="25px"
+                fontFamily="Inter, san-serif"
+                fontWeight="700"
+                color="#000000"
+                className="builder__section-newsletter-brand-card"
+              >
+                Link to your Patreon page!
+              </Text>
+              <Image
+                cursor="pointer"
+                loading="lazy"
+                margin="15px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/banner_patreon.png"
+                borderRadius="10px"
+              />
+              <Box
+                className="builder__section-newsletter-brand-btn"
+                margin="0 0 25px 0"
+                padding="10px 17px"
+                backgroundColor="#e8e8e8"
+                color="#888"
+                borderRadius="4px"
+                width="13rem"
+                alignSelf="center"
+                textAlign="center"
+                fontWeight="600"
+                cursor="pointer"
+              >
+                BECOME A PATREON
+              </Box>
+              <Spacer
+                className="builder__horizontol-divider"
+                borderTop="1px solid #CBCBCB"
+                margin="15px 14px 0 12px"
+                maxHeight="1px"
+              />
+              <Text
+                margin="15px 15px 0 15px"
+                fontSize="20px"
+                lineHeight="25px"
+                fontFamily="Inter, san-serif"
+                fontWeight="700"
+                color="#000000"
+                className="builder__section-newsletter-brand-card"
+              >
+                Link to your Shopify store!
+              </Text>
+              <Image
+                cursor="pointer"
+                loading="lazy"
+                margin="15px 7px"
+                alignSelf="center"
+                width={isLargerThan450 ? '20rem' : '17rem'}
+                height="100%"
+                alt="podcast brand"
+                className="builder__section-newsletter-brand-card"
+                src="/assets/banner_shopify.png"
+                borderRadius="10px"
+              />
+              <Box
+                className="builder__section-newsletter-brand-btn"
+                margin="0 0 25px 0"
+                padding="10px 17px"
+                backgroundColor="#e8e8e8"
+                color="#888"
+                borderRadius="4px"
+                width="8rem"
+                alignSelf="center"
+                textAlign="center"
+                fontWeight="600"
+                cursor="pointer"
+              >
+                SHOP NOW
+              </Box>
+              <Spacer
+                className="builder__horizontol-divider"
+                borderTop="1px solid #CBCBCB"
+                margin="15px 14px 0 12px"
+                maxHeight="1px"
+              />
+              <Text
+                margin="15px 15px"
+                fontSize="20px"
+                lineHeight="25px"
+                fontFamily="Inter, san-serif"
+                fontWeight="700"
+                color="#000000"
+                className="builder__section-newsletter-social-title"
+              >
+                Where your listeners can find you:
+              </Text>
+              <Flex
+                flexDirection="row"
+                className="builder__section-newsletter-social-icon-container"
+                alignItems="center"
+                margin="5px 0"
+              >
+                <Image
+                  margin="0 5px 0 15px"
+                  cursor="pointer"
+                  loading="lazy"
+                  width={isLargerThan450 ? '2.3rem' : '2rem'}
+                  height="100%"
+                  alt="social media company"
+                  className="builder__section-newsletter-social-icon"
+                  src="/assets/icon-website.png"
+                />
+                <Box
+                  color="000"
+                  fontWeight="500"
+                  margin="0 5px"
+                  className="builder__section-newsletter-social-text"
+                >
+                  Website
+                </Box>
+              </Flex>
+              <Flex
+                margin="5px 0"
+                flexDirection="row"
+                className="builder__section-newsletter-social-icon-container"
+                alignItems="center"
+              >
+                <Image
+                  margin="0 5px 0 15px"
+                  cursor="pointer"
+                  loading="lazy"
+                  width={isLargerThan450 ? '2.3rem' : '2rem'}
+                  height="100%"
+                  alt="social media company"
+                  className="builder__section-newsletter-social-icon"
+                  src="/assets/icon-facebook.png"
+                />
+                <Box
+                  color="000"
+                  fontWeight="500"
+                  margin="0 5px"
+                  className="builder__section-newsletter-social-text"
+                >
+                  Facebook
+                </Box>
+              </Flex>
+              <Flex
+                margin="5px 0"
+                flexDirection="row"
+                className="builder__section-newsletter-social-icon-container"
+                alignItems="center"
+              >
+                <Image
+                  margin="0 5px 0 15px"
+                  cursor="pointer"
+                  loading="lazy"
+                  width={isLargerThan450 ? '2.3rem' : '2rem'}
+                  height="100%"
+                  alt="social media company"
+                  className="builder__section-newsletter-social-icon"
+                  src="/assets/icon-youtube.png"
+                />
+                <Box
+                  color="000"
+                  fontWeight="500"
+                  margin="0 5px"
+                  className="builder__section-newsletter-social-text"
+                >
+                  Youtube
+                </Box>
+              </Flex>
+              <Flex
+                margin="5px 0"
+                flexDirection="row"
+                className="builder__section-newsletter-social-icon-container"
+                alignItems="center"
+              >
+                <Image
+                  margin="0 5px 0 15px"
+                  cursor="pointer"
+                  loading="lazy"
+                  width={isLargerThan450 ? '2.3rem' : '2rem'}
+                  height="100%"
+                  alt="social media company"
+                  className="builder__section-newsletter-social-icon"
+                  src="/assets/icon-instagram.png"
+                />
+                <Box
+                  color="000"
+                  fontWeight="500"
+                  margin="0 5px"
+                  className="builder__section-newsletter-social-text"
+                >
+                  Instagram
+                </Box>
+              </Flex>
+              <Flex
+                margin="5px 0"
+                flexDirection="row"
+                className="builder__section-newsletter-social-icon-container"
+                alignItems="center"
+              >
+                <Image
+                  margin="0 5px 0 15px"
+                  cursor="pointer"
+                  loading="lazy"
+                  width={isLargerThan450 ? '2.3rem' : '2rem'}
+                  height="100%"
+                  alt="social media company"
+                  className="builder__section-newsletter-social-icon"
+                  src="/assets/icon-twitter.png"
+                />
+                <Box
+                  color="000"
+                  fontWeight="500"
+                  margin="0 5px"
+                  className="builder__section-newsletter-social-text"
+                >
+                  Twitter
+                </Box>
+              </Flex>
+              <Flex
+                margin="10px 10px 0 10px"
+                position="relative"
+                top="15px"
+                paddingBottom="1.75rem"
+                flexDirection="column"
+                backgroundColor="#f5f5f5"
+              >
+                <Image
+                  cursor="pointer"
+                  loading="lazy"
+                  margin="15px 7px 10px"
+                  alignSelf="center"
+                  width="100%"
+                  maxWidth={isLargerThan450 ? '12rem' : '11rem'}
+                  height="100%"
+                  objectFit="contain"
+                  alt="podcast brand"
+                  className="builder__section-made-with-podcap-img"
+                  src="/assets/made-with-podcap.png"
+                  borderRadius="10px"
+                />
+                <Button
+                  _hover={{
+                    opacity: '.8',
+                  }}
+                  fontFamily="Inter, san-serif"
+                  fontWeight="800"
+                  fontSize="15px"
+                  color="#fff"
+                  backgroundColor="#773ae7"
+                  borderRadius="4px"
+                  padding="9px 16px"
+                  rightIcon={<ArrowForwardIcon w="20px" h="20px" />}
+                  maxWidth={isLargerThan450 ? '18rem' : '17rem'}
+                  alignSelf="center"
+                >
+                  Get started with Podcap today!
+                </Button>
+              </Flex>
+            </Flex>
           </Flex>
         ) : (
           <>

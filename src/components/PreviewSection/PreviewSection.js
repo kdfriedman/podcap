@@ -132,7 +132,11 @@ const PreviewSection = () => {
       <Flex
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
-        backgroundImage='url("/assets/mobile-frame-lg.png")'
+        backgroundImage={
+          isLargerThan450
+            ? 'url("/assets/mobile-frame-lg.png")'
+            : 'url("/assets/mobile-frame-sm.png")'
+        }
         className="builder__section"
         height="100%"
         width={isLargerThan450 ? '700px' : '575px'}
