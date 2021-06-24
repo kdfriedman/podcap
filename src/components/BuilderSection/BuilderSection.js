@@ -1,5 +1,5 @@
-import { Flex, Heading } from "@chakra-ui/react";
-import AccordionModule from "./AccordionModule";
+import { Flex, Heading, Image, Text } from '@chakra-ui/react';
+import AccordionModule from './AccordionModule';
 
 const BuilderSection = () => {
   return (
@@ -28,9 +28,24 @@ const BuilderSection = () => {
           fontWeight="800"
           lineHeight="1.4em"
           textAlign="center"
+          display="flex"
+          direction="column"
+          alignItems="center"
         >
-          Podcast Episode Show Notes Builder
+          <Image
+            maxWidth="23px"
+            maxHeight="23px"
+            src="/assets/hand_wave_emoji.svg"
+            marginRight="7px"
+          />
+          <Text>Build your show notes here</Text>
         </Heading>
+        <Image
+          src="/assets/build-notes-arrow.png"
+          maxHeight="3.25rem"
+          position="relative"
+          top="10px"
+        />
       </Flex>
       <Flex overflow="scroll" h="100%" w="100%" className="builder__section">
         <AccordionModule />

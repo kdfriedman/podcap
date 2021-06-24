@@ -1,63 +1,86 @@
-import { useState, useCallback } from "react";
-import { Accordion } from "@chakra-ui/react";
-import update from "immutability-helper";
-import RearrangeSection from "./RearrangeSection";
+import React, { useState, useCallback, useContext } from 'react';
+import { Accordion } from '@chakra-ui/react';
+import update from 'immutability-helper';
+import DraggableAccordion from './DraggableAccordion';
+import { BuilderContext } from '../../context/BuilderContext';
 
 const AccordionModule = () => {
+  // get context updater function to keep track of global state
+  const [, updateBuilderSectionTextarea] = useContext(BuilderContext);
+
   // set state for section title input values with associated ids
   const [accItemList, updateAccItemList] = useState([
-    { accItemTitleText: "Episode Summary", id: 1 },
-    { accItemTitleText: "Guest Info", id: 2 },
-    { accItemTitleText: "Referenced Media", id: 3 },
-    { accItemTitleText: "Sponsored Links", id: 4 },
+    {
+      accItemTitleText: 'Episode Summary',
+      id: 1,
+      tipDescription:
+        'Provide an overview describing the main episode highlights.',
+    },
+    {
+      accItemTitleText: 'Guest Info',
+      id: 2,
+      tipDescription: 'Provide a brief summary of your guest.',
+    },
+    {
+      accItemTitleText: 'Referenced Media',
+      id: 3,
+      tipDescription: 'Share any links or media referenced during the episode.',
+    },
+    {
+      accItemTitleText: 'Sponsored Links',
+      id: 4,
+      tipDescription: 'List any brand/affiliate partners.',
+    },
   ]);
-
-  // set state for section edit title isEditing status with associated ids
-  const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
-    { sectionTitle: false, id: 1 },
-    { sectionTitle: false, id: 2 },
-    { sectionTitle: false, id: 3 },
-    { sectionTitle: false, id: 4 },
-  ]);
-
-  // handle Accordion button space bar while editing input is active
-  const handleSpaceBarEditSection = (e) => {
-    const isEditingStatusList = isEditingSectionTitle.filter((editSection) => {
-      return editSection.sectionTitle;
-    });
-    if (isEditingStatusList.length > 0) {
-      e.preventDefault();
-    }
-  };
-
   // allows us to update the state as an entire object and alter order of each item in the arr
   const moveAccordion = useCallback(
     (dragIndex, hoverIndex) => {
       const dragAccordion = accItemList[dragIndex];
-      updateAccItemList(
+      let mutatedAccItemList;
+
+      updateAccItemList((accItemList) => {
         // special package from immutability-helper
-        update(accItemList, {
+        // uses drag index to remove the item from the accItemList array,
+        // then uses the hover index to figure out where to add the removed item back into the accItem array at the new index
+        mutatedAccItemList = update(accItemList, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragAccordion],
           ],
-        })
-      );
+        });
+        return mutatedAccItemList;
+      });
+
+      updateBuilderSectionTextarea((builderSectionTextareaList) => {
+        // get correlated matching textarea from draggable accordion by index
+        const draggedBuilderSection = builderSectionTextareaList[dragIndex];
+        // update textarea position onDrag, which correlates to accordion which has been dragged to a new index
+        const mutatedBuilderSectionTextareaList = update(
+          builderSectionTextareaList,
+          {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, draggedBuilderSection],
+            ],
+          }
+        );
+        return mutatedBuilderSectionTextareaList;
+      });
     },
-    [accItemList]
+    [accItemList, updateBuilderSectionTextarea]
   );
+
+  // handler to render draggable accordion section which returns jsx
   const renderDraggableAccoridions = (accItem, index) => {
     return (
-      <RearrangeSection
+      <DraggableAccordion
         key={accItem.id}
         index={index}
         id={accItem.id}
+        tipDescription={accItem.tipDescription}
         accItemTitleText={accItem.accItemTitleText}
         moveAccordion={moveAccordion}
-        isEditingSectionTitle={isEditingSectionTitle}
-        updateIsEditingSectionTitle={updateIsEditingSectionTitle}
         updateAccItemList={updateAccItemList}
-        handleSpaceBarEditSection={handleSpaceBarEditSection}
         accItem={accItem}
       />
     );
@@ -77,13 +100,15 @@ const AccordionModule = () => {
       <Accordion
         className="builder__accordion-container"
         backgroundColor="white"
-        m="16px 24px"
+        m={{
+          base: '1.75rem',
+          md: '16px 24px',
+        }}
         borderRadius="6px"
         w="100%"
         h="fit-content"
         boxShadow="0 2px 6px 0 rgb(0 0 0 / 20%)"
         defaultIndex={[0]}
-        allowMultiple
       >
         {/* Render accordion list of sections */}
         {accItemList.length > 0 && renderAccoridions()}

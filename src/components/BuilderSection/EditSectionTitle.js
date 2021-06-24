@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Icon, Input, FormControl } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Icon,
+  Input,
+  FormControl,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { MdModeEdit } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
+import isTouchDevice from "../../util/getDeviceType";
 
 const EditSectionTitle = ({
   updateAccItemList,
@@ -8,6 +17,9 @@ const EditSectionTitle = ({
   isEditingSectionTitle,
   updateIsEditingSectionTitle,
 }) => {
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery("(min-width: 420px)");
+
   const sectionTitleFormRef = useRef();
   const sectionTitleInputRef = useRef();
 
@@ -99,14 +111,19 @@ const EditSectionTitle = ({
   const handleSectionTitleSave = (e) => {
     e.preventDefault();
 
-    // set draggable container element back to true when section title input focus is lost and onblur event occurs
-    const draggableContainer = e.target.closest("[data-handler-id]");
-    if (!draggableContainer) return;
-    draggableContainer.setAttribute("draggable", "true");
+    // only set draggable attribute back to true for non-touch devices
+    if (!isTouchDevice()) {
+      // set draggable container element back to true when section title input focus is lost and onblur event occurs
+      const draggableContainer = e.target.closest("[data-handler-id]");
+      if (!draggableContainer) return;
+      draggableContainer.setAttribute("draggable", "true");
+    }
 
-    const targetId = e.target.id
-      ? parseInt(e.target.id.slice(e.target.id.length - 1))
+    const targetEl = e.target.closest("[id^=sectionTitle]");
+    const targetId = targetEl.id
+      ? parseInt(targetEl.id.slice(targetEl.id.length - 1))
       : null;
+    if (!targetEl || !targetId) return;
 
     // update save edit section state
     updateIsEditingSectionTitle((sectionTitleList) => {
@@ -149,14 +166,24 @@ const EditSectionTitle = ({
   };
 
   const handleInputFocus = (e) => {
-    // remove draggable attribute to prevent accordion from dragging while editing section title input
-    const draggableContainer = e.target.closest("[data-handler-id]");
-    if (!draggableContainer) return;
-    draggableContainer.setAttribute("draggable", "false");
+    // check if device is non-touch and set attr to false to prevent dragging during editing
+    if (!isTouchDevice()) {
+      // remove draggable attribute to prevent accordion from dragging while editing section title input
+      const draggableContainer = e.target.closest("[data-handler-id]");
+      if (!draggableContainer) return;
+      draggableContainer.setAttribute("draggable", "false");
+    }
+  };
+
+  // prevent accordion from dragging on touch devices while editing section title
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   return (
     <Box
+      className="builder__section-title-container"
       flexDirection="row"
       display="flex"
       alignItems="center"
@@ -165,6 +192,7 @@ const EditSectionTitle = ({
       fontWeight="700"
       flex="1"
       textAlign="left"
+      width="32px"
     >
       {isEditingSectionTitle[accItem.id - 1].sectionTitle ? (
         <>
@@ -177,6 +205,7 @@ const EditSectionTitle = ({
             <FormControl id={`sectionTitleControlInput${accItem.id}`}>
               {/* Max length char count of 45 characters */}
               <Input
+                onTouchMove={handleTouchMove}
                 onFocus={handleInputFocus}
                 maxLength="45"
                 ref={sectionTitleInputRef}
@@ -203,12 +232,24 @@ const EditSectionTitle = ({
               padding="9px 14px"
               marginLeft="4px"
             >
-              Save
+              {isLargerThan420 ? (
+                "Save"
+              ) : (
+                <Flex justifyContent="center" alignItems="center">
+                  <Icon
+                    className="builder__section-title-save-icon"
+                    as={FaSave}
+                    color="#fff"
+                    w="1.2rem"
+                    h="1.2rem"
+                  />
+                </Flex>
+              )}
             </Box>
           </form>
         </>
       ) : (
-        <Box className="builder__section-title-text">
+        <Box isTruncated className="builder__section-title-text">
           {accItem.accItemTitleText}
         </Box>
       )}
@@ -219,8 +260,8 @@ const EditSectionTitle = ({
         padding="1rem 1rem 1rem 0rem"
       >
         <Icon
+          display={{ base: "flex", lg: "none" }}
           className="builder__section-title-edit-icon"
-          display="none"
           ml=".6rem"
           as={MdModeEdit}
         />

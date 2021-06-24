@@ -1,8 +1,23 @@
-import { Flex, Image } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import CopyShownotes from "./CopyShownotes";
+import { useContext } from 'react';
+import { Flex, Image, Link, useMediaQuery } from '@chakra-ui/react';
+import CopyShownotes from './CopyShownotes';
+import PreviewNotes from './PreviewNotes';
+import EditNotes from './EditNotes';
+import { TouchDeviceContext } from '../../context/TouchDeviceContext';
 
 const Nav = () => {
+  // get touch device context updater function to change visible state of sections
+  const [touchDeviceSectionVisibilityList] = useContext(TouchDeviceContext);
+  const [builderSection, previewSection] = touchDeviceSectionVisibilityList;
+
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery('(min-width: 420px)');
+  const [isLargerThan950] = useMediaQuery('(min-width: 950px)');
+
+  const renderCopyShowNotes = () => {
+    if (previewSection.isSectionVisible) return <CopyShownotes />;
+  };
+
   return (
     <>
       <Flex
@@ -16,17 +31,44 @@ const Nav = () => {
         align="center"
         pos="relative"
       >
-        <NavLink className="nav__logo" to="/">
-          <Image
-            maxW="140px"
-            maxH="42px"
-            w="100%"
-            h="100%"
-            src="/assets/podcap-logo.png"
-            alt="Podcap Logo"
-          />
-        </NavLink>
-        <CopyShownotes />
+        {isLargerThan950 ? (
+          <Link className="nav__logo" href="https://www.podcap.io/" isExternal>
+            <Image
+              maxW={isLargerThan420 ? '215px' : '42px'}
+              w="100%"
+              h="100%"
+              src={
+                isLargerThan420
+                  ? '/assets/logo_podcapbuilder.png'
+                  : '/assets/podcap_logo-svg.svg'
+              }
+              alt="Podcap Logo"
+            />
+          </Link>
+        ) : (
+          builderSection.isSectionVisible && (
+            <Link
+              className="nav__logo"
+              href="https://www.podcap.io/"
+              isExternal
+            >
+              <Image
+                maxW={isLargerThan420 ? '215px' : '42px'}
+                w="100%"
+                h="100%"
+                src={
+                  isLargerThan420
+                    ? '/assets/logo_podcapbuilder.png'
+                    : '/assets/podcap_logo-svg.svg'
+                }
+                alt="Podcap Logo"
+              />
+            </Link>
+          )
+        )}
+        {builderSection.isSectionVisible && <PreviewNotes />}
+        {previewSection.isSectionVisible && <EditNotes />}
+        {isLargerThan950 ? <CopyShownotes /> : renderCopyShowNotes()}
       </Flex>
     </>
   );

@@ -1,22 +1,57 @@
-import { useRef } from "react";
+import React, { useState, useRef } from 'react';
 import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Checkbox,
-  Textarea,
   Text,
-} from "@chakra-ui/react";
-import EditSectionTitle from "./EditSectionTitle";
-import { DragHandleIcon } from "@chakra-ui/icons";
-import { useDrag, useDrop } from "react-dnd";
+  Flex,
+  useMediaQuery,
+} from '@chakra-ui/react';
+import EditSectionTitle from './EditSectionTitle';
+import SectionTextarea from './SectionTextarea';
+import HideSection from './HideSection';
+import { DragHandleIcon } from '@chakra-ui/icons';
+import { useDrag, useDrop } from 'react-dnd';
 
-const RearrangeSection = (props) => {
+const DraggableAccordion = (props) => {
+  // create duplicate local state to use for hiding accordions
+  const [
+    builderSectionVisibilityList,
+    updateBuilderSectionVisibilityList,
+  ] = useState([
+    { id: '1', isVisible: true },
+    { id: '2', isVisible: true },
+    { id: '3', isVisible: true },
+    { id: '4', isVisible: true },
+  ]);
+
+  // initialize media query hook from chakra, used for conditionally rendering content based on viewport width
+  const [isLargerThan420] = useMediaQuery('(min-width: 420px)');
+
+  // set state for section edit title isEditing status with associated ids
+  const [isEditingSectionTitle, updateIsEditingSectionTitle] = useState([
+    { sectionTitle: false, id: 1 },
+    { sectionTitle: false, id: 2 },
+    { sectionTitle: false, id: 3 },
+    { sectionTitle: false, id: 4 },
+  ]);
+
+  // handle Accordion button space bar while editing input is active
+  const handleSpaceBarEditSection = (e) => {
+    const isEditingStatusList = isEditingSectionTitle.filter((editSection) => {
+      return editSection.sectionTitle;
+    });
+    if (isEditingStatusList.length > 0) {
+      e.preventDefault();
+    }
+  };
+
+  // draggable libary config
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
-    accept: "accItem",
+    accept: 'accItem',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -63,7 +98,7 @@ const RearrangeSection = (props) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: "accItem",
+    type: 'accItem',
     item: () => {
       return { id: props.id, index: props.index };
     },
@@ -77,7 +112,6 @@ const RearrangeSection = (props) => {
 
   return (
     <AccordionItem
-      //onDragStart={handleDragStart}
       ref={ref}
       style={{ opacity }}
       data-handler-id={handlerId}
@@ -88,9 +122,9 @@ const RearrangeSection = (props) => {
       <h2>
         {/* Button which opens and closes accordion */}
         <AccordionButton
-          onClick={props.handleSpaceBarEditSection}
+          onClick={handleSpaceBarEditSection}
           _hover={{
-            background: "none",
+            background: 'none',
           }}
           p="16px"
           maxH="56px"
@@ -103,22 +137,44 @@ const RearrangeSection = (props) => {
             fontWeight="900"
           />
           {/* Checkbox to hide/show accordion items */}
-          <Checkbox
-            data-is-checkbox
-            borderRadius="4px"
-            colorScheme="brand"
-            className="builder__section-checkbox"
-            size="lg"
-            mr="8px"
-            defaultIsChecked
+          <HideSection
+            updateBuilderSectionVisibilityList={
+              updateBuilderSectionVisibilityList
+            }
           />
+
           {/* initialize EditSectionTitle component to handle section title edits */}
           <EditSectionTitle
             updateAccItemList={props.updateAccItemList}
             accItem={props.accItem}
-            isEditingSectionTitle={props.isEditingSectionTitle}
-            updateIsEditingSectionTitle={props.updateIsEditingSectionTitle}
+            isEditingSectionTitle={isEditingSectionTitle}
+            updateIsEditingSectionTitle={updateIsEditingSectionTitle}
           />
+          {/* if checkbox is selected, render hidden notice in accordion */}
+          {!builderSectionVisibilityList[props.id - 1].isVisible && (
+            <>
+              <Flex
+                display={isLargerThan420 ? 'flex' : 'none'}
+                margin="0 8px"
+                padding="1px 0"
+                maxWidth="5rem"
+                justifyContent="center"
+                alignItems="center"
+                backgroundColor="#D0D0D0"
+                borderRadius="4px"
+                flex="1"
+              >
+                <Text
+                  fontSize="14px"
+                  fontWeight="bold"
+                  fontFamily="Inter, san-serif"
+                  color="#616161"
+                >
+                  Hidden
+                </Text>
+              </Flex>
+            </>
+          )}
           <AccordionIcon w="2rem" h="2rem," />
         </AccordionButton>
       </h2>
@@ -129,20 +185,13 @@ const RearrangeSection = (props) => {
           lineHeight="1.3em"
           className="builder__accordion-tip-text"
         >
-          <strong>Tip:</strong> Provide an overview describing the main episode
-          highlights.
+          <strong>Tip:</strong> {props.tipDescription}
         </Text>
-        {/* Textarea for accordion text input */}
-        <Textarea
-          placeholder="Enter show notes..."
-          minH="180px"
-          mt="8px"
-          resize="none"
-          pb={4}
-        />
+        {/* Instantiate SectionInput component - handles user input for rendering shownotes */}
+        <SectionTextarea sectionId={props.id} />
       </AccordionPanel>
     </AccordionItem>
   );
 };
 
-export default RearrangeSection;
+export default DraggableAccordion;
