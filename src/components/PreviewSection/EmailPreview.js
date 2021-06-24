@@ -260,7 +260,6 @@ const EmailPreview = () => {
             <Box
               className="builder__section-modal-edit-icon-container"
               position="absolute"
-              top="260px"
               left="21px"
               width="78px"
               height="78px"
