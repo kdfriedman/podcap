@@ -60,7 +60,7 @@ const PreviewSection = () => {
         bgColor="#fff"
         w="100%"
         borderBottom="1px solid #ccc"
-        p={isLargerThan425 ? '0' : '0 15px'}
+        p={isLargerThan425 ? '0' : '0 7px 0 25px'}
       >
         <Button
           className="builder__podcast-preview-btn"
@@ -72,6 +72,7 @@ const PreviewSection = () => {
           fontWeight="800"
           fontSize="16px"
           borderRadius="6px 0px 0px 6px"
+          marginLeft={isLargerThan450 ? '26px' : '0'}
           style={previewSectionHeaderButtonDictionary.get(
             `${previewBtnList[0].isActive ? 'active' : 'inactive'}`
           )}
