@@ -14,22 +14,22 @@ const AccordionModule = () => {
       accItemTitleText: 'Episode Summary',
       id: 1,
       tipDescription:
-        'Provide an overview describing the main episodehighlights.',
+        'Provide an overview describing the main episode highlights.',
     },
     {
       accItemTitleText: 'Guest Info',
       id: 2,
-      tipDescription: 'Provide a brief summary of your guest',
+      tipDescription: 'Provide a brief summary of your guest.',
     },
     {
       accItemTitleText: 'Referenced Media',
       id: 3,
-      tipDescription: 'Share any links or media referenced during the episode',
+      tipDescription: 'Share any links or media referenced during the episode.',
     },
     {
       accItemTitleText: 'Sponsored Links',
       id: 4,
-      tipDescription: 'List any brand/affiliate partners',
+      tipDescription: 'List any brand/affiliate partners.',
     },
   ]);
   // allows us to update the state as an entire object and alter order of each item in the arr

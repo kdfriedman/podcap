@@ -497,7 +497,6 @@ const EmailPreview = () => {
                 className="builder__section-newsletter-brand-card"
                 src="/assets/listen_apple.png"
                 borderRadius="10px"
-                cursor="pointer"
               />
               <Image
                 loading="lazy"
@@ -509,7 +508,6 @@ const EmailPreview = () => {
                 className="builder__section-newsletter-brand-card"
                 src="/assets/listen_spotify.png"
                 borderRadius="10px"
-                cursor="pointer"
               />
               <Image
                 loading="lazy"
@@ -521,10 +519,8 @@ const EmailPreview = () => {
                 className="builder__section-newsletter-brand-card"
                 src="/assets/listen_google.png"
                 borderRadius="10px"
-                cursor="pointer"
               />
               <Image
-                cursor="pointer"
                 loading="lazy"
                 margin="2px 7px"
                 alignSelf="center"
@@ -584,21 +580,30 @@ const EmailPreview = () => {
               >
                 Ep 01: Episode Title
               </Box>
-              <Box
-                className="builder__section-newsletter-episode-btn"
-                margin="15px 0 25px 0"
-                padding="10px 17px"
-                backgroundColor="#e8e8e8"
-                color="#888"
-                borderRadius="4px"
-                width="12rem"
+              <Link
                 alignSelf="center"
-                textAlign="center"
-                fontWeight="600"
-                cursor="pointer"
+                _hover={{
+                  textDecoration: 'none',
+                  opacity: 0.8,
+                }}
+                href="https://podcap.io/get-started"
+                isExternal
               >
-                VIEW ALL EPISODES
-              </Box>
+                <Box
+                  className="builder__section-newsletter-episode-btn"
+                  margin="15px 0 25px 0"
+                  padding="10px 17px"
+                  backgroundColor="#e8e8e8"
+                  color="#888"
+                  borderRadius="4px"
+                  width="12rem"
+                  alignSelf="center"
+                  textAlign="center"
+                  fontWeight="600"
+                >
+                  VIEW ALL EPISODES
+                </Box>
+              </Link>
               <Spacer
                 className="builder__horizontol-divider"
                 borderTop="1px solid #CBCBCB"
@@ -617,7 +622,6 @@ const EmailPreview = () => {
                 Link to your Patreon page!
               </Text>
               <Image
-                cursor="pointer"
                 loading="lazy"
                 margin="15px 7px"
                 alignSelf="center"
@@ -628,21 +632,30 @@ const EmailPreview = () => {
                 src="/assets/banner_patreon.png"
                 borderRadius="10px"
               />
-              <Box
-                className="builder__section-newsletter-brand-btn"
-                margin="0 0 25px 0"
-                padding="10px 17px"
-                backgroundColor="#e8e8e8"
-                color="#888"
-                borderRadius="4px"
-                width="13rem"
+              <Link
                 alignSelf="center"
-                textAlign="center"
-                fontWeight="600"
-                cursor="pointer"
+                _hover={{
+                  textDecoration: 'none',
+                  opacity: 0.8,
+                }}
+                href="https://podcap.io/get-started"
+                isExternal
               >
-                BECOME A PATREON
-              </Box>
+                <Box
+                  className="builder__section-newsletter-brand-btn"
+                  margin="0 0 25px 0"
+                  padding="10px 17px"
+                  backgroundColor="#e8e8e8"
+                  color="#888"
+                  borderRadius="4px"
+                  width="13rem"
+                  alignSelf="center"
+                  textAlign="center"
+                  fontWeight="600"
+                >
+                  BECOME A PATREON
+                </Box>
+              </Link>
               <Spacer
                 className="builder__horizontol-divider"
                 borderTop="1px solid #CBCBCB"
@@ -661,7 +674,6 @@ const EmailPreview = () => {
                 Link to your Shopify store!
               </Text>
               <Image
-                cursor="pointer"
                 loading="lazy"
                 margin="15px 7px"
                 alignSelf="center"
@@ -672,21 +684,30 @@ const EmailPreview = () => {
                 src="/assets/banner_shopify.png"
                 borderRadius="10px"
               />
-              <Box
-                className="builder__section-newsletter-brand-btn"
-                margin="0 0 25px 0"
-                padding="10px 17px"
-                backgroundColor="#e8e8e8"
-                color="#888"
-                borderRadius="4px"
-                width="8rem"
+              <Link
                 alignSelf="center"
-                textAlign="center"
-                fontWeight="600"
-                cursor="pointer"
+                _hover={{
+                  textDecoration: 'none',
+                  opacity: 0.8,
+                }}
+                href="https://podcap.io/get-started"
+                isExternal
               >
-                SHOP NOW
-              </Box>
+                <Box
+                  className="builder__section-newsletter-brand-btn"
+                  margin="0 0 25px 0"
+                  padding="10px 17px"
+                  backgroundColor="#e8e8e8"
+                  color="#888"
+                  borderRadius="4px"
+                  width="8rem"
+                  alignSelf="center"
+                  textAlign="center"
+                  fontWeight="600"
+                >
+                  SHOP NOW
+                </Box>
+              </Link>
               <Spacer
                 className="builder__horizontol-divider"
                 borderTop="1px solid #CBCBCB"
@@ -702,7 +723,7 @@ const EmailPreview = () => {
                 color="#000000"
                 className="builder__section-newsletter-social-title"
               >
-                Where your listeners can find you:
+                Link to your Social Media!
               </Text>
               <Flex
                 flexDirection="row"
@@ -712,7 +733,6 @@ const EmailPreview = () => {
               >
                 <Image
                   margin="0 5px 0 15px"
-                  cursor="pointer"
                   loading="lazy"
                   width={isLargerThan450 ? '2.3rem' : '2rem'}
                   height="100%"
@@ -737,7 +757,6 @@ const EmailPreview = () => {
               >
                 <Image
                   margin="0 5px 0 15px"
-                  cursor="pointer"
                   loading="lazy"
                   width={isLargerThan450 ? '2.3rem' : '2rem'}
                   height="100%"
@@ -762,7 +781,6 @@ const EmailPreview = () => {
               >
                 <Image
                   margin="0 5px 0 15px"
-                  cursor="pointer"
                   loading="lazy"
                   width={isLargerThan450 ? '2.3rem' : '2rem'}
                   height="100%"
@@ -787,7 +805,6 @@ const EmailPreview = () => {
               >
                 <Image
                   margin="0 5px 0 15px"
-                  cursor="pointer"
                   loading="lazy"
                   width={isLargerThan450 ? '2.3rem' : '2rem'}
                   height="100%"
@@ -812,7 +829,6 @@ const EmailPreview = () => {
               >
                 <Image
                   margin="0 5px 0 15px"
-                  cursor="pointer"
                   loading="lazy"
                   width={isLargerThan450 ? '2.3rem' : '2rem'}
                   height="100%"
@@ -838,7 +854,6 @@ const EmailPreview = () => {
                 backgroundColor="#f5f5f5"
               >
                 <Image
-                  cursor="pointer"
                   loading="lazy"
                   margin="15px 7px 10px"
                   alignSelf="center"
@@ -852,7 +867,7 @@ const EmailPreview = () => {
                   borderRadius="10px"
                 />
                 <Link
-                  href="https://podcap.io"
+                  href="https://podcap.io/get-started"
                   isExternal
                   _hover={{
                     opacity: '.8',

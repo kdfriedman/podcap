@@ -28,20 +28,18 @@ const SectionTextarea = (props) => {
       const copiedBuilderSectionTextareaList = [...builderSectionTextareaList];
 
       // check if parentElementId exists inside builderSection list
-      const builderSectionTextareaIndex = copiedBuilderSectionTextareaList.findIndex(
-        (prop) => {
+      const builderSectionTextareaIndex =
+        copiedBuilderSectionTextareaList.findIndex((prop) => {
           return prop.id === parentElementId;
-        }
-      );
+        });
 
       //if parentElementId has been added to builderSection list previously, update specific textarea value and id
       if (builderSectionTextareaIndex !== -1) {
         // update text with textarea active input, using index of previously saved data object
         copiedBuilderSectionTextareaList[builderSectionTextareaIndex].text =
           e.target.value;
-        copiedBuilderSectionTextareaList[
-          builderSectionTextareaIndex
-        ].id = parentElementId;
+        copiedBuilderSectionTextareaList[builderSectionTextareaIndex].id =
+          parentElementId;
         return copiedBuilderSectionTextareaList;
       }
 
@@ -78,7 +76,7 @@ const SectionTextarea = (props) => {
       {/* Textarea for accordion text input */}
       <Textarea
         placeholder="Enter show notes..."
-        minH="180px"
+        minH="240px"
         mt="8px"
         resize="none"
         pb={4}
