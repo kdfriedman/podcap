@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "dev----shownotes-builder"
+    "default": "shownote-builder"
   }
 }
