@@ -6,7 +6,7 @@ import {
   Text,
   Spacer,
   Image,
-  Button,
+  Link,
   useMediaQuery,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -481,8 +481,8 @@ const EmailPreview = () => {
                 </Text>
               );
             })}
-            {/* TODO: add newsletter image cards and social information here: */}
             <Flex
+              marginTop="1rem"
               flexDirection="column"
               justifyContent="center"
               className="builder__section-newsletter-brand-container"
@@ -851,23 +851,25 @@ const EmailPreview = () => {
                   src="/assets/made-with-podcap.png"
                   borderRadius="10px"
                 />
-                <Button
+                <Link
+                  href="https://podcap.io"
+                  isExternal
                   _hover={{
                     opacity: '.8',
                   }}
                   fontFamily="Inter, san-serif"
                   fontWeight="800"
-                  fontSize="15px"
+                  fontSize={isLargerThan450 ? '15px' : '13px'}
                   color="#fff"
                   backgroundColor="#773ae7"
                   borderRadius="4px"
                   padding="9px 16px"
-                  rightIcon={<ArrowForwardIcon w="20px" h="20px" />}
                   maxWidth={isLargerThan450 ? '18rem' : '17rem'}
                   alignSelf="center"
                 >
-                  Get started with Podcap today!
-                </Button>
+                  Get started with Podcap today!{' '}
+                  <ArrowForwardIcon w="20px" h="20px" />
+                </Link>
               </Flex>
             </Flex>
           </Flex>
